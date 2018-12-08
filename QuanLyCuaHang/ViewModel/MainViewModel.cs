@@ -12,6 +12,7 @@ namespace QuanLyCuaHang.ViewModel
     {
         public bool Isloaded = false;
         public ICommand LoadedWindowCommand { get; set; }
+        public ICommand UnitCommand { get; set; }
 
         public MainViewModel()
         {
@@ -22,6 +23,8 @@ namespace QuanLyCuaHang.ViewModel
                 loginWindow.ShowDialog();
             }
             );
+
+            UnitCommand = new RelayCommand<object>((p) => { return true; }, (p) => { UnitWindow wd = new UnitWindow(); wd.ShowDialog(); });
         }
     }
 }
