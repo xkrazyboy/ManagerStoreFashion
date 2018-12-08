@@ -13,6 +13,7 @@ namespace QuanLyCuaHang.ViewModel
         public bool Isloaded = false;
         public ICommand LoadedWindowCommand { get; set; }
         public ICommand UnitCommand { get; set; }
+        public ICommand SuplierCommand { get; set; }
 
         public MainViewModel()
         {
@@ -25,6 +26,7 @@ namespace QuanLyCuaHang.ViewModel
             );
 
             UnitCommand = new RelayCommand<object>((p) => { return true; }, (p) => { UnitWindow wd = new UnitWindow(); wd.ShowDialog(); });
+            SuplierCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SuplierWindow wd = new SuplierWindow(); wd.ShowDialog(); });
         }
     }
 }
