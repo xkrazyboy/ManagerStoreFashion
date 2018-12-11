@@ -18,8 +18,8 @@
             ResizeMode="NoResize"
             WindowStyle="None"
             WindowStartupLocation="CenterScreen"
-            x:Name="window"
-        
+            x:Name="window"        
+            DataContext="{StaticResource SuplierVM}"        
         Title="Nhà cung cấp" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
@@ -45,7 +45,7 @@
                     <TextBox Text="{Binding Phone}" Margin="5 5 15 5" materialDesign:HintAssist.Hint="Điện thoại" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                     <TextBox Text="{Binding Email}" Margin="5 5 15 5" materialDesign:HintAssist.Hint="Email" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                     <TextBox Text="{Binding MoreInfo}" Margin="5 5 15 5" materialDesign:HintAssist.Hint="Thông tin thêm" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                    <DatePicker SelectedDate="{Binding ContractDate}" Width="100" Margin="5 5 15 5" materialDesign:HintAssist.Hint="Ngày hợp tác" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+                    <DatePicker SelectedDate="{Binding ContractDate, StringFormat='dd/MM/yyyy'}" Width="100" Margin="5 5 15 5" materialDesign:HintAssist.Hint="Ngày hợp tác" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
                 </WrapPanel>
             </materialDesign:Card>
 
@@ -68,7 +68,7 @@
                                 <GridViewColumn Header="Điện thoại" DisplayMemberBinding="{Binding Phone}"></GridViewColumn>
                                 <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Email}"></GridViewColumn>
                                 <GridViewColumn Header="Thông tin thêm" DisplayMemberBinding="{Binding MoreInfo}"></GridViewColumn>
-                                <GridViewColumn Header="Ngày hợp tác" DisplayMemberBinding="{Binding ContractDate}"></GridViewColumn>
+                                <GridViewColumn Header="Ngày hợp tác" DisplayMemberBinding="{Binding ContractDate, StringFormat='dd/MM/yyyy'}"></GridViewColumn>
                             </GridView>
                         </ListView.View>
                     </ListView>
