@@ -45,7 +45,7 @@ create table Object
 	BarCode nvarchar(max)
 
 	foreign key(IdUnit) references Unit(Id),
-	foreign key(IdUnit) references Suplier(Id),
+	foreign key(IdSuplier) references Suplier(Id),
 )
 go
 

@@ -20,7 +20,7 @@
             WindowStartupLocation="CenterScreen"
             DataContext="{StaticResource MainVM}"
             Name="mainWindow"
-            Title="Phần mềm quản lý cửa hàng thời trang" Height="500" Width="600">
+            Title="Phần mềm quản lý cửa hàng thời trang" Height="600" Width="650">
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
@@ -348,16 +348,12 @@
                             <Separator></Separator>
                         </Grid>
                         <Grid Grid.Row="2">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="9*"/>
-                                <ColumnDefinition Width="20*"/>
-                            </Grid.ColumnDefinitions>
-                            <ListView Grid.ColumnSpan="2">
+                            <ListView ItemsSource="{Binding InventoryList}">
                                 <ListView.View>
                                     <GridView>
-                                        <GridViewColumn Header="STT"></GridViewColumn>
-                                        <GridViewColumn Header="Tên sản phẩm"></GridViewColumn>
-                                        <GridViewColumn Header="Số lượng tồn"></GridViewColumn>
+                                        <GridViewColumn Header="STT" DisplayMemberBinding="{Binding STT}"></GridViewColumn>
+                                        <GridViewColumn Header="Tên sản phẩm" DisplayMemberBinding="{Binding Object.DisplayName}"></GridViewColumn>
+                                        <GridViewColumn Header="Số lượng tồn" DisplayMemberBinding="{Binding Count}"></GridViewColumn>
                                     </GridView>
                                 </ListView.View>
                             </ListView>

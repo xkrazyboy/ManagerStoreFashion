@@ -1,6 +1,7 @@
 ﻿using QuanLyCuaHang.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,9 @@ namespace QuanLyCuaHang.ViewModel
 {
     public class MainViewModel : BaseViewModel
     {
+        private ObservableCollection<Inventory> _InventoryList;
+        public ObservableCollection<Inventory> InventoryList { get => _InventoryList; set { _InventoryList = value; OnPropertyChanged(); } }
+
         public bool Isloaded = false;
         public ICommand LoadedWindowCommand { get; set; }
         public ICommand UnitCommand { get; set; }
@@ -38,6 +42,7 @@ namespace QuanLyCuaHang.ViewModel
                 if (loginVM.IsLogin)
                 {
                     p.Show();
+                    LoadInventoryData();
                 }
                 else
                 {
@@ -55,6 +60,43 @@ namespace QuanLyCuaHang.ViewModel
             OutputCommand = new RelayCommand<object>((p) => { return true; }, (p) => { OutputWindow wd = new OutputWindow(); wd.ShowDialog(); });
 
             //MessageBox.Show(DataProvider.Ins.DB.Users.First().DisplayName);
+        }
+
+        void LoadInventoryData()
+        {
+            InventoryList = new ObservableCollection<Inventory>();
+
+            var objectList = DataProvider.Ins.DB.Objects;
+
+            int i = 1;
+            foreach (var item in objectList)
+            {
+                var inputList = DataProvider.Ins.DB.InputInfoes.Where(p => p.IdObject == item.Id);
+                var outputList = DataProvider.Ins.DB.OutputInfoes.Where(p => p.IdObject == item.Id);
+
+                int sumInput = 0;
+                int sumOutput = 0;
+
+                if (inputList != null)
+                {
+                    sumInput = (int)inputList.Sum(p => p.Count);
+                }
+
+                if (outputList != null)
+                {
+                    sumOutput = (int)outputList.Sum(p => p.Count);
+                }
+
+                Inventory inventory = new Inventory();
+                inventory.STT = i;
+                inventory.Count = sumInput - sumOutput;
+                inventory.Object = item;
+
+                InventoryList.Add(inventory);
+
+                i++;
+            }
+
         }
     }
 }
