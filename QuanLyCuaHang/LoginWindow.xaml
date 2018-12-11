@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QuanLyCuaHang"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:uc="clr-namespace:QuanLyCuaHang.UserControlQLCH"
         mc:Ignorable="d"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -17,15 +18,18 @@
             ResizeMode="NoResize"
             WindowStyle="None"
             WindowStartupLocation="CenterScreen"
+        
+            DataContext="{StaticResource LoginVM}"
+        
             Name="loginWindow"
-            Title="Đăng nhập" Height="500" Width="500">
+            Title="Đăng nhập" Height="300" Width="400">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <uc:ControlBarUI Tag="{Binding Title, ElementName=loginWindow}"> </uc:ControlBarUI>
+            <uc:ControlBarUI Tag="{Binding Title, ElementName=loginWindow}"></uc:ControlBarUI>
         </Grid>
         <Grid Grid.Row="1">
             <materialDesign:Card Width="330" Height="200" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -43,13 +47,23 @@
                     <Grid Grid.Row="0">
                         <TextBox
                         materialDesign:HintAssist.Hint="Tên đăng nhập"
+                        Text="{Binding UserName}"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                     </Grid>
                     <Grid Grid.Row="1">
                         <PasswordBox
                         x:Name="FloatingPasswordBox"
-                        materialDesign:HintAssist.Hint="Mật khẩu"
-                        Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" />
+                        materialDesign:HintAssist.Hint="Mật khẩu"    
+                        Style="{StaticResource MaterialDesignFloatingHintPasswordBox}">
+                            
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PasswordChanged">
+                                <i:InvokeCommandAction Command="{Binding PasswordChangedCommand}" 
+                                CommandParameter="{Binding ElementName=FloatingPasswordBox}"/>
+                             </i:EventTrigger>
+                         </i:Interaction.Triggers>
+
+                        </PasswordBox>
                     </Grid>
                     <Grid Grid.Row="2">
                         <Grid.ColumnDefinitions>
@@ -58,15 +72,21 @@
                         </Grid.ColumnDefinitions>
 
                         <Button Grid.Column="0"
+                        IsDefault="True"
                         Style="{StaticResource MaterialDesignRaisedButton}"
                         Width="110"
+                        Command="{Binding LoginCommand}"
+                        CommandParameter="{Binding ElementName=loginWindow}"
                         Background="BlueViolet"
                         ToolTip="Resource name: MaterialDesignRaisedButton"
                         Content="Đăng nhập">
+                            
                         </Button>
                         <Button Grid.Column="1"
                         Style="{StaticResource MaterialDesignRaisedButton}"
                         Width="110"
+                        Command="{Binding CloseCommand}"
+                        CommandParameter="{Binding ElementName=loginWindow}"
                         ToolTip="Resource name: MaterialDesignRaisedButton"
                         Content="Thoát">
                         </Button>
