@@ -1,7 +1,7 @@
-create database QuanLyKho
+create database QuanLyCuaHang
 go
 
-use QuanLyKho
+use QuanLyCuaHang
 go
 
 create table Unit
@@ -118,7 +118,8 @@ create table OutputInfo
 	Status nvarchar(max),
 
 	foreign key (IdObject) references Object(Id),
-	foreign key (IdInputInfo) references InputInfo(Id),
-	foreign key (IdCustomer) references Customer(Id)
+	foreign key (IdCustomer) references Customer(Id),
+	
+	foreign key (Id) references Output(Id),
 )
 go
