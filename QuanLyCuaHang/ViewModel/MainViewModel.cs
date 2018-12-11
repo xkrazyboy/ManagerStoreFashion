@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QuanLyCuaHang.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -36,6 +37,8 @@ namespace QuanLyCuaHang.ViewModel
             UserCommand = new RelayCommand<object>((p) => { return true; }, (p) => { UserWindow wd = new UserWindow(); wd.ShowDialog(); });
             InputCommand = new RelayCommand<object>((p) => { return true; }, (p) => { InputWindow wd = new InputWindow(); wd.ShowDialog(); });
             OutputCommand = new RelayCommand<object>((p) => { return true; }, (p) => { OutputWindow wd = new OutputWindow(); wd.ShowDialog(); });
+
+            //MessageBox.Show(DataProvider.Ins.DB.Users.First().DisplayName);
         }
     }
 }
