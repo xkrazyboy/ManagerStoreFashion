@@ -29,7 +29,7 @@ namespace QuanLyCuaHang.ViewModel
                     Email = SelectedItem.Email;
                     Address = SelectedItem.Address;
                     MoreInfo = SelectedItem.MoreInfo;
-                    ContracDate = SelectedItem.ContractDate;
+                    ContractDate = SelectedItem.ContractDate;
                 }
             }
         }
@@ -52,8 +52,8 @@ namespace QuanLyCuaHang.ViewModel
         private string _MoreInfo;
         public string MoreInfo { get => _MoreInfo; set { _MoreInfo = value; OnPropertyChanged(); } }
 
-        private DateTime? _ContracDate;
-        public DateTime? ContracDate { get => _ContracDate; set { _ContracDate = value; OnPropertyChanged(); } }
+        private DateTime? _ContractDate;
+        public DateTime? ContractDate { get => _ContractDate; set { _ContractDate = value; OnPropertyChanged(); } }
 
         public ICommand AddCommand { get; set; }
         public ICommand EditCommand { get; set; }
@@ -69,7 +69,7 @@ namespace QuanLyCuaHang.ViewModel
 
             }, (p) =>
             {
-                var Suplier = new Suplier() { DisplayName = DisplayName, Phone = Phone, Address = Address, Email = Email, ContractDate = ContracDate, MoreInfo = MoreInfo };
+                var Suplier = new Suplier() { DisplayName = DisplayName, Phone = Phone, Address = Address, Email = Email, ContractDate = ContractDate, MoreInfo = MoreInfo };
 
                 DataProvider.Ins.DB.Supliers.Add(Suplier);
                 DataProvider.Ins.DB.SaveChanges();
@@ -94,7 +94,7 @@ namespace QuanLyCuaHang.ViewModel
                 Suplier.Phone = Phone;
                 Suplier.Address = Address;
                 Suplier.Email = Email;
-                Suplier.ContractDate = ContracDate;
+                Suplier.ContractDate = ContractDate;
                 Suplier.MoreInfo = MoreInfo;
                 DataProvider.Ins.DB.SaveChanges();
 
