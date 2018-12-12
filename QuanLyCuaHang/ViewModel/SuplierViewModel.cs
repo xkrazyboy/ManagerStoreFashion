@@ -60,7 +60,7 @@ namespace QuanLyCuaHang.ViewModel
 
         public SuplierViewModel()
         {
-            List = new ObservableCollection<Suplier>(DataProvider.Ins.DB.Supliers.ToList());
+            List = new ObservableCollection<Suplier>(DataProvider.Ins.DB.Supliers);
 
 
             AddCommand = new RelayCommand<object>((p) =>
