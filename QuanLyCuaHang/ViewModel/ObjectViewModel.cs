@@ -34,7 +34,7 @@ namespace QuanLyCuaHang.ViewModel
                     DisplayName = SelectedItem.DisplayName;
                     QRCode = SelectedItem.QRCode;
                     BarCode = SelectedItem.BarCode;
-                    SelectedUnit = _SelectedItem.Unit;
+                    SelectedUnit = SelectedItem.Unit;
                     SelectedSuplier = SelectedItem.Suplier;
                 }
             }
@@ -70,18 +70,7 @@ namespace QuanLyCuaHang.ViewModel
 
 
         private string _BarCode;
-        public string BarCode { get => _BarCode; set { _BarCode = value; OnPropertyChanged(); } }
-
-
-        private string _Email;
-        public string Email { get => _Email; set { _Email = value; OnPropertyChanged(); } }
-
-
-        private string _MoreInfo;
-        public string MoreInfo { get => _MoreInfo; set { _MoreInfo = value; OnPropertyChanged(); } }
-
-        private DateTime? _ContracDate;
-        public DateTime? ContracDate { get => _ContracDate; set { _ContracDate = value; OnPropertyChanged(); } }
+        public string BarCode { get => _BarCode; set { _BarCode = value; OnPropertyChanged(); } }       
 
         public ICommand AddCommand { get; set; }
         public ICommand EditCommand { get; set; }

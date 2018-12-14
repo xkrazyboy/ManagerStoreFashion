@@ -20,7 +20,7 @@
             WindowStartupLocation="CenterScreen"
             x:Name="window"
         
-        Title="Khách hàng" Height="450" Width="800">
+        Title="Người dùng" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>

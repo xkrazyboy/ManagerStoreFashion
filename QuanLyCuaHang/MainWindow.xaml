@@ -20,7 +20,7 @@
             WindowStartupLocation="CenterScreen"
             DataContext="{StaticResource MainVM}"
             Name="mainWindow"
-            Title="Phần mềm quản lý cửa hàng thời trang" Height="600" Width="650">
+            Title="Phần mềm quản lý cửa hàng" Height="600" Width="650">
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
@@ -97,7 +97,7 @@
                                 <RowDefinition></RowDefinition>
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0">
-                                <TextBlock Text="Vật tư" HorizontalAlignment="Center"></TextBlock>
+                                <TextBlock Text="Sản phẩm" HorizontalAlignment="Center"></TextBlock>
                             </Grid>
                             <Grid Grid.Row="1">
                                 <materialDesign:PackIcon HorizontalAlignment="Center" Width="30" Height="30" Kind="PumpkinCarved" />
