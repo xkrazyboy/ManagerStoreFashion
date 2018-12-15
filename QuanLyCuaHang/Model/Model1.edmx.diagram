@@ -4,26 +4,27 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="a4510b33451947fca4f7b465471086d8" Name="Diagram1" ZoomLevel="109">
-        <EntityTypeShape EntityType="QuanLyCuaHangModel.Customer" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyCuaHangModel.Input" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyCuaHangModel.InputInfo" Width="1.5" PointX="5.25" PointY="4.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyCuaHangModel.Object" Width="1.5" PointX="3" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyCuaHangModel.Output" Width="1.5" PointX="6" PointY="9" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyCuaHangModel.OutputInfo" Width="1.5" PointX="8.25" PointY="4.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyCuaHangModel.Suplier" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyCuaHangModel.sysdiagram" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyCuaHangModel.Unit" Width="1.5" PointX="0.75" PointY="2.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyCuaHangModel.UserRole" Width="1.5" PointX="8.75" PointY="9.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyCuaHangModel.User" Width="1.5" PointX="11" PointY="8.875" IsExpanded="true" />
-        <AssociationConnector Association="QuanLyCuaHangModel.FK__OutputInf__IdCus__4F7CD00D" ManuallyRouted="false" />
-        <AssociationConnector Association="QuanLyCuaHangModel.FK__InputInfo__IdInp__4BAC3F29" ManuallyRouted="false" />
-        <AssociationConnector Association="QuanLyCuaHangModel.FK__InputInfo__IdObj__4CA06362" ManuallyRouted="false" />
-        <AssociationConnector Association="QuanLyCuaHangModel.FK__Object__IdSuplie__4E88ABD4" ManuallyRouted="false" />
-        <AssociationConnector Association="QuanLyCuaHangModel.FK__Object__IdUnit__4D94879B" ManuallyRouted="false" />
-        <AssociationConnector Association="QuanLyCuaHangModel.FK__OutputInf__IdObj__5070F446" ManuallyRouted="false" />
-        <AssociationConnector Association="QuanLyCuaHangModel.FK__OutputInfo__Id__412EB0B6" ManuallyRouted="false" />
-        <AssociationConnector Association="QuanLyCuaHangModel.FK__Users__IdRole__5165187F" ManuallyRouted="false" />
+      <Diagram DiagramId="a4510b33451947fca4f7b465471086d8" Name="Diagram1" ZoomLevel="81">
+        <EntityTypeShape EntityType="QuanLyCuaHangModel.Customer" Width="1.5" PointX="5.25" PointY="5.875" />
+        <EntityTypeShape EntityType="QuanLyCuaHangModel.Input" Width="1.5" PointX="3" PointY="5.75" />
+        <EntityTypeShape EntityType="QuanLyCuaHangModel.InputInfo" Width="1.5" PointX="5.25" PointY="1.125" />
+        <EntityTypeShape EntityType="QuanLyCuaHangModel.Object" Width="1.5" PointX="3" PointY="1.125" />
+        <EntityTypeShape EntityType="QuanLyCuaHangModel.Output" Width="1.5" PointX="5.25" PointY="9.125" />
+        <EntityTypeShape EntityType="QuanLyCuaHangModel.OutputInfo" Width="1.5" PointX="7.5" PointY="1" />
+        <EntityTypeShape EntityType="QuanLyCuaHangModel.Suplier" Width="1.5" PointX="0.75" PointY="5.25" />
+        <EntityTypeShape EntityType="QuanLyCuaHangModel.sysdiagram" Width="1.5" PointX="0.75" PointY="8.75" />
+        <EntityTypeShape EntityType="QuanLyCuaHangModel.Unit" Width="1.5" PointX="0.75" PointY="1.75" />
+        <EntityTypeShape EntityType="QuanLyCuaHangModel.UserRole" Width="1.5" PointX="7.75" PointY="6.25" />
+        <EntityTypeShape EntityType="QuanLyCuaHangModel.User" Width="1.5" PointX="10" PointY="5.875" />
+        <AssociationConnector Association="QuanLyCuaHangModel.FK__OutputInf__IdCus__52593CB8" />
+        <AssociationConnector Association="QuanLyCuaHangModel.FK__InputInfo__IdInp__4AB81AF0" />
+        <AssociationConnector Association="QuanLyCuaHangModel.FK__InputInfo__IdObj__49C3F6B7" />
+        <AssociationConnector Association="QuanLyCuaHangModel.FK__OutputInf__IdInp__5070F446" />
+        <AssociationConnector Association="QuanLyCuaHangModel.FK__Object__BarCode__3D5E1FD2" />
+        <AssociationConnector Association="QuanLyCuaHangModel.FK__Object__IdSuplie__3E52440B" />
+        <AssociationConnector Association="QuanLyCuaHangModel.FK__OutputInf__IdObj__4F7CD00D" />
+        <AssociationConnector Association="QuanLyCuaHangModel.FK__OutputInf__IdOut__5165187F" />
+        <AssociationConnector Association="QuanLyCuaHangModel.FK__Users__IdRole__4316F928" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

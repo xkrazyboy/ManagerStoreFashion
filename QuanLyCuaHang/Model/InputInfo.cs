@@ -15,6 +15,12 @@ namespace QuanLyCuaHang.Model
     
     public partial class InputInfo : BaseViewModel
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public InputInfo()
+        {
+            this.OutputInfoes = new HashSet<OutputInfo>();
+        }
+
         private string _Id;
         public string Id { get => _Id; set { _Id = value; OnPropertyChanged(); } }
 
@@ -29,17 +35,20 @@ namespace QuanLyCuaHang.Model
 
         private Nullable<double> _InputPrice;
         public Nullable<double> InputPrice { get => _InputPrice; set { _InputPrice = value; OnPropertyChanged(); } }
-        
+
         private Nullable<double> _OutputPrice;
         public Nullable<double> OutputPrice { get => _OutputPrice; set { _OutputPrice = value; OnPropertyChanged(); } }
 
         private string _Status;
-        public string Status { get => _Status; set { _Status = value; OnPropertyChanged(); } }        
+        public string Status { get => _Status; set { _Status = value; OnPropertyChanged(); } }
 
         private Input _Input;
         public virtual Input Input { get => _Input; set { _Input = value; OnPropertyChanged(); } }
 
         private Object _Object;
         public virtual Object Object { get => _Object; set { _Object = value; OnPropertyChanged(); } }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OutputInfo> OutputInfoes { get; set; }
     }
 }

@@ -12,7 +12,6 @@ namespace QuanLyCuaHang.ViewModel
         private ObservableCollection<Model.Input> _List;
         public ObservableCollection<Model.Input> List { get => _List; set { _List = value; OnPropertyChanged(); } }
 
-
         private string _Id;
         public string Id { get => _Id; set { _Id = value; OnPropertyChanged(); } }
 

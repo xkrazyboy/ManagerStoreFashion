@@ -9,20 +9,44 @@
 
 namespace QuanLyCuaHang.Model
 {
+    using QuanLyCuaHang.ViewModel;
     using System;
     using System.Collections.Generic;
     
-    public partial class OutputInfo
+    public partial class OutputInfo : BaseViewModel
     {
-        public string Id { get; set; }
-        public string IdObject { get; set; }
-        public string IdOutputInfo { get; set; }
-        public int IdCustomer { get; set; }
-        public Nullable<int> Count { get; set; }
-        public string Status { get; set; }
-    
-        public virtual Customer Customer { get; set; }
-        public virtual Object Object { get; set; }
-        public virtual Output Output { get; set; }
+        private string _Id;
+        public string Id { get => _Id; set { _Id = value; OnPropertyChanged(); } }
+
+        private string _IdObject;
+        public string IdObject { get => _IdObject; set { _IdObject = value; OnPropertyChanged(); } }
+
+        private string _IdInputInfo;
+        public string IdInputInfo { get => _IdInputInfo; set { _IdInputInfo = value; OnPropertyChanged(); } }
+
+        private string _IdOutput;
+        public string IdOutput { get => _IdOutput; set { _IdOutput = value; OnPropertyChanged(); } }
+
+        private int _IdCustomer;
+        public int IdCustomer { get => _IdCustomer; set { _IdCustomer = value; OnPropertyChanged(); } }
+
+        private Nullable<int> _Count;
+        public Nullable<int> Count { get => _Count; set { _Count = value; OnPropertyChanged(); } }
+
+        private string _Status;
+        public string Status { get => _Status; set { _Status = value; OnPropertyChanged(); } }
+
+        
+        private Customer _Customer;
+        public virtual Customer Customer { get => _Customer; set { _Customer = value; OnPropertyChanged(); } }
+
+        private InputInfo _InputInfo;
+        public virtual InputInfo InputInfo { get => _InputInfo; set { _InputInfo = value; OnPropertyChanged(); } }
+
+        private Object _Object;
+        public virtual Object Object { get => _Object; set { _Object = value; OnPropertyChanged(); } }
+        
+        private Output _Output;
+        public virtual Output Output { get => _Output; set { _Output = value; OnPropertyChanged(); } }
     }
 }
