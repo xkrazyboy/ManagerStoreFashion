@@ -17,13 +17,21 @@ namespace QuanLyCuaHang.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Output()
         {
-            this.OutputInfoes = new HashSet<OutputInfo>();
+            this.OutputInfo = new HashSet<OutputInfo>();
         }
     
         public string Id { get; set; }
+        public int IdCustomer { get; set; }
+        public int IdUser { get; set; }
+        public Nullable<int> IdPromotion { get; set; }
         public Nullable<System.DateTime> DateOutput { get; set; }
+        public string Status { get; set; }
+        public Nullable<double> Total { get; set; }
     
+        public virtual Customer Customer { get; set; }
+        public virtual Promotion Promotion { get; set; }
+        public virtual Users Users { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OutputInfo> OutputInfoes { get; set; }
+        public virtual ICollection<OutputInfo> OutputInfo { get; set; }
     }
 }

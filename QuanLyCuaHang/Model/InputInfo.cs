@@ -17,7 +17,7 @@ namespace QuanLyCuaHang.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public InputInfo()
         {
-            this.OutputInfoes = new HashSet<OutputInfo>();
+            this.OutputInfo = new HashSet<OutputInfo>();
         }
     
         public string Id { get; set; }
@@ -31,6 +31,6 @@ namespace QuanLyCuaHang.Model
         public virtual Input Input { get; set; }
         public virtual Object Object { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OutputInfo> OutputInfoes { get; set; }
+        public virtual ICollection<OutputInfo> OutputInfo { get; set; }
     }
 }

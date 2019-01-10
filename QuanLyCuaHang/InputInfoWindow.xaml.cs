@@ -17,9 +17,9 @@ namespace QuanLyCuaHang
     /// <summary>
     /// Interaction logic for InputWindow.xaml
     /// </summary>
-    public partial class InputWindow : Window
+    public partial class InputInfoWindow : Window
     {
-        public InputWindow()
+        public InputInfoWindow()
         {
             InitializeComponent();
         }

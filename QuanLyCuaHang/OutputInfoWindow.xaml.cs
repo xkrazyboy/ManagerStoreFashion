@@ -17,9 +17,9 @@ namespace QuanLyCuaHang
     /// <summary>
     /// Interaction logic for OutputWindow.xaml
     /// </summary>
-    public partial class OutputWindow : Window
+    public partial class OutputInfoWindow : Window
     {
-        public OutputWindow()
+        public OutputInfoWindow()
         {
             InitializeComponent();
         }

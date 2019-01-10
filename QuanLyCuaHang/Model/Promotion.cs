@@ -12,18 +12,21 @@ namespace QuanLyCuaHang.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Input
+    public partial class Promotion
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Input()
+        public Promotion()
         {
-            this.InputInfo = new HashSet<InputInfo>();
+            this.Output = new HashSet<Output>();
         }
     
-        public string Id { get; set; }
-        public Nullable<System.DateTime> DateInput { get; set; }
+        public int Id { get; set; }
+        public string DisplayName { get; set; }
+        public Nullable<System.DateTime> StartDate { get; set; }
+        public Nullable<System.DateTime> EndDate { get; set; }
+        public Nullable<double> PromotionalValue { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<InputInfo> InputInfo { get; set; }
+        public virtual ICollection<Output> Output { get; set; }
     }
 }

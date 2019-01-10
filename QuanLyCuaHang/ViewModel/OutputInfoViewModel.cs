@@ -26,8 +26,8 @@ namespace QuanLyCuaHang.ViewModel
         private ObservableCollection<Model.Output> _Output;
         public ObservableCollection<Model.Output> Output { get => _Output; set { _Output = value; OnPropertyChanged(); } }
 
-        private ObservableCollection<Model.Customer> _Customer;
-        public ObservableCollection<Model.Customer> Customer { get => _Customer; set { _Customer = value; OnPropertyChanged(); } }
+        //private ObservableCollection<Model.Customer> _Customer;
+        //public ObservableCollection<Model.Customer> Customer { get => _Customer; set { _Customer = value; OnPropertyChanged(); } }
 
         private Model.OutputInfo _SelectedItem;
         public Model.OutputInfo SelectedItem
@@ -43,7 +43,7 @@ namespace QuanLyCuaHang.ViewModel
                     SelectedOutput = SelectedItem.Output;
                     Count = SelectedItem.Count;
                     SelectedInputInfo = SelectedItem.InputInfo;
-                    SelectedCustomer = SelectedItem.Customer;
+                    //SelectedCustomer = SelectedItem.Customer;
                     Status = SelectedItem.Status;
                 }
             }
@@ -77,11 +77,11 @@ namespace QuanLyCuaHang.ViewModel
             Output = new ObservableCollection<Model.Output>(DataProvider.Ins.DB.Outputs);
             InputInfo = new ObservableCollection<Model.InputInfo>(DataProvider.Ins.DB.InputInfoes);
             Output = new ObservableCollection<Model.Output>(DataProvider.Ins.DB.Outputs);
-            Customer = new ObservableCollection<Model.Customer>(DataProvider.Ins.DB.Customers);
+            //Customer = new ObservableCollection<Model.Customer>(DataProvider.Ins.DB.Customers);
 
             AddCommand = new RelayCommand<object>((p) =>
             {
-                if (SelectedObject == null || SelectedOutput == null || SelectedInputInfo == null || SelectedCustomer == null)
+                if (SelectedObject == null || SelectedOutput == null || SelectedInputInfo == null)
                     return false;
                 return true;
 
@@ -89,7 +89,7 @@ namespace QuanLyCuaHang.ViewModel
 
             {
                 var NewOutput = new Model.Output() { Id = Guid.NewGuid().ToString(), DateOutput = SelectedOutput.DateOutput };
-                var OutputInfo = new Model.OutputInfo() { IdObject = SelectedObject.Id, IdOutput = NewOutput.Id, Count = Count, IdInputInfo = SelectedInputInfo.Id, IdCustomer = SelectedCustomer.Id, Status = Status, Id = Guid.NewGuid().ToString() };
+                var OutputInfo = new Model.OutputInfo() { IdObject = SelectedObject.Id, IdOutput = NewOutput.Id, Count = Count, IdInputInfo = SelectedInputInfo.Id, Status = Status, Id = Guid.NewGuid().ToString() };
 
                 DataProvider.Ins.DB.Outputs.Add(NewOutput);
                 DataProvider.Ins.DB.OutputInfoes.Add(OutputInfo);
@@ -100,7 +100,7 @@ namespace QuanLyCuaHang.ViewModel
 
             EditCommand = new RelayCommand<OutputInfo>((p) =>
             {
-                if (SelectedObject == null || SelectedOutput == null || SelectedInputInfo == null || SelectedCustomer == null)
+                if (SelectedObject == null || SelectedOutput == null || SelectedInputInfo == null)
                     return false;
 
                 var displayList = DataProvider.Ins.DB.OutputInfoes.Where(x => x.Id == SelectedItem.Id);
@@ -113,9 +113,9 @@ namespace QuanLyCuaHang.ViewModel
                 var OutputInfo = DataProvider.Ins.DB.OutputInfoes.Where(x => x.Id == SelectedItem.Id).SingleOrDefault();
                 OutputInfo.IdObject = SelectedObject.Id;
                 OutputInfo.IdOutput = SelectedOutput.Id;
-                OutputInfo.Count = Count;
+                //OutputInfo.Count = Count;
                 OutputInfo.IdInputInfo = SelectedInputInfo.Id;
-                OutputInfo.IdCustomer = SelectedCustomer.Id;
+                //OutputInfo.IdCustomer = SelectedCustomer.Id;
                 OutputInfo.Status = Status;
                 DataProvider.Ins.DB.SaveChanges();
             });
