@@ -9,20 +9,24 @@
 
 namespace QuanLyCuaHang.Model
 {
+    using QuanLyCuaHang.ViewModel;
     using System;
     using System.Collections.Generic;
     
-    public partial class Unit
+    public partial class Unit : BaseViewModel
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Unit()
         {
             this.Object = new HashSet<Object>();
         }
-    
-        public int Id { get; set; }
-        public string DisplayName { get; set; }
-    
+
+        private int _Id;
+        public int Id { get => _Id; set { _Id = value; OnPropertyChanged(); } }
+
+        private string _DisplayName;
+        public string DisplayName { get => _DisplayName; set { _DisplayName = value; OnPropertyChanged(); } }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Object> Object { get; set; }
     }

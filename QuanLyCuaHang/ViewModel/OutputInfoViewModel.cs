@@ -72,11 +72,10 @@ namespace QuanLyCuaHang.ViewModel
 
         public OutputInfoViewModel()
         {
-            List = new ObservableCollection<Model.OutputInfo>(DataProvider.Ins.DB.OutputInfoes);
-            Object = new ObservableCollection<Model.Object>(DataProvider.Ins.DB.Objects);
-            Output = new ObservableCollection<Model.Output>(DataProvider.Ins.DB.Outputs);
-            InputInfo = new ObservableCollection<Model.InputInfo>(DataProvider.Ins.DB.InputInfoes);
-            Output = new ObservableCollection<Model.Output>(DataProvider.Ins.DB.Outputs);
+            List = new ObservableCollection<Model.OutputInfo>(DataProvider.Ins.DB.OutputInfo);
+            Object = new ObservableCollection<Model.Object>(DataProvider.Ins.DB.Object);
+            Output = new ObservableCollection<Model.Output>(DataProvider.Ins.DB.Output);
+            InputInfo = new ObservableCollection<Model.InputInfo>(DataProvider.Ins.DB.InputInfo);
             //Customer = new ObservableCollection<Model.Customer>(DataProvider.Ins.DB.Customers);
 
             AddCommand = new RelayCommand<object>((p) =>
@@ -91,8 +90,8 @@ namespace QuanLyCuaHang.ViewModel
                 var NewOutput = new Model.Output() { Id = Guid.NewGuid().ToString(), DateOutput = SelectedOutput.DateOutput };
                 var OutputInfo = new Model.OutputInfo() { IdObject = SelectedObject.Id, IdOutput = NewOutput.Id, Count = Count, IdInputInfo = SelectedInputInfo.Id, Status = Status, Id = Guid.NewGuid().ToString() };
 
-                DataProvider.Ins.DB.Outputs.Add(NewOutput);
-                DataProvider.Ins.DB.OutputInfoes.Add(OutputInfo);
+                DataProvider.Ins.DB.Output.Add(NewOutput);
+                DataProvider.Ins.DB.OutputInfo.Add(OutputInfo);
                 DataProvider.Ins.DB.SaveChanges();
 
                 List.Add(OutputInfo);
@@ -103,14 +102,14 @@ namespace QuanLyCuaHang.ViewModel
                 if (SelectedObject == null || SelectedOutput == null || SelectedInputInfo == null)
                     return false;
 
-                var displayList = DataProvider.Ins.DB.OutputInfoes.Where(x => x.Id == SelectedItem.Id);
+                var displayList = DataProvider.Ins.DB.OutputInfo.Where(x => x.Id == SelectedItem.Id);
                 if (displayList != null && displayList.Count() != 0)
                     return true;
                 return false;
 
             }, (p) =>
             {
-                var OutputInfo = DataProvider.Ins.DB.OutputInfoes.Where(x => x.Id == SelectedItem.Id).SingleOrDefault();
+                var OutputInfo = DataProvider.Ins.DB.OutputInfo.Where(x => x.Id == SelectedItem.Id).SingleOrDefault();
                 OutputInfo.IdObject = SelectedObject.Id;
                 OutputInfo.IdOutput = SelectedOutput.Id;
                 //OutputInfo.Count = Count;

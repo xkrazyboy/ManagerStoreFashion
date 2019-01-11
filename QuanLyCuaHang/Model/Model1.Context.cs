@@ -13,10 +13,10 @@ namespace QuanLyCuaHang.Model
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class QuanLyCuaHangEntities : DbContext
+    public partial class QuanLyCuaHangThoiTrangEntities : DbContext
     {
-        public QuanLyCuaHangEntities()
-            : base("name=QuanLyCuaHang3Entities")
+        public QuanLyCuaHangThoiTrangEntities()
+            : base("name=QuanLyCuaHangThoiTrangEntities")
         {
         }
     

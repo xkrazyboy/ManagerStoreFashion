@@ -60,7 +60,7 @@ namespace QuanLyCuaHang.ViewModel
 
         public SuplierViewModel()
         {
-            List = new ObservableCollection<Suplier>(DataProvider.Ins.DB.Supliers);
+            List = new ObservableCollection<Suplier>(DataProvider.Ins.DB.Suplier);
 
 
             AddCommand = new RelayCommand<object>((p) =>
@@ -71,7 +71,7 @@ namespace QuanLyCuaHang.ViewModel
             {
                 var Suplier = new Suplier() { DisplayName = DisplayName, Phone = Phone, Address = Address, Email = Email, ContractDate = ContractDate, MoreInfo = MoreInfo };
 
-                DataProvider.Ins.DB.Supliers.Add(Suplier);
+                DataProvider.Ins.DB.Suplier.Add(Suplier);
                 DataProvider.Ins.DB.SaveChanges();
 
                 List.Add(Suplier);
@@ -82,14 +82,14 @@ namespace QuanLyCuaHang.ViewModel
                 if (SelectedItem == null)
                     return false;
 
-                var displayList = DataProvider.Ins.DB.Supliers.Where(x => x.Id == SelectedItem.Id);
+                var displayList = DataProvider.Ins.DB.Suplier.Where(x => x.Id == SelectedItem.Id);
                 if (displayList != null && displayList.Count() != 0)
                     return true;
                 return false;
 
             }, (p) =>
             {
-                var Suplier = DataProvider.Ins.DB.Supliers.Where(x => x.Id == SelectedItem.Id).SingleOrDefault();
+                var Suplier = DataProvider.Ins.DB.Suplier.Where(x => x.Id == SelectedItem.Id).SingleOrDefault();
                 Suplier.DisplayName = DisplayName;
                 Suplier.Phone = Phone;
                 Suplier.Address = Address;

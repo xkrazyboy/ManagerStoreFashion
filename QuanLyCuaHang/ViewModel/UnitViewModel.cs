@@ -35,7 +35,7 @@ namespace QuanLyCuaHang.ViewModel
 
         public UnitViewModel()
         {
-            List = new ObservableCollection<Unit>(DataProvider.Ins.DB.Units.ToList());
+            List = new ObservableCollection<Unit>(DataProvider.Ins.DB.Unit.ToList());
 
 
             AddCommand = new RelayCommand<object>((p) => 
@@ -43,7 +43,7 @@ namespace QuanLyCuaHang.ViewModel
                 if (string.IsNullOrEmpty(DisplayName))
                     return false;
 
-                var displayList = DataProvider.Ins.DB.Units.Where(x => x.DisplayName == DisplayName);
+                var displayList = DataProvider.Ins.DB.Unit.Where(x => x.DisplayName == DisplayName);
                 if (displayList == null || displayList.Count() != 0)
                     return false;
                 return true;
@@ -52,7 +52,7 @@ namespace QuanLyCuaHang.ViewModel
             {
                 var unit = new Unit() { DisplayName = DisplayName };
 
-                DataProvider.Ins.DB.Units.Add(unit);
+                DataProvider.Ins.DB.Unit.Add(unit);
                 DataProvider.Ins.DB.SaveChanges();
 
                 List.Add(unit);
@@ -63,14 +63,14 @@ namespace QuanLyCuaHang.ViewModel
                 if (string.IsNullOrEmpty(DisplayName) || SelectedItem == null)
                     return false;
 
-                var displayList = DataProvider.Ins.DB.Units.Where(x => x.DisplayName == DisplayName);
+                var displayList = DataProvider.Ins.DB.Unit.Where(x => x.DisplayName == DisplayName);
                 if (displayList == null || displayList.Count() != 0)
                     return false;
                 return true;
 
             }, (p) =>
             {
-                var unit = DataProvider.Ins.DB.Units.Where(x => x.Id == SelectedItem.Id).SingleOrDefault();
+                var unit = DataProvider.Ins.DB.Unit.Where(x => x.Id == SelectedItem.Id).SingleOrDefault();
                 unit.DisplayName = DisplayName;
                 DataProvider.Ins.DB.SaveChanges();
 

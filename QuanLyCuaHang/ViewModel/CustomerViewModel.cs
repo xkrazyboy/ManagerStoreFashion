@@ -82,7 +82,7 @@ namespace QuanLyCuaHang.ViewModel
 
         public CustomerViewModel()
         {
-            List = new ObservableCollection<Model.Customer>(DataProvider.Ins.DB.Customers);
+            List = new ObservableCollection<Model.Customer>(DataProvider.Ins.DB.Customer);
 
             AddCommand = new RelayCommand<object>((p) =>
             {
@@ -92,7 +92,7 @@ namespace QuanLyCuaHang.ViewModel
             {
                 var Customer = new Model.Customer() { DisplayName = DisplayName, Address = Address, Phone = Phone, Email = Email, MoreInfo = MoreInfo, ContractDate = ContractDate };
 
-                DataProvider.Ins.DB.Customers.Add(Customer);
+                DataProvider.Ins.DB.Customer.Add(Customer);
                 DataProvider.Ins.DB.SaveChanges();
 
                 List.Add(Customer);
@@ -103,14 +103,14 @@ namespace QuanLyCuaHang.ViewModel
                 if (SelectedItem == null)
                     return false;
 
-                var displayList = DataProvider.Ins.DB.Customers.Where(x => x.Id == SelectedItem.Id);
+                var displayList = DataProvider.Ins.DB.Customer.Where(x => x.Id == SelectedItem.Id);
                 if (displayList != null && displayList.Count() != 0)
                     return true;
                 return false;
 
             }, (p) =>
             {
-                var Customer = DataProvider.Ins.DB.Customers.Where(x => x.Id == SelectedItem.Id).SingleOrDefault();
+                var Customer = DataProvider.Ins.DB.Customer.Where(x => x.Id == SelectedItem.Id).SingleOrDefault();
                 Customer.DisplayName = DisplayName;
                 Customer.Address = Address;
                 Customer.Phone = Phone;

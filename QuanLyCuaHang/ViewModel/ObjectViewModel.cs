@@ -77,9 +77,9 @@ namespace QuanLyCuaHang.ViewModel
 
         public ObjectViewModel()
         {
-            List = new ObservableCollection<Model.Object>(DataProvider.Ins.DB.Objects);
-            Unit = new ObservableCollection<Model.Unit>(DataProvider.Ins.DB.Units);
-            Suplier = new ObservableCollection<Model.Suplier>(DataProvider.Ins.DB.Supliers);
+            List = new ObservableCollection<Model.Object>(DataProvider.Ins.DB.Object);
+            Unit = new ObservableCollection<Model.Unit>(DataProvider.Ins.DB.Unit);
+            Suplier = new ObservableCollection<Model.Suplier>(DataProvider.Ins.DB.Suplier);
 
 
             AddCommand = new RelayCommand<object>((p) =>
@@ -92,7 +92,7 @@ namespace QuanLyCuaHang.ViewModel
             {
                 var Object = new Model.Object() { DisplayName = DisplayName, BarCode = BarCode, QRCode = QRCode, IdSuplier = SelectedSuplier.Id, IdUnit = SelectedUnit.Id, Id = Guid.NewGuid().ToString() };
 
-                DataProvider.Ins.DB.Objects.Add(Object);
+                DataProvider.Ins.DB.Object.Add(Object);
                 DataProvider.Ins.DB.SaveChanges();
 
                 List.Add(Object);
@@ -103,14 +103,14 @@ namespace QuanLyCuaHang.ViewModel
                 if (SelectedItem == null || SelectedSuplier == null || SelectedUnit == null)
                     return false;
 
-                var displayList = DataProvider.Ins.DB.Objects.Where(x => x.Id == SelectedItem.Id);
+                var displayList = DataProvider.Ins.DB.Object.Where(x => x.Id == SelectedItem.Id);
                 if (displayList != null && displayList.Count() != 0)
                     return true;
                 return false;
 
             }, (p) =>
             {
-                var Object = DataProvider.Ins.DB.Objects.Where(x => x.Id == SelectedItem.Id).SingleOrDefault();
+                var Object = DataProvider.Ins.DB.Object.Where(x => x.Id == SelectedItem.Id).SingleOrDefault();
                 Object.DisplayName = DisplayName;
                 Object.BarCode = BarCode;
                 Object.QRCode = QRCode;

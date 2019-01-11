@@ -11,11 +11,11 @@ namespace QuanLyCuaHang.Model
         private static DataProvider _ins;
         public static DataProvider Ins { get { if (_ins == null) _ins = new DataProvider(); return _ins; } set { _ins = value; } }
 
-        public QuanLyCuaHangEntities DB { get; set; }
+        public QuanLyCuaHangThoiTrangEntities DB { get; set; }
 
         private DataProvider()
         {
-            DB = new QuanLyCuaHangEntities();
+            DB = new QuanLyCuaHangThoiTrangEntities();
         }
     }
 }

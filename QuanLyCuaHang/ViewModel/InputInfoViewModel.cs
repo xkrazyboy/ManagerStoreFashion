@@ -82,9 +82,9 @@ namespace QuanLyCuaHang.ViewModel
 
         public InputInfoViewModel()
         {
-            List = new ObservableCollection<Model.InputInfo>(DataProvider.Ins.DB.InputInfoes);
-            Object = new ObservableCollection<Model.Object>(DataProvider.Ins.DB.Objects);
-            Input = new ObservableCollection<Model.Input>(DataProvider.Ins.DB.Inputs);
+            List = new ObservableCollection<Model.InputInfo>(DataProvider.Ins.DB.InputInfo);
+            Object = new ObservableCollection<Model.Object>(DataProvider.Ins.DB.Object);
+            Input = new ObservableCollection<Model.Input>(DataProvider.Ins.DB.Input);
 
             AddCommand = new RelayCommand<object>((p) =>
             {
@@ -98,8 +98,8 @@ namespace QuanLyCuaHang.ViewModel
                 var NewInput = new Model.Input() { Id = Guid.NewGuid().ToString(), DateInput = SelectedInput.DateInput };
                 var InputInfo = new Model.InputInfo() { IdObject = SelectedObject.Id, IdInput = NewInput.Id, Count = Count, InputPrice = InputPrice, OutputPrice = OutputPrice, Status = Status, Id = Guid.NewGuid().ToString() };
                 
-                DataProvider.Ins.DB.Inputs.Add(NewInput);
-                DataProvider.Ins.DB.InputInfoes.Add(InputInfo);
+                DataProvider.Ins.DB.Input.Add(NewInput);
+                DataProvider.Ins.DB.InputInfo.Add(InputInfo);
                 DataProvider.Ins.DB.SaveChanges();
 
                 List.Add(InputInfo);
@@ -110,14 +110,14 @@ namespace QuanLyCuaHang.ViewModel
                 if (SelectedItem == null || SelectedObject == null || SelectedInput == null)
                     return false;
 
-                var displayList = DataProvider.Ins.DB.InputInfoes.Where(x => x.Id == SelectedItem.Id);
+                var displayList = DataProvider.Ins.DB.InputInfo.Where(x => x.Id == SelectedItem.Id);
                 if (displayList != null && displayList.Count() != 0)
                     return true;
                 return false;
 
             }, (p) =>
             {
-                var InputInfo = DataProvider.Ins.DB.InputInfoes.Where(x => x.Id == SelectedItem.Id).SingleOrDefault();
+                var InputInfo = DataProvider.Ins.DB.InputInfo.Where(x => x.Id == SelectedItem.Id).SingleOrDefault();
                 InputInfo.IdObject = SelectedObject.Id;
                 InputInfo.IdInput = SelectedInput.Id;
 

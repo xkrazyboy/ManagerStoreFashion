@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="QuanLyCuaHang3Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="QuanLyCuaHangThoiTrangModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Customer">
           <Key>
             <PropertyRef Name="Id" />
@@ -248,7 +248,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="QuanLyCuaHang3ModelStoreContainer">
+        <EntityContainer Name="QuanLyCuaHangThoiTrangModelStoreContainer">
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Input" EntityType="Self.Input" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InputInfo" EntityType="Self.InputInfo" Schema="dbo" store:Type="Tables" />
@@ -309,7 +309,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="QuanLyCuaHang3Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="QuanLyCuaHangThoiTrangModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Customer">
           <Key>
             <PropertyRef Name="Id" />
@@ -575,7 +575,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="QuanLyCuaHang3Entities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="QuanLyCuaHangThoiTrangEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Customer" EntityType="Self.Customer" />
           <EntitySet Name="Input" EntityType="Self.Input" />
           <EntitySet Name="InputInfo" EntityType="Self.InputInfo" />
@@ -637,9 +637,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="QuanLyCuaHang3ModelStoreContainer" CdmEntityContainer="QuanLyCuaHang3Entities">
+        <EntityContainerMapping StorageEntityContainer="QuanLyCuaHangThoiTrangModelStoreContainer" CdmEntityContainer="QuanLyCuaHangThoiTrangEntities">
           <EntitySetMapping Name="Customer">
-            <EntityTypeMapping TypeName="QuanLyCuaHang3Model.Customer">
+            <EntityTypeMapping TypeName="QuanLyCuaHangThoiTrangModel.Customer">
               <MappingFragment StoreEntitySet="Customer">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
@@ -652,7 +652,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Input">
-            <EntityTypeMapping TypeName="QuanLyCuaHang3Model.Input">
+            <EntityTypeMapping TypeName="QuanLyCuaHangThoiTrangModel.Input">
               <MappingFragment StoreEntitySet="Input">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="DateInput" ColumnName="DateInput" />
@@ -660,7 +660,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="InputInfo">
-            <EntityTypeMapping TypeName="QuanLyCuaHang3Model.InputInfo">
+            <EntityTypeMapping TypeName="QuanLyCuaHangThoiTrangModel.InputInfo">
               <MappingFragment StoreEntitySet="InputInfo">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="IdObject" ColumnName="IdObject" />
@@ -673,7 +673,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Object">
-            <EntityTypeMapping TypeName="QuanLyCuaHang3Model.Object">
+            <EntityTypeMapping TypeName="QuanLyCuaHangThoiTrangModel.Object">
               <MappingFragment StoreEntitySet="Object">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
@@ -685,7 +685,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Output">
-            <EntityTypeMapping TypeName="QuanLyCuaHang3Model.Output">
+            <EntityTypeMapping TypeName="QuanLyCuaHangThoiTrangModel.Output">
               <MappingFragment StoreEntitySet="Output">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="IdCustomer" ColumnName="IdCustomer" />
@@ -698,7 +698,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="OutputInfo">
-            <EntityTypeMapping TypeName="QuanLyCuaHang3Model.OutputInfo">
+            <EntityTypeMapping TypeName="QuanLyCuaHangThoiTrangModel.OutputInfo">
               <MappingFragment StoreEntitySet="OutputInfo">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="IdOutput" ColumnName="IdOutput" />
@@ -710,7 +710,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Promotion">
-            <EntityTypeMapping TypeName="QuanLyCuaHang3Model.Promotion">
+            <EntityTypeMapping TypeName="QuanLyCuaHangThoiTrangModel.Promotion">
               <MappingFragment StoreEntitySet="Promotion">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
@@ -721,7 +721,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Suplier">
-            <EntityTypeMapping TypeName="QuanLyCuaHang3Model.Suplier">
+            <EntityTypeMapping TypeName="QuanLyCuaHangThoiTrangModel.Suplier">
               <MappingFragment StoreEntitySet="Suplier">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
@@ -734,7 +734,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Unit">
-            <EntityTypeMapping TypeName="QuanLyCuaHang3Model.Unit">
+            <EntityTypeMapping TypeName="QuanLyCuaHangThoiTrangModel.Unit">
               <MappingFragment StoreEntitySet="Unit">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
@@ -742,7 +742,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserRole">
-            <EntityTypeMapping TypeName="QuanLyCuaHang3Model.UserRole">
+            <EntityTypeMapping TypeName="QuanLyCuaHangThoiTrangModel.UserRole">
               <MappingFragment StoreEntitySet="UserRole">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
@@ -750,7 +750,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="QuanLyCuaHang3Model.Users">
+            <EntityTypeMapping TypeName="QuanLyCuaHangThoiTrangModel.Users">
               <MappingFragment StoreEntitySet="Users">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />

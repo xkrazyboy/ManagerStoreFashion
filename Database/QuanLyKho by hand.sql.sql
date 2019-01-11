@@ -1,7 +1,7 @@
-drop database QuanLyCuaHang2
+drop database QuanLyCuaHang8
 go
 
-use QuanLyCuaHang8
+use QuanLyCuaHang3
 go
 
 create table Unit
