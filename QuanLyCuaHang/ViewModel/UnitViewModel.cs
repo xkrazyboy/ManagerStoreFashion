@@ -27,11 +27,15 @@ namespace QuanLyCuaHang.ViewModel
             }
         }
 
+        private int _Id;
+        public int Id { get => _Id; set { _Id = value; OnPropertyChanged(); } }
+
         private string _DisplayName;
         public string DisplayName { get => _DisplayName; set { _DisplayName = value; OnPropertyChanged(); } }
 
         public ICommand AddCommand { get; set; }
         public ICommand EditCommand { get; set; }
+        public ICommand DeleteCommand { get; set; }
 
         public UnitViewModel()
         {
@@ -75,6 +79,25 @@ namespace QuanLyCuaHang.ViewModel
                 DataProvider.Ins.DB.SaveChanges();
 
                 SelectedItem.DisplayName = DisplayName;
+            });
+
+            DeleteCommand = new RelayCommand<object>((p) =>
+            {
+                if (SelectedItem == null)
+                    return false;
+
+                var displayList = DataProvider.Ins.DB.Unit.Where(x => x.Id == SelectedItem.Id);
+                if (displayList != null && displayList.Count() != 0)
+                    return true;
+                return false;
+
+            }, (p) =>
+            {
+                var unit = DataProvider.Ins.DB.Unit.Where(x => x.Id == SelectedItem.Id).SingleOrDefault();
+
+                DataProvider.Ins.DB.Unit.Remove(unit);
+                DataProvider.Ins.DB.SaveChanges();
+                List.Remove(unit);
             });
         }
     }

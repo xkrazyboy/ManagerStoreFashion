@@ -9,17 +9,18 @@
 
 namespace QuanLyCuaHang.Model
 {
+    using QuanLyCuaHang.ViewModel;
     using System;
     using System.Collections.Generic;
     
-    public partial class Input
+    public partial class Input : BaseViewModel
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Input()
         {
             this.InputInfo = new HashSet<InputInfo>();
         }
-    
+        
         public string Id { get; set; }
         public Nullable<System.DateTime> DateInput { get; set; }
     

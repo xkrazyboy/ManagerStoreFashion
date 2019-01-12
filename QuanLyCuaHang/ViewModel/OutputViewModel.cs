@@ -21,6 +21,9 @@ namespace QuanLyCuaHang.ViewModel
         private ObservableCollection<Model.Customer> _Customer;
         public ObservableCollection<Model.Customer> Customer { get => _Customer; set { _Customer = value; OnPropertyChanged(); } }
 
+        private ObservableCollection<Model.Object> _Object;
+        public ObservableCollection<Model.Object> Object { get => _Object; set { _Object = value; OnPropertyChanged(); } }
+
         private ObservableCollection<Model.Users> _Users;
         public ObservableCollection<Model.Users> Users { get => _Users; set { _Users = value; OnPropertyChanged(); } }      
 
@@ -41,7 +44,7 @@ namespace QuanLyCuaHang.ViewModel
                     //SelectedInputInfo = SelectedItem.InputInfo;
                     
                     Id = SelectedItem.Id;
-                    Status = SelectedItem.Status;
+                    //Status = SelectedItem.Status;
                     
                 }
             }
@@ -51,6 +54,13 @@ namespace QuanLyCuaHang.ViewModel
         public Model.OutputInfo SelectedOutputInfo { get => _SelectedOutputInfo; set {
                 _SelectedOutputInfo = value;
                 OnPropertyChanged();
+                if (SelectedOutputInfo != null)
+                {
+                    SelectedObject = SelectedOutputInfo.Object;                    
+                    Count = SelectedOutputInfo.Count;
+                    Status = SelectedOutputInfo.Status;
+                    //SelectedInputInfo = SelectedItem.InputInfo;
+                }
             }
         }
 
@@ -83,8 +93,9 @@ namespace QuanLyCuaHang.ViewModel
 
         private string _Status;
         public string Status { get => _Status; set { _Status = value; OnPropertyChanged(); } }
-
+        
         public ICommand SelectedItemListViewChangedCommand { get; set; }
+        public ICommand SelectedOutputInfoListViewChangedCommand { get; set; }
         public ICommand AddCommand { get; set; }
         public ICommand EditCommand { get; set; }
         public ICommand AddOuputInfoCommand { get; set; }
@@ -96,6 +107,7 @@ namespace QuanLyCuaHang.ViewModel
             ListOutputInfo = new ObservableCollection<OutputInfo>(DataProvider.Ins.DB.OutputInfo);
             Users = new ObservableCollection<Model.Users>(DataProvider.Ins.DB.Users);
             Customer = new ObservableCollection<Model.Customer>(DataProvider.Ins.DB.Customer);
+            Object = new ObservableCollection<Model.Object>(DataProvider.Ins.DB.Object);
 
             SelectedItemListViewChangedCommand = new RelayCommand<object>((p) => true, (p) =>
             {
@@ -107,9 +119,16 @@ namespace QuanLyCuaHang.ViewModel
                 }
             });
 
+            //SelectedOutputInfoListViewChangedCommand = new RelayCommand<object>((p) => true, (p) =>
+            //{
+            //    //SelectedObject = SelectedOutputInfo.Object;
+            //    Count = SelectedOutputInfo.Count;
+            //    Status = SelectedOutputInfo.Status;
+            //});
+
             AddCommand = new RelayCommand<object>((p) =>
             {
-                if (SelectedUsers == null || SelectedCustomer == null)
+                if (SelectedObject == null || Count == null)
                     return false;
                 return true;
 
@@ -134,12 +153,16 @@ namespace QuanLyCuaHang.ViewModel
             }, (p) =>
 
             {
-                var OutputInfo = new Model.OutputInfo() { IdObject = SelectedObject.Id, Count = Count, IdInputInfo = SelectedInputInfo.Id, Status = Status, Id = Guid.NewGuid().ToString() };
+                var OutputInfo = new Model.OutputInfo() {IdOutput = SelectedItem.Id, IdObject = SelectedObject.Id, IdInputInfo = SelectedInputInfo.Id, Count = Count, Status = Status, Id = Guid.NewGuid().ToString() };
                 
                 DataProvider.Ins.DB.OutputInfo.Add(OutputInfo);
                 DataProvider.Ins.DB.SaveChanges();
 
                 ListOutputInfo.Add(OutputInfo);
+
+                //SelectedObject = SelectedOutputInfo.Object;
+                //Count = SelectedOutputInfo.Count;
+                //Status = SelectedOutputInfo.Status;
             });
 
             EditCommand = new RelayCommand<Output>((p) =>

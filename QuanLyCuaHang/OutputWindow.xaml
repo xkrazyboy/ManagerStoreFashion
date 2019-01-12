@@ -140,12 +140,28 @@
             <materialDesign:Card Grid.Row="1" Margin="5">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="40"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
                         <RowDefinition Height="auto"></RowDefinition>
                     </Grid.RowDefinitions>
 
                     <Grid Grid.Row="0">
-                        <Label  Margin="5 5 15 5" Content="Danh sách chi tiết hóa đơn"></Label>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="400"></ColumnDefinition>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0">
+                            <!--<materialDesign:Card Margin="5" VerticalAlignment="Stretch" Grid.ColumnSpan="2">
+                            </materialDesign:Card>-->
+                            <Label  Margin="5 5 15 5" Content="Danh sách chi tiết hóa đơn"></Label>
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <WrapPanel>
+                                <ComboBox Margin="5 5 15 5" DisplayMemberPath="DisplayName" ItemsSource="{Binding Object}" SelectedItem="{Binding SelectedObject, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Tên sản phẩm" IsEditable="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}"></ComboBox>
+                                <TextBox Text="{Binding Count, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="5 5 15 5" materialDesign:HintAssist.Hint="Số lượng" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                                <TextBox Text="{Binding Status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="5 5 15 5" materialDesign:HintAssist.Hint="Trạng thái nhập" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                            </WrapPanel>
+                        </Grid>
+
                     </Grid>
 
                     <Grid Grid.Row="1">
@@ -182,7 +198,7 @@
                         <Grid Grid.Column="1">
                             <materialDesign:Card Grid.Row="4" Margin="5" VerticalAlignment="Stretch">
                                 <ScrollViewer VerticalScrollBarVisibility="Auto">
-                                    <ListView ItemsSource="{Binding ListOutputInfo}" SelectedItem="{Binding SelectedOutputInfo.Id, Mode=TwoWay}">
+                                    <ListView ItemsSource="{Binding ListOutputInfo}" SelectedItem="{Binding SelectedOutputInfo, Mode=TwoWay}">
                                         <ListView.View>
                                             <GridView>
                                                 <GridViewColumn Header="Tên sản phẩm" DisplayMemberBinding="{Binding Object.DisplayName}"></GridViewColumn>
@@ -192,12 +208,12 @@
                                                 <GridViewColumn Header="Ghi chú" DisplayMemberBinding="{Binding Status}"></GridViewColumn>
                                             </GridView>
                                         </ListView.View>
-                                        <!--<i:Interaction.Triggers>
+                                        <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="SelectionChanged">
-                                                <i:InvokeCommandAction Command="{Binding Chitiet_SelectedItemListViewChangedCommand}"
-                                                                       CommandParameter="{Binding ElementName=listChiTiet}"/>
+                                                <i:InvokeCommandAction Command="{Binding SelectedOutputInfoListViewChangedCommand}"
+                                                                       CommandParameter="{Binding ElementName= ListOutputInfo}"/>
                                             </i:EventTrigger>
-                                        </i:Interaction.Triggers>-->
+                                        </i:Interaction.Triggers>
                                     </ListView>
                                 </ScrollViewer>
                             </materialDesign:Card>
