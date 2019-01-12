@@ -5,37 +5,24 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace QuanLyCuaHang.ViewModel
 {
     class OutputViewModel : BaseViewModel
     {
-        private ObservableCollection<Model.Output> _List;
-        public ObservableCollection<Model.Output> List { get => _List; set { _List = value; OnPropertyChanged(); } }
+        private ObservableCollection<Model.Output> _ListOutput;
+        public ObservableCollection<Model.Output> ListOutput { get => _ListOutput; set { _ListOutput = value; OnPropertyChanged(); } }        
+
+        private ObservableCollection<Model.OutputInfo> _ListOutputInfo;
+        public ObservableCollection<Model.OutputInfo> ListOutputInfo { get => _ListOutputInfo; set { _ListOutputInfo = value; OnPropertyChanged(); } }
 
         private ObservableCollection<Model.Customer> _Customer;
-        public ObservableCollection<Model.Customer> Customer { get => _Customer; set { _Customer = value; OnPropertyChanged(); } }        
-
-        private ObservableCollection<Model.OutputInfo> _OutputInfo;
-        public ObservableCollection<Model.OutputInfo> OutputInfo { get => _OutputInfo; set { _OutputInfo = value; OnPropertyChanged(); } }
-
-        private ObservableCollection<Model.Object> _Object;
-        public ObservableCollection<Model.Object> Object { get => _Object; set { _Object = value; OnPropertyChanged(); } }
+        public ObservableCollection<Model.Customer> Customer { get => _Customer; set { _Customer = value; OnPropertyChanged(); } }
 
         private ObservableCollection<Model.Users> _Users;
-        public ObservableCollection<Model.Users> Users { get => _Users; set { _Users = value; OnPropertyChanged(); } }
-
-
-        //private ObservableCollection<Model.Input> _Input;
-        //public ObservableCollection<Model.Input> Input { get => _Input; set { _Input = value; OnPropertyChanged(); } }
-
-        //private ObservableCollection<Model.InputInfo> _InputInfo;
-        //public ObservableCollection<Model.InputInfo> InputInfo { get => _InputInfo; set { _InputInfo = value; OnPropertyChanged(); } }
-
-        //private ObservableCollection<Model.Output> _Output;
-        //public ObservableCollection<Model.Output> Output { get => _Output; set { _Output = value; OnPropertyChanged(); } }
-
+        public ObservableCollection<Model.Users> Users { get => _Users; set { _Users = value; OnPropertyChanged(); } }      
 
         private Model.Output _SelectedItem;
         public Model.Output SelectedItem
@@ -49,99 +36,132 @@ namespace QuanLyCuaHang.ViewModel
                 {
                     SelectedCustomer = SelectedItem.Customer;
                     DateOutput = SelectedItem.DateOutput;
+                    SelectedUsers = SelectedItem.Users;
+                    //Count = SelectedItem.Count;
+                    //SelectedInputInfo = SelectedItem.InputInfo;
+                    
+                    Id = SelectedItem.Id;
                     Status = SelectedItem.Status;
-                    //Total = SelectedItem.Total;
+                    
                 }
+            }
+        }
+
+        private Model.OutputInfo _SelectedOutputInfo;
+        public Model.OutputInfo SelectedOutputInfo { get => _SelectedOutputInfo; set {
+                _SelectedOutputInfo = value;
+                OnPropertyChanged();
             }
         }
 
         private Model.Object _SelectedObject;
         public Model.Object SelectedObject { get => _SelectedObject; set { _SelectedObject = value; OnPropertyChanged(); } }
 
-        //private Model.Output _SelectedOutput;
-        //public Model.Output SelectedOutput { get => _SelectedOutput; set { _SelectedOutput = value; OnPropertyChanged(); } }
-
-        //private Model.InputInfo _SelectedInputInfo;
-        //public Model.InputInfo SelectedInputInfo { get => _SelectedInputInfo; set { _SelectedInputInfo = value; OnPropertyChanged(); } }
+        private Model.InputInfo _SelectedInputInfo;
+        public Model.InputInfo SelectedInputInfo { get => _SelectedInputInfo; set { _SelectedInputInfo = value; OnPropertyChanged(); } }
 
         private Model.Customer _SelectedCustomer;
-        public Model.Customer SelectedCustomer {
-            get => _SelectedCustomer;
-            set
-            {
-                _SelectedCustomer = value;
-                OnPropertyChanged();
-                //if (_SelectedCustomer != null)
-                //{
-                //    SelectedCustomer = SelectedItem.Customer;
-                //}
-
-            }
-        }
-        
-        
-        private DateTime? _DateOutput;
-        public DateTime? DateOutput { get => _DateOutput; set { _DateOutput = value; OnPropertyChanged(); } }
+        public Model.Customer SelectedCustomer { get => _SelectedCustomer; set { _SelectedCustomer = value; OnPropertyChanged(); } }
 
         private Model.Users _SelectedUsers;
         public Model.Users SelectedUsers { get => _SelectedUsers; set { _SelectedUsers = value; OnPropertyChanged(); } }
 
-        private double? _Total;
-        public double? Total { get => _Total; set { _Total = value; OnPropertyChanged(); } }
+        private Model.Promotion _SelectedPromotion;
+        public Model.Promotion SelectedPromotion { get => _SelectedPromotion; set { _SelectedPromotion = value; OnPropertyChanged(); } }
+
+        private DateTime? _DateOutput;
+        public DateTime? DateOutput { get => _DateOutput; set { _DateOutput = value; OnPropertyChanged(); } }
+        
+        private string _Id;
+        public string Id { get => _Id; set { _Id = value; OnPropertyChanged(); } }
+
+        private int? _Count;
+        public int? Count { get => _Count; set { _Count = value; OnPropertyChanged(); } }
+
+        private double? _Sum;
+        public double? Sum { get => _Sum; set { _Sum = value; OnPropertyChanged(); } }
 
         private string _Status;
         public string Status { get => _Status; set { _Status = value; OnPropertyChanged(); } }
-        
+
+        public ICommand SelectedItemListViewChangedCommand { get; set; }
         public ICommand AddCommand { get; set; }
         public ICommand EditCommand { get; set; }
+        public ICommand AddOuputInfoCommand { get; set; }
+        public ICommand EditOuputInfoCommand { get; set; }
 
         public OutputViewModel()
         {
-            List = new ObservableCollection<Model.Output>(DataProvider.Ins.DB.Output);
-            Object = new ObservableCollection<Model.Object>(DataProvider.Ins.DB.Object);
-            Customer = new ObservableCollection<Model.Customer>(DataProvider.Ins.DB.Customer);
+            ListOutput = new ObservableCollection<Model.Output>(DataProvider.Ins.DB.Output);
+            ListOutputInfo = new ObservableCollection<OutputInfo>(DataProvider.Ins.DB.OutputInfo);
             Users = new ObservableCollection<Model.Users>(DataProvider.Ins.DB.Users);
+            Customer = new ObservableCollection<Model.Customer>(DataProvider.Ins.DB.Customer);
 
-            //AddCommand = new RelayCommand<object>((p) =>
-            //{
-            //    if (SelectedObject == null || SelectedOutput == null || SelectedInputInfo == null)
-            //        return false;
-            //    return true;
+            SelectedItemListViewChangedCommand = new RelayCommand<object>((p) => true, (p) =>
+            {
+                ListOutputInfo.Clear();
+                var collection = DataProvider.Ins.DB.OutputInfo.Where(x => x.IdOutput == SelectedItem.Id).ToList();
+                foreach (var item in collection)
+                {
+                    ListOutputInfo.Add(item);
+                }
+            });
 
-            //}, (p) =>
+            AddCommand = new RelayCommand<object>((p) =>
+            {
+                if (SelectedUsers == null || SelectedCustomer == null)
+                    return false;
+                return true;
 
-            //{
-            //    var NewOutput = new Model.Output() { Id = Guid.NewGuid().ToString(), DateOutput = SelectedOutput.DateOutput };
-            //    var OutputInfo = new Model.OutputInfo() { IdObject = SelectedObject.Id, IdOutput = NewOutput.Id, Count = Count, IdInputInfo = SelectedInputInfo.Id, Status = Status, Id = Guid.NewGuid().ToString() };
+            }, (p) =>
 
-            //    DataProvider.Ins.DB.Output.Add(NewOutput);
-            //    DataProvider.Ins.DB.OutputInfo.Add(OutputInfo);
-            //    DataProvider.Ins.DB.SaveChanges();
+            {
+                var Output = new Model.Output() { IdCustomer = SelectedCustomer.Id, IdUser = SelectedUsers.Id, IdPromotion = SelectedPromotion.Id, DateOutput = DateOutput, Status = Status, Id = Guid.NewGuid().ToString() };
+                
+                DataProvider.Ins.DB.Output.Add(Output);
+                DataProvider.Ins.DB.SaveChanges();
 
-            //    List.Add(OutputInfo);
-            //});
+                ListOutput.Add(Output);
+            });
 
-            //EditCommand = new RelayCommand<OutputInfo>((p) =>
-            //{
-            //    if (SelectedObject == null || SelectedOutput == null || SelectedInputInfo == null)
-            //        return false;
 
-            //    var displayList = DataProvider.Ins.DB.OutputInfo.Where(x => x.Id == SelectedItem.Id);
-            //    if (displayList != null && displayList.Count() != 0)
-            //        return true;
-            //    return false;
+            AddOuputInfoCommand = new RelayCommand<object>((p) =>
+            {
+                if (SelectedObject == null || SelectedInputInfo == null)
+                    return false;
+                return true;
 
-            //}, (p) =>
-            //{
-            //    var OutputInfo = DataProvider.Ins.DB.OutputInfo.Where(x => x.Id == SelectedItem.Id).SingleOrDefault();
-            //    OutputInfo.IdObject = SelectedObject.Id;
-            //    OutputInfo.IdOutput = SelectedOutput.Id;
-            //    //OutputInfo.Count = Count;
-            //    OutputInfo.IdInputInfo = SelectedInputInfo.Id;
-            //    //OutputInfo.IdCustomer = SelectedCustomer.Id;
-            //    OutputInfo.Status = Status;
-            //    DataProvider.Ins.DB.SaveChanges();
-            //});
+            }, (p) =>
+
+            {
+                var OutputInfo = new Model.OutputInfo() { IdObject = SelectedObject.Id, Count = Count, IdInputInfo = SelectedInputInfo.Id, Status = Status, Id = Guid.NewGuid().ToString() };
+                
+                DataProvider.Ins.DB.OutputInfo.Add(OutputInfo);
+                DataProvider.Ins.DB.SaveChanges();
+
+                ListOutputInfo.Add(OutputInfo);
+            });
+
+            EditCommand = new RelayCommand<Output>((p) =>
+            {
+                if (SelectedUsers == null || SelectedCustomer == null)
+                    return false;
+
+                var displayList = DataProvider.Ins.DB.Output.Where(x => x.Id == SelectedItem.Id);
+                if (displayList != null && displayList.Count() != 0)
+                    return true;
+                return false;
+
+            }, (p) =>
+            {
+                var Output = DataProvider.Ins.DB.Output.Where(x => x.Id == SelectedItem.Id).SingleOrDefault();
+                Output.IdCustomer = SelectedCustomer.Id;
+                Output.IdUser = SelectedUsers.Id;
+                //Output.IdPromotion = SelectedPromotion.Id;
+                DateOutput = DateOutput;
+                Status = Status;
+                DataProvider.Ins.DB.SaveChanges();
+            });
         }
     }
 }

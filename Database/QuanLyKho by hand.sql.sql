@@ -1,8 +1,11 @@
-drop database QuanLyCuaHang8
+create database QuanLyCuaHangThoiTrang
 go
 
-use QuanLyCuaHang3
+use QuanLyCuaHangThoiTrang
 go
+
+--ALTER TABLE OutputInfo
+-- ADD SumPrice float default 0;
 
 create table Unit
 (
@@ -179,6 +182,7 @@ create table OutputInfo
 	IdInputInfo nvarchar(128) not null,
 	Count int,
 	Status nvarchar(max),
+	SumPrice float default 0,
 
 	foreign key (IdOutput) references Output(Id),
 	foreign key (IdObject) references Object(Id),
@@ -186,11 +190,11 @@ create table OutputInfo
 )
 go
 
-insert into OutputInfo(Id, IdOutput, IdInputInfo, IdObject, Count, Status) values(N'1', '1', '1', '1', 5, N'firstOuputInfo')
+insert into OutputInfo(Id, IdOutput, IdInputInfo, IdObject, Count, Status, SumPrice) values(N'1', '1', '1', '1', 5, N'firstOuputInfo', 2000)
 go
-insert into OutputInfo(Id, IdOutput, IdInputInfo, IdObject, Count, Status) values(N'2', '1', '2', '2', 5, N'firstOuputInfo')
+insert into OutputInfo(Id, IdOutput, IdInputInfo, IdObject, Count, Status, SumPrice) values(N'2', '1', '2', '2', 5, N'firstOuputInfo', 3000)
 go
-insert into OutputInfo(Id, IdOutput, IdInputInfo, IdObject, Count, Status) values(N'3', '1', '1', '2', 5, N'firstOuputInfo')
+insert into OutputInfo(Id, IdOutput, IdInputInfo, IdObject, Count, Status, SumPrice) values(N'3', '1', '1', '2', 5, N'firstOuputInfo', 4000)
 go
-insert into OutputInfo(Id, IdOutput, IdInputInfo, IdObject, Count, Status) values(N'4', '2', '2', '2', 5, N'twoOuputInfo')
+insert into OutputInfo(Id, IdOutput, IdInputInfo, IdObject, Count, Status, SumPrice) values(N'4', '2', '2', '2', 5, N'twoOuputInfo', 5000)
 go

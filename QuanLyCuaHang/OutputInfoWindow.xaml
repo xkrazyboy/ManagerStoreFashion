@@ -59,7 +59,7 @@
 
             <materialDesign:Card Grid.Row="2" Margin="5" VerticalAlignment="Stretch">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <ListView ItemsSource="{Binding List}" SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}">
+                    <ListView ItemsSource="{Binding ListOutputInfo}" SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Sản phẩm" DisplayMemberBinding="{Binding Object.DisplayName}"></GridViewColumn>

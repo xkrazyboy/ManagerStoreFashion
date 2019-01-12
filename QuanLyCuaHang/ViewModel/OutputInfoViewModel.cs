@@ -11,8 +11,8 @@ namespace QuanLyCuaHang.ViewModel
 {
     class OutputInfoViewModel : BaseViewModel
     {
-        private ObservableCollection<Model.OutputInfo> _List;
-        public ObservableCollection<Model.OutputInfo> List { get => _List; set { _List = value; OnPropertyChanged(); } }
+        private ObservableCollection<Model.OutputInfo> _ListOutputInfo;
+        public ObservableCollection<Model.OutputInfo> ListOutputInfo { get => _ListOutputInfo; set { _ListOutputInfo = value; OnPropertyChanged(); } }
 
         private ObservableCollection<Model.Object> _Object;
         public ObservableCollection<Model.Object> Object { get => _Object; set { _Object = value; OnPropertyChanged(); } }
@@ -72,7 +72,7 @@ namespace QuanLyCuaHang.ViewModel
 
         public OutputInfoViewModel()
         {
-            List = new ObservableCollection<Model.OutputInfo>(DataProvider.Ins.DB.OutputInfo);
+            ListOutputInfo = new ObservableCollection<Model.OutputInfo>(DataProvider.Ins.DB.OutputInfo);
             Object = new ObservableCollection<Model.Object>(DataProvider.Ins.DB.Object);
             Output = new ObservableCollection<Model.Output>(DataProvider.Ins.DB.Output);
             InputInfo = new ObservableCollection<Model.InputInfo>(DataProvider.Ins.DB.InputInfo);
@@ -94,7 +94,7 @@ namespace QuanLyCuaHang.ViewModel
                 DataProvider.Ins.DB.OutputInfo.Add(OutputInfo);
                 DataProvider.Ins.DB.SaveChanges();
 
-                List.Add(OutputInfo);
+                ListOutputInfo.Add(OutputInfo);
             });
 
             EditCommand = new RelayCommand<OutputInfo>((p) =>

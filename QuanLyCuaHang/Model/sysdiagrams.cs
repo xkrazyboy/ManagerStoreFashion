@@ -12,18 +12,12 @@ namespace QuanLyCuaHang.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class OutputInfo
+    public partial class sysdiagrams
     {
-        public string Id { get; set; }
-        public string IdOutput { get; set; }
-        public string IdObject { get; set; }
-        public string IdInputInfo { get; set; }
-        public Nullable<int> Count { get; set; }
-        public string Status { get; set; }
-        public Nullable<double> SumPrice { get; set; }
-    
-        public virtual InputInfo InputInfo { get; set; }
-        public virtual Object Object { get; set; }
-        public virtual Output Output { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }
