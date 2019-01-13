@@ -425,8 +425,8 @@
                                             </TextBlock>
                                             <Grid Grid.Row="3">
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="2*"></ColumnDefinition>
-                                                    <ColumnDefinition Width="13*"></ColumnDefinition>
+                                                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                                                    <ColumnDefinition></ColumnDefinition>
                                                 </Grid.ColumnDefinitions>
                                                 <TextBlock
                                                 Grid.Column="0"
@@ -506,7 +506,7 @@
                                         <GridViewColumn Header="Tiền bán" DisplayMemberBinding="{Binding MoneyOutput, Mode=TwoWay}"></GridViewColumn>
                                         <GridViewColumn Header="Lượng tồn" DisplayMemberBinding="{Binding CountInventory, Mode=TwoWay}"></GridViewColumn>
                                         <GridViewColumn Header="Tiền tồn" DisplayMemberBinding="{Binding MoneyInventory, Mode=TwoWay}"></GridViewColumn>
-                                        <GridViewColumn Header="Tiền lời" DisplayMemberBinding="{Binding MoneyIncome, Mode=TwoWay}"></GridViewColumn>
+                                        <GridViewColumn Header="Tiền lãi" DisplayMemberBinding="{Binding MoneyIncome, Mode=TwoWay}"></GridViewColumn>
                                     </GridView>
                                 </ListView.View>
                             </ListView>
