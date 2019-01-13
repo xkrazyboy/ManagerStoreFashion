@@ -175,7 +175,6 @@
                                 <RowDefinition Height="auto"></RowDefinition>
                             </Grid.RowDefinitions>
                             <materialDesign:Card Margin="5" VerticalAlignment="Stretch" Grid.Row="0">
-                                <ScrollViewer VerticalScrollBarVisibility="Auto">
                                     <ListView ItemsSource="{Binding ListOutput}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
                                         <ListView.View>
                                             <GridView>
@@ -191,8 +190,7 @@
                                     CommandParameter="{Binding ElementName=ListOutput}"/>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
-                                    </ListView>
-                                </ScrollViewer>
+                                    </ListView>                                
                             </materialDesign:Card>
                             <Grid Grid.Row="1">
                                 <WrapPanel>
@@ -208,8 +206,7 @@
                                 <RowDefinition Height="auto"></RowDefinition>
                             </Grid.RowDefinitions>
                             <materialDesign:Card Grid.Row="0" Margin="5" VerticalAlignment="Stretch">
-                                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                                    <ListView ItemsSource="{Binding ListOutputInfo}" SelectedItem="{Binding SelectedOutputInfo, Mode=TwoWay}">
+                                   <ListView ItemsSource="{Binding ListOutputInfo}" SelectedItem="{Binding SelectedOutputInfo, Mode=TwoWay}">
                                         <ListView.View>
                                             <GridView>
                                                 <GridViewColumn Header="Tên sản phẩm" DisplayMemberBinding="{Binding Object.DisplayName}"></GridViewColumn>
@@ -226,7 +223,6 @@
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                     </ListView>
-                                </ScrollViewer>
                             </materialDesign:Card>
                             <Grid Grid.Row="1">
                                 <WrapPanel>

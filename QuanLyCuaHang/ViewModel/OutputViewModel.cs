@@ -104,7 +104,8 @@ namespace QuanLyCuaHang.ViewModel
         public ICommand SelectedOutputInfoListViewChangedCommand { get; set; }
         public ICommand AddCommand { get; set; }
         public ICommand EditCommand { get; set; }
-        public ICommand AddOuputInfoCommand { get; set; }
+        public ICommand DeleteCommand { get; set; }
+        public ICommand AddOuputInfoCommand { get; set; }        
         public ICommand EditOuputInfoCommand { get; set; }
         public ICommand DeleteOuputInfoCommand { get; set; }
 
@@ -120,10 +121,13 @@ namespace QuanLyCuaHang.ViewModel
             SelectedItemListViewChangedCommand = new RelayCommand<object>((p) => true, (p) =>
             {
                 ListOutputInfo.Clear();
-                var collection = DataProvider.Ins.DB.OutputInfo.Where(x => x.IdOutput == SelectedItem.Id).ToList();
-                foreach (var item in collection)
+                if (SelectedItem != null)
                 {
-                    ListOutputInfo.Add(item);
+                    var collection = DataProvider.Ins.DB.OutputInfo.Where(x => x.IdOutput == SelectedItem.Id).ToList();
+                    foreach (var item in collection)
+                    {
+                        ListOutputInfo.Add(item);
+                    }
                 }
             });
 
@@ -136,7 +140,7 @@ namespace QuanLyCuaHang.ViewModel
 
             AddCommand = new RelayCommand<object>((p) =>
             {
-                if (SelectedUsers == null)
+                if (SelectedUsers == null || SelectedItem == null)
                     return false;
                 return true;
 
@@ -159,7 +163,7 @@ namespace QuanLyCuaHang.ViewModel
 
             EditCommand = new RelayCommand<Output>((p) =>
             {
-                if (SelectedUsers == null || SelectedCustomer == null)
+                if (SelectedUsers == null || SelectedCustomer == null || SelectedItem == null)
                     return false;
 
                 var displayList = DataProvider.Ins.DB.Output.Where(x => x.Id == SelectedItem.Id);
@@ -176,6 +180,38 @@ namespace QuanLyCuaHang.ViewModel
                 DateOutput = DateOutput;
                 Status = Status;
                 DataProvider.Ins.DB.SaveChanges();
+
+                ICollectionView view = CollectionViewSource.GetDefaultView(ListOutput);
+                view.Refresh();
+            });
+
+            DeleteCommand = new RelayCommand<Output>((p) =>
+            {
+                if (SelectedUsers == null || SelectedCustomer == null || SelectedItem == null)
+                    return false;
+
+                var displayList = DataProvider.Ins.DB.Output.Where(x => x.Id == SelectedItem.Id);
+                if (displayList != null && displayList.Count() != 0)
+                    return true;
+                return false;
+
+            }, (p) =>
+            {
+                var Output = DataProvider.Ins.DB.Output.Where(x => x.Id == SelectedItem.Id).SingleOrDefault();
+                var collection = DataProvider.Ins.DB.OutputInfo.Where(x => x.IdOutput == SelectedItem.Id).ToList();
+
+                foreach (var item in collection)
+                {
+                    DataProvider.Ins.DB.OutputInfo.Remove(item);
+
+                }
+                ListOutputInfo.Clear();
+
+                DataProvider.Ins.DB.Output.Remove(Output);
+                ListOutput.Remove(Output);
+                DataProvider.Ins.DB.SaveChanges();
+                ICollectionView view = CollectionViewSource.GetDefaultView(ListOutputInfo);
+                view.Refresh();
             });
 
             AddOuputInfoCommand = new RelayCommand<object>((p) =>
@@ -266,20 +302,14 @@ namespace QuanLyCuaHang.ViewModel
 
             }, (p) =>
             {
-                var OutputInfo = DataProvider.Ins.DB.OutputInfo.Where(x => x.Id == SelectedOutputInfo.Id).SingleOrDefault();
-
-
-                var InputInfo = DataProvider.Ins.DB.InputInfo.Where(x => x.Id == SelectedObject.Id).SingleOrDefault();
-
+                var OutputInfo = DataProvider.Ins.DB.OutputInfo.Where(x => x.Id == SelectedOutputInfo.Id).SingleOrDefault();               
                 
-                OutputInfo.IdObject = SelectedObject.Id;
-
                 ListOutputInfo.Remove(OutputInfo);
                 DataProvider.Ins.DB.SaveChanges();
+
                 ICollectionView view = CollectionViewSource.GetDefaultView(ListOutputInfo);
                 view.Refresh();
-
-
+                
             });
 
         }
