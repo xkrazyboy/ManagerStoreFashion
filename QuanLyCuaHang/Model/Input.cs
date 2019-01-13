@@ -9,11 +9,10 @@
 
 namespace QuanLyCuaHang.Model
 {
-    using QuanLyCuaHang.ViewModel;
     using System;
     using System.Collections.Generic;
     
-    public partial class Input:BaseViewModel
+    public partial class Input
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Input()
@@ -22,11 +21,8 @@ namespace QuanLyCuaHang.Model
         }
     
         public string Id { get; set; }
-     
-
-        private Nullable<System.DateTime> _DateInput;
-        public Nullable<System.DateTime> DateInput { get => _DateInput; set { _DateInput = value; OnPropertyChanged(); } }
-
+        public Nullable<System.DateTime> DateInput { get; set; }
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InputInfo> InputInfo { get; set; }
     }

@@ -70,14 +70,26 @@ namespace QuanLyCuaHang.ViewModel
             }
         }
 
+        private Model.Customer _SelectedCustomer;
+        public Model.Customer SelectedCustomer
+        {
+            get => _SelectedCustomer;
+            set {
+                _SelectedCustomer = value;
+                OnPropertyChanged();
+                //if (SelectedCustomer != null)
+                //{
+                //    SelectedCustomer = SelectedItem.Customer;
+                //}
+            }
+        }
+
+
         private Model.Object _SelectedObject;
         public Model.Object SelectedObject { get => _SelectedObject; set { _SelectedObject = value; OnPropertyChanged(); } }
 
         private Model.InputInfo _SelectedInputInfo;
         public Model.InputInfo SelectedInputInfo { get => _SelectedInputInfo; set { _SelectedInputInfo = value; OnPropertyChanged(); } }
-
-        private Model.Customer _SelectedCustomer;
-        public Model.Customer SelectedCustomer { get => _SelectedCustomer; set { _SelectedCustomer = value; OnPropertyChanged(); } }
 
         private Model.Users _SelectedUsers;
         public Model.Users SelectedUsers { get => _SelectedUsers; set { _SelectedUsers = value; OnPropertyChanged(); } }
@@ -150,7 +162,7 @@ namespace QuanLyCuaHang.ViewModel
                 var Customer = DataProvider.Ins.DB.Customer.Where(x => x.Id == SelectedItem.IdCustomer).SingleOrDefault();
                 if (Customer == null)
                 {
-                    Customer = new Model.Customer() { DisplayName = SelectedCustomer.DisplayName, Address = SelectedCustomer.Address, Phone = SelectedCustomer.Phone };
+                    Customer = new Model.Customer() {Id = SelectedItem.IdCustomer, DisplayName = SelectedCustomer.DisplayName, Address = SelectedCustomer.Address, Phone = SelectedCustomer.Phone };
                 }
                 //, IdPromotion = SelectedPromotion.Id, Status = Status
                 var Output = new Model.Output() { IdCustomer = Customer.Id, IdUser = SelectedUsers.Id, DateOutput = DateOutput, Id = Guid.NewGuid().ToString() };
