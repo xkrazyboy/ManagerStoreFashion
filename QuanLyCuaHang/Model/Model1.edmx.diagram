@@ -4,17 +4,17 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="7a88ed46a1c7474399e9ab5c0543e10f" Name="Diagram1">
+      <Diagram DiagramId="7a88ed46a1c7474399e9ab5c0543e10f" Name="Diagram1" ZoomLevel="82">
         <EntityTypeShape EntityType="QuanLyCuaHangThoiTrangModel.Customer" Width="1.5" PointX="2.5" PointY="4.5" />
-        <EntityTypeShape EntityType="QuanLyCuaHangThoiTrangModel.Input" Width="1.5" PointX="3" PointY="12.25" />
-        <EntityTypeShape EntityType="QuanLyCuaHangThoiTrangModel.InputInfo" Width="1.5" PointX="5.25" PointY="14.375" />
-        <EntityTypeShape EntityType="QuanLyCuaHangThoiTrangModel.Object" Width="1.5" PointX="3" PointY="15.625" />
+        <EntityTypeShape EntityType="QuanLyCuaHangThoiTrangModel.Input" Width="1.5" PointX="12" PointY="0.875" />
+        <EntityTypeShape EntityType="QuanLyCuaHangThoiTrangModel.InputInfo" Width="1.5" PointX="14.25" PointY="3" />
+        <EntityTypeShape EntityType="QuanLyCuaHangThoiTrangModel.Object" Width="1.5" PointX="12" PointY="4.25" />
         <EntityTypeShape EntityType="QuanLyCuaHangThoiTrangModel.Output" Width="1.5" PointX="5.25" PointY="1" />
         <EntityTypeShape EntityType="QuanLyCuaHangThoiTrangModel.OutputInfo" Width="1.5" PointX="7.5" PointY="1.125" />
         <EntityTypeShape EntityType="QuanLyCuaHangThoiTrangModel.Promotion" Width="1.5" PointX="3" PointY="9.125" />
-        <EntityTypeShape EntityType="QuanLyCuaHangThoiTrangModel.Suplier" Width="1.5" PointX="0.75" PointY="14.625" />
+        <EntityTypeShape EntityType="QuanLyCuaHangThoiTrangModel.Suplier" Width="1.5" PointX="9.75" PointY="3.25" />
         <EntityTypeShape EntityType="QuanLyCuaHangThoiTrangModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="5.75" />
-        <EntityTypeShape EntityType="QuanLyCuaHangThoiTrangModel.Unit" Width="1.5" PointX="0.75" PointY="17.875" />
+        <EntityTypeShape EntityType="QuanLyCuaHangThoiTrangModel.Unit" Width="1.5" PointX="9.75" PointY="6.5" />
         <EntityTypeShape EntityType="QuanLyCuaHangThoiTrangModel.UserRole" Width="1.5" PointX="0.75" PointY="1.75" />
         <EntityTypeShape EntityType="QuanLyCuaHangThoiTrangModel.Users" Width="1.5" PointX="3" PointY="1.375" />
         <AssociationConnector Association="QuanLyCuaHangThoiTrangModel.FK__Output__IdCustom__5165187F" />

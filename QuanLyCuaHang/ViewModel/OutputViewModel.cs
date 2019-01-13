@@ -15,11 +15,21 @@ namespace QuanLyCuaHang.ViewModel
 {
     class OutputViewModel : BaseViewModel
     {
+
+        private ObservableCollection<Inventory> _InventoryList;
+        public ObservableCollection<Inventory> InventoryList { get => _InventoryList; set { _InventoryList = value; OnPropertyChanged(); } }
+
+        private ThongKe _ThongKe;
+        public ThongKe ThongKe { get => _ThongKe; set { _ThongKe = value; OnPropertyChanged(); } }
+
         private ObservableCollection<Model.Output> _ListOutput;
         public ObservableCollection<Model.Output> ListOutput { get => _ListOutput; set { _ListOutput = value; OnPropertyChanged(); } }
 
         private ObservableCollection<Model.OutputInfo> _ListOutputInfo;
         public ObservableCollection<Model.OutputInfo> ListOutputInfo { get => _ListOutputInfo; set { _ListOutputInfo = value; OnPropertyChanged(); } }
+
+        private ObservableCollection<Model.InputInfo> _ListInputInfo;
+        public ObservableCollection<Model.InputInfo> ListInputInfo { get => _ListInputInfo; set { _ListInputInfo = value; OnPropertyChanged(); } }
 
         private ObservableCollection<Model.Customer> _Customer;
         public ObservableCollection<Model.Customer> Customer { get => _Customer; set { _Customer = value; OnPropertyChanged(); } }
@@ -63,10 +73,10 @@ namespace QuanLyCuaHang.ViewModel
                 if (SelectedOutputInfo != null)
                 {
                     SelectedObject = SelectedOutputInfo.Object;
-                    Count = SelectedOutputInfo.Count;
+                    Count = SelectedOutputInfo.Count;                    
                     Status = SelectedOutputInfo.Status;
-                    SelectedCustomer = SelectedItem.Customer;
-                    //SelectedInputInfo = SelectedItem.InputInfo;
+                    if (SelectedItem != null)
+                        SelectedCustomer = SelectedItem.Customer;
 
                 }
             }
@@ -90,7 +100,7 @@ namespace QuanLyCuaHang.ViewModel
         private Model.Object _SelectedObject;
         public Model.Object SelectedObject { get => _SelectedObject; set { _SelectedObject = value; OnPropertyChanged(); } }
 
-       
+        #region List
 
         private Model.InputInfo _SelectedInputInfo;
         public Model.InputInfo SelectedInputInfo { get => _SelectedInputInfo; set { _SelectedInputInfo = value; OnPropertyChanged(); } }
@@ -124,21 +134,24 @@ namespace QuanLyCuaHang.ViewModel
         public ICommand AddOuputInfoCommand { get; set; }        
         public ICommand EditOuputInfoCommand { get; set; }
         public ICommand DeleteOuputInfoCommand { get; set; }
+        #endregion
 
         public OutputViewModel()
         {
             ListOutput = new ObservableCollection<Model.Output>(DataProvider.Ins.DB.Output);
             ListOutputInfo = new ObservableCollection<OutputInfo>(DataProvider.Ins.DB.OutputInfo);
+            ListInputInfo = new ObservableCollection<InputInfo>(DataProvider.Ins.DB.InputInfo);
             Users = new ObservableCollection<Model.Users>(DataProvider.Ins.DB.Users);
             Customer = new ObservableCollection<Model.Customer>(DataProvider.Ins.DB.Customer);
             Object = new ObservableCollection<Model.Object>(DataProvider.Ins.DB.Object);
 
-
+            LoadTotalPrice();
 
             // Nhấn vào danh sách hóa đơn => chi tiết hóa đơn thay đổi theo
             SelectedItemListViewChangedCommand = new RelayCommand<object>((p) => true, (p) =>
             {
                 ListOutputInfo.Clear();
+
                 if (SelectedItem != null)
                 {
                     var collection = DataProvider.Ins.DB.OutputInfo.Where(x => x.IdOutput == SelectedItem.Id).ToList();
@@ -147,6 +160,31 @@ namespace QuanLyCuaHang.ViewModel
                         ListOutputInfo.Add(item);
                     }
                 }
+
+                //var Output = DataProvider.Ins.DB.Output.Where(x => x.Id == SelectedItem.Id).SingleOrDefault();         
+
+                //if (SelectedItem != null)
+                //{
+                //    // Tính giá tiền nhập tương ứng với danh sách từng sản phẩm
+                //    var collection = DataProvider.Ins.DB.OutputInfo.Where(x => x.IdOutput == SelectedItem.Id).ToList();
+                //    foreach (var item in collection)
+                //    {
+
+                //        var InputInfo = DataProvider.Ins.DB.InputInfo.Where(x => x.IdInput == item.Id).SingleOrDefault();
+                //        if (InputInfo != null)
+                //        {
+                //            Output.Total += item.Count * InputInfo.OutputPrice;
+                //        }
+                //        ListOutputInfo.Add(item);
+                //        DataProvider.Ins.DB.SaveChanges();
+                //    }
+                //}
+                
+                ////DataProvider.Ins.DB.Output.Add(ListOutputInfo);
+                //DataProvider.Ins.DB.SaveChanges();
+
+                //ICollectionView view = CollectionViewSource.GetDefaultView(ListOutput);
+                //view.Refresh();
             });
 
             //SelectedOutputInfoListViewChangedCommand = new RelayCommand<object>((p) => true, (p) =>
@@ -156,6 +194,7 @@ namespace QuanLyCuaHang.ViewModel
             //    Status = SelectedOutputInfo.Status;
             //});
 
+            #region OutputCommand
             AddCommand = new RelayCommand<object>((p) =>
             {
                 if (SelectedUsers == null)
@@ -249,6 +288,8 @@ namespace QuanLyCuaHang.ViewModel
                 Status = Status;
                 DataProvider.Ins.DB.SaveChanges();
 
+                LoadTotalPrice();
+
                 ICollectionView view = CollectionViewSource.GetDefaultView(ListOutput);
                 view.Refresh();
             });
@@ -278,10 +319,13 @@ namespace QuanLyCuaHang.ViewModel
                 DataProvider.Ins.DB.Output.Remove(Output);
                 ListOutput.Remove(Output);
                 DataProvider.Ins.DB.SaveChanges();
+
                 ICollectionView view = CollectionViewSource.GetDefaultView(ListOutputInfo);
                 view.Refresh();
             });
+            #endregion
 
+            #region OutputInfoCommand
             AddOuputInfoCommand = new RelayCommand<object>((p) =>
             {
                 if (SelectedObject == null || Count == null)
@@ -292,6 +336,7 @@ namespace QuanLyCuaHang.ViewModel
 
             {
                 var InputInfo = DataProvider.Ins.DB.InputInfo.Where(x => x.Id == SelectedObject.Id).SingleOrDefault();
+                var Output = DataProvider.Ins.DB.Output.Where(x => x.Id == SelectedItem.Id).SingleOrDefault();
                 if (InputInfo == null)
                 {
                     MessageBox.Show("Hàng trong kho đã hết");
@@ -311,11 +356,16 @@ namespace QuanLyCuaHang.ViewModel
                         Id = Guid.NewGuid().ToString()
                     };
 
+                    Output.Total += Count * InputInfo.OutputPrice;
                     DataProvider.Ins.DB.OutputInfo.Add(OutputInfo);
                     DataProvider.Ins.DB.SaveChanges();
 
+                    ICollectionView view = CollectionViewSource.GetDefaultView(ListOutput);
+                    view.Refresh();
+
                     ListOutputInfo.Add(OutputInfo);
                 }
+
             });
 
             EditOuputInfoCommand = new RelayCommand<Output>((p) =>
@@ -349,6 +399,8 @@ namespace QuanLyCuaHang.ViewModel
                     OutputInfo.Status = Status;
                     OutputInfo.SumPrice = Count * InputInfo.OutputPrice;
                     //Output.IdPromotion = SelectedPromotion.Id;
+
+                    LoadTotalPrice();
                     DataProvider.Ins.DB.SaveChanges();
 
                     ICollectionView view = CollectionViewSource.GetDefaultView(ListOutputInfo);
@@ -373,13 +425,43 @@ namespace QuanLyCuaHang.ViewModel
                 var OutputInfo = DataProvider.Ins.DB.OutputInfo.Where(x => x.Id == SelectedOutputInfo.Id).SingleOrDefault();               
                 
                 ListOutputInfo.Remove(OutputInfo);
+
+                LoadTotalPrice();
                 DataProvider.Ins.DB.SaveChanges();
 
                 ICollectionView view = CollectionViewSource.GetDefaultView(ListOutputInfo);
                 view.Refresh();
                 
             });
-
+            #endregion
         }
+
+        // Hàm tính tổng hóa đơn
+        void LoadTotalPrice()
+        {
+            var outputList = DataProvider.Ins.DB.Output;
+
+            int i = 1;
+
+            foreach (var item in outputList)
+            {
+                var outputInfoList = DataProvider.Ins.DB.OutputInfo.Where(p => p.IdOutput == item.Id);
+                double tongtien = 0;
+
+                if (outputInfoList != null && outputInfoList.Count() > 0)
+                {
+                    tongtien = (double)outputInfoList.Sum(p => p.SumPrice);
+                }
+                item.Total = tongtien;
+                
+                i++;
+            }
+
+            DataProvider.Ins.DB.SaveChanges();
+
+            //ICollectionView view = CollectionViewSource.GetDefaultView(outputList);
+            //view.Refresh();
+        }
+
     }
 }

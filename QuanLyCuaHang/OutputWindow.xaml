@@ -191,7 +191,7 @@
                                                 <GridViewColumn Header="Mã HĐ" DisplayMemberBinding="{Binding Id}"></GridViewColumn>
                                                 <GridViewColumn Header="Khách hàng" DisplayMemberBinding="{Binding Customer.DisplayName}"></GridViewColumn>
                                                 <GridViewColumn Header="Ngày lập" DisplayMemberBinding="{Binding DateOutput, StringFormat='dd/MM/yyyy'}"></GridViewColumn>
-                                                <GridViewColumn Header="Ghi chú" DisplayMemberBinding="{Binding Status}"></GridViewColumn>
+                                                <GridViewColumn Header="Tổng tiền" DisplayMemberBinding="{Binding Total}"></GridViewColumn>
                                             </GridView>
                                         </ListView.View>
                                         <i:Interaction.Triggers>
@@ -221,8 +221,8 @@
                                             <GridView>
                                                 <GridViewColumn Header="Tên sản phẩm" DisplayMemberBinding="{Binding Object.DisplayName}"></GridViewColumn>
                                                 <GridViewColumn Header="Số lượng" DisplayMemberBinding="{Binding Count}"></GridViewColumn>
-                                                <GridViewColumn Header="Giá" DisplayMemberBinding="{Binding InputInfo.InputPrice}"></GridViewColumn>
-                                                <GridViewColumn Header="Tổng" DisplayMemberBinding="{Binding SumPrice}"></GridViewColumn>
+                                                <GridViewColumn Header="Giá nhập" DisplayMemberBinding="{Binding InputInfo.InputPrice}"></GridViewColumn>
+                                                <GridViewColumn Header="Thành tiền" DisplayMemberBinding="{Binding SumPrice}"></GridViewColumn>
                                                 <GridViewColumn Header="Ghi chú" DisplayMemberBinding="{Binding Status}"></GridViewColumn>
                                             </GridView>
                                         </ListView.View>
