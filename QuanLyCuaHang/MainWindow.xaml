@@ -20,7 +20,7 @@
             WindowStartupLocation="CenterScreen"
             DataContext="{StaticResource MainVM}"
             Name="mainWindow"
-            Title="Phần mềm quản lý cửa hàng" Height="600" Width="650">
+            Title="Phần mềm quản lý cửa hàng" Height="650" Width="1010">
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
@@ -202,24 +202,30 @@
                                 </Grid.ColumnDefinitions>
 
                                 <Grid Grid.Column="0">
-                                    <DatePicker Width="100" VerticalAlignment="Center" HorizontalAlignment="Left" materialDesign:HintAssist.Hint="Ngày bắt đầu" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+                                    <DatePicker Width="100" Margin="25 5 0 0" SelectedDate="{Binding DateBegin}" VerticalAlignment="Center" HorizontalAlignment="Left" materialDesign:HintAssist.Hint="Ngày bắt đầu" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
                                 </Grid>
                                 <Grid Grid.Column="1">
-                                    <DatePicker Width="100" VerticalAlignment="Center" HorizontalAlignment="Left" materialDesign:HintAssist.Hint="Ngày kết thúc" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+                                    <DatePicker Width="100" Margin="25 5 0 0" SelectedDate="{Binding DateEnd}" VerticalAlignment="Center" HorizontalAlignment="Left" materialDesign:HintAssist.Hint="Ngày kết thúc" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
                                 </Grid>
                                 <Grid Grid.Column="2">
                                     <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" 
-                                            Width="100"
+                                            Width="100" Margin="25 5 0 0"
                                             Content="LỌC" 
-                                            ToolTip="Resource name: MaterialDesignRaisedLightDarkButton" Margin="5">
+                                            Command="{Binding Inventory}" 
+                                            ToolTip="Resource name: MaterialDesignRaisedLightDarkButton">
                                     </Button>
                                 </Grid>
                             </Grid>
                             <Grid Grid.Row="1">
-                                <Separator Margin="10"></Separator>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="50*"/>
+                                    <ColumnDefinition Width="571*"/>
+                                </Grid.ColumnDefinitions>
+                                <Separator Margin="10" Grid.ColumnSpan="2"></Separator>
                             </Grid>
                             <Grid Grid.Row="2">
                                 <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"></ColumnDefinition>
                                     <ColumnDefinition Width="auto"></ColumnDefinition>
                                     <ColumnDefinition Width="auto"></ColumnDefinition>
                                     <ColumnDefinition Width="auto"></ColumnDefinition>
@@ -229,9 +235,10 @@
                                     <materialDesign:Card Background="#03a9f4" Margin="5"
                                                          Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
                                                          Padding="0"
-                                                         Width="200">
+                                                         Width="235">
                                         <Grid>
                                             <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
                                                 <RowDefinition Height="Auto" />
                                                 <RowDefinition Height="Auto" />
                                                 <RowDefinition Height="Auto" />
@@ -246,9 +253,31 @@
                                                 Margin="16 0 16 8"
                                                 VerticalAlignment="Center"
                                                 HorizontalAlignment="Left"
-                                                Text="1231313"
+                                                Text="{Binding ThongKe.LuongNhap}"
                                                 Style="{StaticResource MaterialDesignTitleTextBlock}">
                                             </TextBlock>
+                                            <Grid Grid.Row="3">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                                                    <ColumnDefinition></ColumnDefinition>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock
+                                                Grid.Column="0"
+                                                Margin="16 0 16 8"
+                                                VerticalAlignment="Center"
+                                                HorizontalAlignment="Left"
+                                                Text="{Binding ThongKe.GiaNhap}"
+                                                Style="{StaticResource MaterialDesignTitleTextBlock}">
+                                                </TextBlock>
+                                                <TextBlock
+                                                Grid.Column="1"
+                                                Margin="16 0 16 8"
+                                                VerticalAlignment="Center"
+                                                HorizontalAlignment="Left"
+                                                Text="VNĐ"
+                                                Style="{StaticResource MaterialDesignTitleTextBlock}">
+                                                </TextBlock>
+                                            </Grid>
                                             <materialDesign:PopupBox HorizontalAlignment="Right" Padding="2 0 2 0" Margin="15">
                                                 <StackPanel>
                                                     <!--đưa gì vào đi-->
@@ -262,9 +291,10 @@
                                     <materialDesign:Card Background="#03a9f4" Margin="5"
                                                          Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
                                                          Padding="0"
-                                                         Width="200">
+                                                         Width="235">
                                         <Grid>
                                             <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
                                                 <RowDefinition Height="Auto" />
                                                 <RowDefinition Height="Auto" />
                                                 <RowDefinition Height="Auto" />
@@ -279,9 +309,31 @@
                                                 Margin="16 0 16 8"
                                                 VerticalAlignment="Center"
                                                 HorizontalAlignment="Left"
-                                                Text="1231313"
+                                                Text="{Binding ThongKe.LuongXuat}"
                                                 Style="{StaticResource MaterialDesignTitleTextBlock}">
                                             </TextBlock>
+                                            <Grid Grid.Row="3">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                                                    <ColumnDefinition></ColumnDefinition>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock
+                                                Grid.Column="0"
+                                                Margin="16 0 16 8"
+                                                VerticalAlignment="Center"
+                                                HorizontalAlignment="Left"
+                                                Text="{Binding ThongKe.GiaXuat}"
+                                                Style="{StaticResource MaterialDesignTitleTextBlock}">
+                                                </TextBlock>
+                                                <TextBlock
+                                                Grid.Column="1"
+                                                Margin="16 0 16 8"
+                                                VerticalAlignment="Center"
+                                                HorizontalAlignment="Left"
+                                                Text="VNĐ"
+                                                Style="{StaticResource MaterialDesignTitleTextBlock}">
+                                                </TextBlock>
+                                            </Grid>
                                             <materialDesign:PopupBox HorizontalAlignment="Right" Padding="2 0 2 0" Margin="15">
                                                 <StackPanel>
                                                     <!--đưa gì vào đi-->
@@ -295,9 +347,10 @@
                                     <materialDesign:Card Background="#03a9f4" Margin="5"
                                                          Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
                                                          Padding="0"
-                                                         Width="200">
+                                                         Width="235">
                                         <Grid>
                                             <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
                                                 <RowDefinition Height="Auto" />
                                                 <RowDefinition Height="Auto" />
                                                 <RowDefinition Height="Auto" />
@@ -312,9 +365,31 @@
                                                 Margin="16 0 16 8"
                                                 VerticalAlignment="Center"
                                                 HorizontalAlignment="Left"
-                                                Text="1231313"
+                                                Text="{Binding ThongKe.LuongTon}"
                                                 Style="{StaticResource MaterialDesignTitleTextBlock}">
                                             </TextBlock>
+                                            <Grid Grid.Row="3">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                                                    <ColumnDefinition></ColumnDefinition>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock
+                                                Grid.Column="0"
+                                                Margin="16 0 16 8"
+                                                VerticalAlignment="Center"
+                                                HorizontalAlignment="Left"
+                                                Text="{Binding ThongKe.GiaTon}"
+                                                Style="{StaticResource MaterialDesignTitleTextBlock}">
+                                                </TextBlock>
+                                                <TextBlock
+                                                Grid.Column="1"
+                                                Margin="16 0 16 8"
+                                                VerticalAlignment="Center"
+                                                HorizontalAlignment="Left"
+                                                Text="VNĐ"
+                                                Style="{StaticResource MaterialDesignTitleTextBlock}">
+                                                </TextBlock>
+                                            </Grid>
                                             <materialDesign:PopupBox HorizontalAlignment="Right" Padding="2 0 2 0" Margin="15">
                                                 <StackPanel>
                                                     <!--đưa gì vào đi-->
@@ -323,6 +398,62 @@
                                         </Grid>
                                     </materialDesign:Card>
                                 </Grid>
+                                <Grid Grid.Column="3">
+                                    <materialDesign:Card Background="#03a9f4" Margin="5"
+                                                         Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                                                         Padding="0"
+                                                         Width="235">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+                                            <TextBlock Grid.Row="0" Margin="16 16 16 4"
+                                                       Text="Tiền lãi"
+                                                       Style="{StaticResource MaterialDesignHeadlineTextBlock}">
+                                            </TextBlock>
+                                            <Separator Grid.Row="1" Style="{StaticResource MaterialDesignLightSeparator}" />
+                                            <TextBlock
+                                                Grid.Row="2"
+                                                Margin="16 0 16 8"
+                                                VerticalAlignment="Center"
+                                                HorizontalAlignment="Left"
+                                                Text=""
+                                                Style="{StaticResource MaterialDesignTitleTextBlock}">
+                                            </TextBlock>
+                                            <Grid Grid.Row="3">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                                                    <ColumnDefinition Width="13*"></ColumnDefinition>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock
+                                                Grid.Column="0"
+                                                Margin="16 0 16 8"
+                                                VerticalAlignment="Center"
+                                                HorizontalAlignment="Left"
+                                                Text="{Binding ThongKe.GiaLai}"
+                                                Style="{StaticResource MaterialDesignTitleTextBlock}">
+                                                </TextBlock>
+                                                <TextBlock
+                                                Grid.Column="1"
+                                                Margin="16 0 16 8"
+                                                VerticalAlignment="Center"
+                                                HorizontalAlignment="Left"
+                                                Text="VNĐ"
+                                                Style="{StaticResource MaterialDesignTitleTextBlock}">
+                                                </TextBlock>
+                                            </Grid>
+                                            <materialDesign:PopupBox HorizontalAlignment="Right" Padding="2 0 2 0" Margin="15">
+                                                <StackPanel>
+                                                    <!--đưa gì vào đi-->
+                                                </StackPanel>
+                                            </materialDesign:PopupBox>
+                                        </Grid>
+                                    </materialDesign:Card>
+                                </Grid>
+
 
                             </Grid>
 
@@ -346,17 +477,17 @@
                             </Grid.ColumnDefinitions>
                             <!--SelectedDate="{Binding DateBeginInventory}"-->
                             <Grid Grid.Column="0">
-                                <DatePicker Width="100" VerticalAlignment="Center" HorizontalAlignment="Left" materialDesign:HintAssist.Hint="Ngày bắt đầu" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+                                <DatePicker Width="100" Margin="25 5 0 0" SelectedDate="{Binding DateBeginInventory}" VerticalAlignment="Center" HorizontalAlignment="Left" materialDesign:HintAssist.Hint="Ngày bắt đầu" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
                             </Grid>
                             <Grid Grid.Column="1">
-                                <DatePicker Width="100" VerticalAlignment="Center" HorizontalAlignment="Left" materialDesign:HintAssist.Hint="Ngày kết thúc" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+                                <DatePicker Width="100" Margin="25 5 0 0" SelectedDate="{Binding DateEndInventory}" VerticalAlignment="Center" HorizontalAlignment="Left" materialDesign:HintAssist.Hint="Ngày kết thúc" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
                             </Grid>
                             <Grid Grid.Column="2">
                                 <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" 
-                                        Width="100"
+                                        Width="100" Margin="25 5 0 0"
                                         Content="LỌC"
                                         Command="{Binding InventoryCommand}" 
-                                        ToolTip="Resource name: MaterialDesignRaisedLightDarkButton" Margin="5">
+                                        ToolTip="Resource name: MaterialDesignRaisedLightDarkButton" >
                                 </Button>
                             </Grid>
                         </Grid>
@@ -369,7 +500,13 @@
                                     <GridView>
                                         <GridViewColumn Header="STT" DisplayMemberBinding="{Binding STT}"></GridViewColumn>
                                         <GridViewColumn Header="Tên sản phẩm" DisplayMemberBinding="{Binding Object.DisplayName}"></GridViewColumn>
-                                        <GridViewColumn Header="Số lượng tồn" DisplayMemberBinding="{Binding Count, Mode=TwoWay}"></GridViewColumn>
+                                        <GridViewColumn Header="Lượng nhập" DisplayMemberBinding="{Binding CountInput, Mode=TwoWay}"></GridViewColumn>
+                                        <GridViewColumn Header="Tiền nhập" DisplayMemberBinding="{Binding MoneyInput, Mode=TwoWay}"></GridViewColumn>
+                                        <GridViewColumn Header="Lượng đã bán" DisplayMemberBinding="{Binding CountOutput, Mode=TwoWay}"></GridViewColumn>
+                                        <GridViewColumn Header="Tiền bán" DisplayMemberBinding="{Binding MoneyOutput, Mode=TwoWay}"></GridViewColumn>
+                                        <GridViewColumn Header="Lượng tồn" DisplayMemberBinding="{Binding CountInventory, Mode=TwoWay}"></GridViewColumn>
+                                        <GridViewColumn Header="Tiền tồn" DisplayMemberBinding="{Binding MoneyInventory, Mode=TwoWay}"></GridViewColumn>
+                                        <GridViewColumn Header="Tiền lời" DisplayMemberBinding="{Binding MoneyIncome, Mode=TwoWay}"></GridViewColumn>
                                     </GridView>
                                 </ListView.View>
                             </ListView>

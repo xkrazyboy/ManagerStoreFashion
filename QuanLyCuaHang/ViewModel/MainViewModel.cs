@@ -15,6 +15,21 @@ namespace QuanLyCuaHang.ViewModel
         private ObservableCollection<Inventory> _InventoryList;
         public ObservableCollection<Inventory> InventoryList { get => _InventoryList; set { _InventoryList = value; OnPropertyChanged(); } }
 
+        private ThongKe _ThongKe;
+        public ThongKe ThongKe { get => _ThongKe; set { _ThongKe = value; OnPropertyChanged(); } }
+
+        private DateTime? _DateBeginInventory;
+        public DateTime? DateBeginInventory { get => _DateBeginInventory; set { _DateBeginInventory = value; OnPropertyChanged(); } }
+
+        private DateTime? _DateEndInventory;
+        public DateTime? DateEndInventory { get => _DateEndInventory; set { _DateEndInventory = value; OnPropertyChanged(); } }
+        
+        private DateTime? _DateBegin;
+        public DateTime? DateBegin { get => _DateBegin; set { _DateBegin = value; OnPropertyChanged(); } }
+
+        private DateTime? _DateEnd;
+        public DateTime? DateEnd { get => _DateEnd; set { _DateEnd = value; OnPropertyChanged(); } }
+
         public bool Isloaded = false;
         public ICommand LoadedWindowCommand { get; set; }
         public ICommand UnitCommand { get; set; }
@@ -25,9 +40,8 @@ namespace QuanLyCuaHang.ViewModel
         public ICommand InputInfoCommand { get; set; }
         public ICommand OutputInfoCommand { get; set; }        
         public ICommand OutputCommand { get; set; }
+        public ICommand Inventory { get; set; }
         public ICommand InventoryCommand { get; set; }
-        public object DateBeginInventory { get; }
-        public object DateEndInventory { get; }
 
         public MainViewModel()
         {
@@ -65,18 +79,19 @@ namespace QuanLyCuaHang.ViewModel
             OutputInfoCommand = new RelayCommand<object>((p) => { return true; }, (p) => { OutputInfoWindow wd = new OutputInfoWindow(); wd.ShowDialog(); });
             OutputCommand = new RelayCommand<object>((p) => { return true; }, (p) => { OutputWindow wd = new OutputWindow(); wd.ShowDialog(); });
 
-            //InventoryCommand = new RelayCommand<object>((p) =>
-            //{
-            //    if (DateBeginInventory == null || DateEndInventory == null)
-            //        return false;
-            //    return true;
-                
-            //}, (p) =>
+            InventoryCommand = new RelayCommand<object>((x) =>
+            {
+                if (DateBeginInventory == null || DateEndInventory == null)
+                    return false;
+                return true;
 
-            //{
-            //    InventoryList.Clear();
-            //    LoadInventoryData();
-            //});
+            }, (x) =>
+
+            {
+                InventoryList.Clear();
+                LoadInventoryData();
+                
+            });
 
             //MessageBox.Show(DataProvider.Ins.DB.Users.First().DisplayName);
         }
@@ -84,8 +99,15 @@ namespace QuanLyCuaHang.ViewModel
         void LoadInventoryData()
         {
             InventoryList = new ObservableCollection<Inventory>();
-
+            ThongKe = new ThongKe();
             var objectList = DataProvider.Ins.DB.Object;
+
+            int luongNhap = 0;
+            int luongXuat = 0;
+            double tongTienNhap = 0;
+            double tongTienXuat = 0;
+            double tongTienTon = 0;
+            double tongTienLai = 0;
 
             int i = 1;
             foreach (var item in objectList)
@@ -95,20 +117,37 @@ namespace QuanLyCuaHang.ViewModel
 
                 int sumInput = 0;
                 int sumOutput = 0;
+                double tienNhap = 0;
+                double tienXuat = 0;
 
                 if (inputList != null && inputList.Count() > 0)
                 {
                     sumInput = (int)inputList.Sum(p => p.Count);
+                    tienNhap = (double)inputList.Sum(p => p.InputPrice);
+                    tienXuat = (double)inputList.Sum(p => p.OutputPrice);
+                    luongNhap += sumInput;
                 }
 
                 if (outputList != null && outputList.Count() > 0)
                 {
                     sumOutput = (int)outputList.Sum(p => p.Count);
+                    luongXuat += sumOutput;
                 }
+
+                tongTienTon += (sumInput - sumOutput) * tienNhap;
+                tongTienLai += sumOutput * (tienXuat - tienNhap);
+                tongTienNhap += sumInput * tienNhap;
+                tongTienXuat += sumOutput * tienXuat;
 
                 Inventory inventory = new Inventory();
                 inventory.STT = i;
-                inventory.Count = sumInput - sumOutput;
+                inventory.CountInput = sumInput;
+                inventory.CountOutput = sumOutput;
+                inventory.CountInventory = sumInput - sumOutput;
+                inventory.MoneyInput = sumInput * tienNhap;
+                inventory.MoneyOutput = sumOutput * tienXuat;
+                inventory.MoneyInventory = (sumInput - sumOutput)*tienNhap;
+                inventory.MoneyIncome = sumOutput * (tienXuat - tienNhap);
                 inventory.Object = item;
 
                 InventoryList.Add(inventory);
@@ -116,6 +155,13 @@ namespace QuanLyCuaHang.ViewModel
                 i++;
             }
 
+            ThongKe.LuongNhap = luongNhap;
+            ThongKe.LuongXuat = luongXuat;
+            ThongKe.GiaNhap = tongTienNhap;
+            ThongKe.GiaXuat = tongTienXuat;
+            ThongKe.LuongTon = luongNhap - luongXuat;
+            ThongKe.GiaTon = tongTienTon;
+            ThongKe.GiaLai = tongTienLai;
         }
     }
 }

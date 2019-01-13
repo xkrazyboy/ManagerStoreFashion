@@ -170,6 +170,7 @@
     <Compile Include="ViewModel\OutputInfoViewModel.cs" />
     <Compile Include="ViewModel\OutputViewModel.cs" />
     <Compile Include="ViewModel\SuplierViewModel.cs" />
+    <Compile Include="ViewModel\ThongKe.cs" />
     <Compile Include="ViewModel\UnitViewModel.cs" />
     <Page Include="CustomerWindow.xaml">
       <SubType>Designer</SubType>
