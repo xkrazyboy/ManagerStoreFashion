@@ -220,6 +220,7 @@ namespace QuanLyCuaHang.ViewModel
             }, (p) =>
             {
                 var OutputInfo = DataProvider.Ins.DB.OutputInfo.Where(x => x.Id == SelectedItem.Id).SingleOrDefault();
+
                 var InputInfo = DataProvider.Ins.DB.InputInfo.Where(x => x.Id == OutputInfo.IdInputInfo).SingleOrDefault();
                 if (InputInfo == null)
                 {

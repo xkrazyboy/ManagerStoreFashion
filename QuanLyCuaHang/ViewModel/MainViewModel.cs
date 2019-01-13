@@ -23,7 +23,7 @@ namespace QuanLyCuaHang.ViewModel
 
         private DateTime? _DateEndInventory;
         public DateTime? DateEndInventory { get => _DateEndInventory; set { _DateEndInventory = value; OnPropertyChanged(); } }
-        
+
         private DateTime? _DateBegin;
         public DateTime? DateBegin { get => _DateBegin; set { _DateBegin = value; OnPropertyChanged(); } }
 
@@ -38,7 +38,7 @@ namespace QuanLyCuaHang.ViewModel
         public ICommand ObjectCommand { get; set; }
         public ICommand UserCommand { get; set; }
         public ICommand InputInfoCommand { get; set; }
-        public ICommand OutputInfoCommand { get; set; }        
+        public ICommand OutputInfoCommand { get; set; }
         public ICommand OutputCommand { get; set; }
         public ICommand Inventory { get; set; }
         public ICommand InventoryCommand { get; set; }
@@ -90,7 +90,7 @@ namespace QuanLyCuaHang.ViewModel
             {
                 InventoryList.Clear();
                 LoadInventoryData();
-                
+
             });
 
             //MessageBox.Show(DataProvider.Ins.DB.Users.First().DisplayName);
@@ -146,7 +146,7 @@ namespace QuanLyCuaHang.ViewModel
                 inventory.CountInventory = sumInput - sumOutput;
                 inventory.MoneyInput = sumInput * tienNhap;
                 inventory.MoneyOutput = sumOutput * tienXuat;
-                inventory.MoneyInventory = (sumInput - sumOutput)*tienNhap;
+                inventory.MoneyInventory = (sumInput - sumOutput) * tienNhap;
                 inventory.MoneyIncome = sumOutput * (tienXuat - tienNhap);
                 inventory.Object = item;
 
