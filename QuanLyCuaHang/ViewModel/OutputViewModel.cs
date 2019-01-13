@@ -2,11 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace QuanLyCuaHang.ViewModel
@@ -14,7 +16,7 @@ namespace QuanLyCuaHang.ViewModel
     class OutputViewModel : BaseViewModel
     {
         private ObservableCollection<Model.Output> _ListOutput;
-        public ObservableCollection<Model.Output> ListOutput { get => _ListOutput; set { _ListOutput = value; OnPropertyChanged(); } }        
+        public ObservableCollection<Model.Output> ListOutput { get => _ListOutput; set { _ListOutput = value; OnPropertyChanged(); } }
 
         private ObservableCollection<Model.OutputInfo> _ListOutputInfo;
         public ObservableCollection<Model.OutputInfo> ListOutputInfo { get => _ListOutputInfo; set { _ListOutputInfo = value; OnPropertyChanged(); } }
@@ -26,7 +28,7 @@ namespace QuanLyCuaHang.ViewModel
         public ObservableCollection<Model.Object> Object { get => _Object; set { _Object = value; OnPropertyChanged(); } }
 
         private ObservableCollection<Model.Users> _Users;
-        public ObservableCollection<Model.Users> Users { get => _Users; set { _Users = value; OnPropertyChanged(); } }      
+        public ObservableCollection<Model.Users> Users { get => _Users; set { _Users = value; OnPropertyChanged(); } }
 
         private Model.Output _SelectedItem;
         public Model.Output SelectedItem
@@ -43,21 +45,24 @@ namespace QuanLyCuaHang.ViewModel
                     SelectedUsers = SelectedItem.Users;
                     //Count = SelectedItem.Count;
                     //SelectedInputInfo = SelectedItem.InputInfo;
-                    
+
                     Id = SelectedItem.Id;
                     //Status = SelectedItem.Status;
-                    
+
                 }
             }
         }
 
         private Model.OutputInfo _SelectedOutputInfo;
-        public Model.OutputInfo SelectedOutputInfo { get => _SelectedOutputInfo; set {
+        public Model.OutputInfo SelectedOutputInfo
+        {
+            get => _SelectedOutputInfo; set
+            {
                 _SelectedOutputInfo = value;
                 OnPropertyChanged();
                 if (SelectedOutputInfo != null)
                 {
-                    SelectedObject = SelectedOutputInfo.Object;                    
+                    SelectedObject = SelectedOutputInfo.Object;
                     Count = SelectedOutputInfo.Count;
                     Status = SelectedOutputInfo.Status;
                     //SelectedInputInfo = SelectedItem.InputInfo;
@@ -82,7 +87,7 @@ namespace QuanLyCuaHang.ViewModel
 
         private DateTime? _DateOutput;
         public DateTime? DateOutput { get => _DateOutput; set { _DateOutput = value; OnPropertyChanged(); } }
-        
+
         private string _Id;
         public string Id { get => _Id; set { _Id = value; OnPropertyChanged(); } }
 
@@ -94,13 +99,14 @@ namespace QuanLyCuaHang.ViewModel
 
         private string _Status;
         public string Status { get => _Status; set { _Status = value; OnPropertyChanged(); } }
-        
+
         public ICommand SelectedItemListViewChangedCommand { get; set; }
         public ICommand SelectedOutputInfoListViewChangedCommand { get; set; }
         public ICommand AddCommand { get; set; }
         public ICommand EditCommand { get; set; }
         public ICommand AddOuputInfoCommand { get; set; }
         public ICommand EditOuputInfoCommand { get; set; }
+        public ICommand DeleteOuputInfoCommand { get; set; }
 
         public OutputViewModel()
         {
@@ -110,6 +116,7 @@ namespace QuanLyCuaHang.ViewModel
             Customer = new ObservableCollection<Model.Customer>(DataProvider.Ins.DB.Customer);
             Object = new ObservableCollection<Model.Object>(DataProvider.Ins.DB.Object);
 
+            // Nhấn vào danh sách hóa đơn => chi tiết hóa đơn thay đổi theo
             SelectedItemListViewChangedCommand = new RelayCommand<object>((p) => true, (p) =>
             {
                 ListOutputInfo.Clear();
@@ -129,7 +136,7 @@ namespace QuanLyCuaHang.ViewModel
 
             AddCommand = new RelayCommand<object>((p) =>
             {
-                if ( SelectedUsers == null)
+                if (SelectedUsers == null)
                     return false;
                 return true;
 
@@ -143,7 +150,7 @@ namespace QuanLyCuaHang.ViewModel
                 }
                 //, IdPromotion = SelectedPromotion.Id, Status = Status
                 var Output = new Model.Output() { IdCustomer = Customer.Id, IdUser = SelectedUsers.Id, DateOutput = DateOutput, Id = Guid.NewGuid().ToString() };
-                
+
                 DataProvider.Ins.DB.Output.Add(Output);
                 DataProvider.Ins.DB.SaveChanges();
 
@@ -172,9 +179,9 @@ namespace QuanLyCuaHang.ViewModel
             });
 
             AddOuputInfoCommand = new RelayCommand<object>((p) =>
-            {                
+            {
                 if (SelectedObject == null || Count == null)
-                    return false;                
+                    return false;
                 return true;
 
             }, (p) =>
@@ -209,7 +216,7 @@ namespace QuanLyCuaHang.ViewModel
 
             EditOuputInfoCommand = new RelayCommand<Output>((p) =>
             {
-                if (SelectedObject == null || SelectedCustomer == null)
+                if (SelectedObject == null || SelectedCustomer == null || SelectedOutputInfo == null)
                     return false;
 
                 var displayList = DataProvider.Ins.DB.Output.Where(x => x.Id == SelectedItem.Id);
@@ -219,9 +226,13 @@ namespace QuanLyCuaHang.ViewModel
 
             }, (p) =>
             {
-                var OutputInfo = DataProvider.Ins.DB.OutputInfo.Where(x => x.Id == SelectedItem.Id).SingleOrDefault();
+                var OutputInfo = DataProvider.Ins.DB.OutputInfo.Where(x => x.Id == SelectedOutputInfo.Id).SingleOrDefault();
 
-                var InputInfo = DataProvider.Ins.DB.InputInfo.Where(x => x.Id == OutputInfo.IdInputInfo).SingleOrDefault();
+                //MessageBox.Show(OutputInfo.Id);
+                //var Output = DataProvider.Ins.DB.Output.Where(x => x.Id == OutputInfo.IdOutput).SingleOrDefault();
+
+
+                var InputInfo = DataProvider.Ins.DB.InputInfo.Where(x => x.Id == SelectedObject.Id).SingleOrDefault();
                 if (InputInfo == null)
                 {
                     MessageBox.Show("Hàng trong kho đã hết");
@@ -235,8 +246,40 @@ namespace QuanLyCuaHang.ViewModel
                     OutputInfo.SumPrice = Count * InputInfo.OutputPrice;
                     //Output.IdPromotion = SelectedPromotion.Id;
                     DataProvider.Ins.DB.SaveChanges();
+
+                    ICollectionView view = CollectionViewSource.GetDefaultView(ListOutputInfo);
+                    view.Refresh();
                 }
+
+            });
+
+
+            DeleteOuputInfoCommand = new RelayCommand<Output>((p) =>
+            {
+                if (SelectedObject == null || SelectedCustomer == null || SelectedOutputInfo == null)
+                    return false;
+
+                var displayList = DataProvider.Ins.DB.Output.Where(x => x.Id == SelectedItem.Id);
+                if (displayList != null && displayList.Count() != 0)
+                    return true;
+                return false;
+
+            }, (p) =>
+            {
+                var OutputInfo = DataProvider.Ins.DB.OutputInfo.Where(x => x.Id == SelectedOutputInfo.Id).SingleOrDefault();
+
+
+                var InputInfo = DataProvider.Ins.DB.InputInfo.Where(x => x.Id == SelectedObject.Id).SingleOrDefault();
+
                 
+                OutputInfo.IdObject = SelectedObject.Id;
+
+                ListOutputInfo.Remove(OutputInfo);
+                DataProvider.Ins.DB.SaveChanges();
+                ICollectionView view = CollectionViewSource.GetDefaultView(ListOutputInfo);
+                view.Refresh();
+
+
             });
 
         }

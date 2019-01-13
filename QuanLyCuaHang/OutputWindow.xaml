@@ -125,7 +125,7 @@
                                     <ComboBox Margin="0,-8,0,23" DisplayMemberPath="DisplayName" ItemsSource="{Binding Users}" SelectedItem="{Binding SelectedUsers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Tên nhân viên" IsEditable="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}"></ComboBox>
                                 </Grid>
                                 <Grid Grid.Row="1">
-                                    <DatePicker VerticalAlignment="Bottom" SelectedDate="{Binding DateOutput}" Width="100" Margin="0,-9,20,23" materialDesign:HintAssist.Hint="Ngày lập" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+                                    <DatePicker VerticalAlignment="Bottom" SelectedDate="{Binding SelectedItem.DateOutput}" Width="100" Margin="0,-9,20,23" materialDesign:HintAssist.Hint="Ngày lập" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
                                 </Grid>
                                 <Grid Grid.Row="2">
                                     <TextBox Margin="0,-10,20,20" Text="{Binding Id, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Mã hóa đơn" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
