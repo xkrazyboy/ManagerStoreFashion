@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QuanLyCuaHang.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,11 +7,16 @@ using System.Threading.Tasks;
 
 namespace QuanLyCuaHang.Model
 {
-    public class Inventory
+    public class Inventory : BaseViewModel
     {
-        public Object Object { get; set; }
-        public int STT { get; set; }
+        private Object _Object;
+        public Object Object { get => _Object; set { _Object = value; OnPropertyChanged(); } }
 
-        public int Count { get; set; }
+        private int _STT;
+        public int STT { get => _STT; set { _STT = value; OnPropertyChanged(); } }
+
+        private int _Count;
+        public int Count { get => _Count; set { _Count = value; OnPropertyChanged(); } }
+        
     }
 }

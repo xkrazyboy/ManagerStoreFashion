@@ -23,8 +23,12 @@ namespace QuanLyCuaHang.ViewModel
         public ICommand ObjectCommand { get; set; }
         public ICommand UserCommand { get; set; }
         public ICommand InputInfoCommand { get; set; }
-        public ICommand OutputInfoCommand { get; set; }
+        public ICommand OutputInfoCommand { get; set; }        
         public ICommand OutputCommand { get; set; }
+        public ICommand InventoryCommand { get; set; }
+        public object DateBeginInventory { get; }
+        public object DateEndInventory { get; }
+
         public MainViewModel()
         {
             LoadedWindowCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
@@ -60,6 +64,19 @@ namespace QuanLyCuaHang.ViewModel
             InputInfoCommand = new RelayCommand<object>((p) => { return true; }, (p) => { InputInfoWindow wd = new InputInfoWindow(); wd.ShowDialog(); });
             OutputInfoCommand = new RelayCommand<object>((p) => { return true; }, (p) => { OutputInfoWindow wd = new OutputInfoWindow(); wd.ShowDialog(); });
             OutputCommand = new RelayCommand<object>((p) => { return true; }, (p) => { OutputWindow wd = new OutputWindow(); wd.ShowDialog(); });
+
+            //InventoryCommand = new RelayCommand<object>((p) =>
+            //{
+            //    if (DateBeginInventory == null || DateEndInventory == null)
+            //        return false;
+            //    return true;
+                
+            //}, (p) =>
+
+            //{
+            //    InventoryList.Clear();
+            //    LoadInventoryData();
+            //});
 
             //MessageBox.Show(DataProvider.Ins.DB.Users.First().DisplayName);
         }

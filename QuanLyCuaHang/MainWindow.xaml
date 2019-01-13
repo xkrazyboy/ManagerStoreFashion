@@ -344,7 +344,7 @@
                                 <ColumnDefinition Width="auto"></ColumnDefinition>
                                 <ColumnDefinition Width="auto"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-
+                            <!--SelectedDate="{Binding DateBeginInventory}"-->
                             <Grid Grid.Column="0">
                                 <DatePicker Width="100" VerticalAlignment="Center" HorizontalAlignment="Left" materialDesign:HintAssist.Hint="Ngày bắt đầu" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
                             </Grid>
@@ -355,6 +355,7 @@
                                 <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" 
                                         Width="100"
                                         Content="LỌC"
+                                        Command="{Binding InventoryCommand}" 
                                         ToolTip="Resource name: MaterialDesignRaisedLightDarkButton" Margin="5">
                                 </Button>
                             </Grid>
@@ -368,7 +369,7 @@
                                     <GridView>
                                         <GridViewColumn Header="STT" DisplayMemberBinding="{Binding STT}"></GridViewColumn>
                                         <GridViewColumn Header="Tên sản phẩm" DisplayMemberBinding="{Binding Object.DisplayName}"></GridViewColumn>
-                                        <GridViewColumn Header="Số lượng tồn" DisplayMemberBinding="{Binding Count}"></GridViewColumn>
+                                        <GridViewColumn Header="Số lượng tồn" DisplayMemberBinding="{Binding Count, Mode=TwoWay}"></GridViewColumn>
                                     </GridView>
                                 </ListView.View>
                             </ListView>

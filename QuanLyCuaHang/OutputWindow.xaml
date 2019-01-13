@@ -20,7 +20,7 @@
             WindowStartupLocation="CenterScreen"
             x:Name="window"
             DataContext="{StaticResource OutputVM}"
-        Title="Quản lý hóa đơn" Height="auto" Width="1000">
+        Title="Quản lý hóa đơn" Height="540" Width="1200">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
@@ -52,7 +52,7 @@
 
                     <Grid Grid.Row="1">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="500"></ColumnDefinition>
+                            <ColumnDefinition Width="600"></ColumnDefinition>
                             <ColumnDefinition Width="auto"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0">
@@ -146,7 +146,7 @@
 
                     <Grid Grid.Row="0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="400"></ColumnDefinition>
+                            <ColumnDefinition Width="590"></ColumnDefinition>
                             <ColumnDefinition Width="auto"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0">
@@ -156,9 +156,9 @@
                         </Grid>
                         <Grid Grid.Column="1">
                             <WrapPanel>
-                                <ComboBox Margin="5 5 15 5" DisplayMemberPath="DisplayName" ItemsSource="{Binding Object}" SelectedItem="{Binding SelectedObject, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Tên sản phẩm" IsEditable="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}"></ComboBox>
+                                <ComboBox Margin="20 5 15 5" DisplayMemberPath="DisplayName" ItemsSource="{Binding Object}" SelectedItem="{Binding SelectedObject, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Tên sản phẩm" IsEditable="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}"></ComboBox>
                                 <TextBox Text="{Binding Count, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="5 5 15 5" materialDesign:HintAssist.Hint="Số lượng" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                                <TextBox Text="{Binding Status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="5 5 15 5" materialDesign:HintAssist.Hint="Trạng thái nhập" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                                <TextBox Text="{Binding Status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="5 5 15 5" materialDesign:HintAssist.Hint="Ghi chú" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                             </WrapPanel>
                         </Grid>
 
@@ -166,15 +166,15 @@
 
                     <Grid Grid.Row="1">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="400"></ColumnDefinition>
-                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                            <ColumnDefinition Width="590"></ColumnDefinition>
+                            <ColumnDefinition Width="595"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="349*"/>
-                                <ColumnDefinition Width="52*"/>
-                            </Grid.ColumnDefinitions>
-                            <materialDesign:Card Margin="5" VerticalAlignment="Stretch" Grid.ColumnSpan="2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="200"></RowDefinition>
+                                <RowDefinition Height="auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <materialDesign:Card Margin="5" VerticalAlignment="Stretch" Grid.Row="0">
                                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                                     <ListView ItemsSource="{Binding ListOutput}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
                                         <ListView.View>
@@ -194,9 +194,20 @@
                                     </ListView>
                                 </ScrollViewer>
                             </materialDesign:Card>
+                            <Grid Grid.Row="1">
+                                <WrapPanel>
+                                    <Button Command="{Binding AddCommand}" Content="Thêm hóa đơn" Margin="5" Width="150"></Button>
+                                    <Button Command="{Binding EditCommand}" Content="Sửa hóa đơn" Margin="5" Width="150"></Button>
+                                    <Button Command="{Binding DeleteCommand}" Content="Xóa hoá đơn" Margin="5" Width="150"></Button>
+                                </WrapPanel>
+                            </Grid>
                         </Grid>
                         <Grid Grid.Column="1">
-                            <materialDesign:Card Grid.Row="4" Margin="5" VerticalAlignment="Stretch">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="200"></RowDefinition>
+                                <RowDefinition Height="auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <materialDesign:Card Grid.Row="0" Margin="5" VerticalAlignment="Stretch">
                                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                                     <ListView ItemsSource="{Binding ListOutputInfo}" SelectedItem="{Binding SelectedOutputInfo, Mode=TwoWay}">
                                         <ListView.View>
@@ -217,6 +228,13 @@
                                     </ListView>
                                 </ScrollViewer>
                             </materialDesign:Card>
+                            <Grid Grid.Row="1">
+                                <WrapPanel>
+                                    <Button Command="{Binding AddOuputInfoCommand}" Content="Thêm sản phẩm" Margin="5" Width="150"></Button>
+                                    <Button Command="{Binding EditOuputInfoCommand}" Content="Sửa sản phẩm" Margin="5" Width="150"></Button>
+                                    <Button Command="{Binding DeleteOuputInfoCommand}" Content="Xóa sản phẩm" Margin="5" Width="150"></Button>
+                                </WrapPanel>
+                            </Grid>
                         </Grid>
                     </Grid>
                 </Grid>
@@ -228,20 +246,13 @@
                         <ColumnDefinition Width="400"></ColumnDefinition>
                         <ColumnDefinition Width="auto"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0">
+                    <!--<Grid Grid.Column="0">
                         <WrapPanel>
                             <Button Command="{Binding AddCommand}" Content="Thêm" Margin="5" Width="120"></Button>
                             <Button Command="{Binding EditCommand}" Content="Sửa" Margin="5" Width="120"></Button>
                             <Button Command="{Binding DeleteCommand}" Content="Xóa" Margin="5" Width="120"></Button>
                         </WrapPanel>
-                    </Grid>
-                    <Grid Grid.Column="1">
-                        <WrapPanel>
-                            <Button Command="{Binding AddOuputInfoCommand}" Content="Thêm" Margin="5" Width="120"></Button>
-                            <Button Command="{Binding EditOuputInfoCommand}" Content="Sửa" Margin="5" Width="120"></Button>
-                            <Button Command="{Binding DeleteOuputInfoCommand}" Content="Xóa" Margin="5" Width="120"></Button>
-                        </WrapPanel>
-                    </Grid>
+                    </Grid>-->                    
                 </Grid>               
                 
             </materialDesign:Card>

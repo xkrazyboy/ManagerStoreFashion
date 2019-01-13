@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -128,41 +129,25 @@ namespace QuanLyCuaHang.ViewModel
 
             AddCommand = new RelayCommand<object>((p) =>
             {
-                if (SelectedObject == null || Count == null)
+                if ( SelectedUsers == null)
                     return false;
                 return true;
 
             }, (p) =>
 
             {
-                var Output = new Model.Output() { IdCustomer = SelectedCustomer.Id, IdUser = SelectedUsers.Id, IdPromotion = SelectedPromotion.Id, DateOutput = DateOutput, Status = Status, Id = Guid.NewGuid().ToString() };
+                var Customer = DataProvider.Ins.DB.Customer.Where(x => x.Id == SelectedItem.IdCustomer).SingleOrDefault();
+                if (Customer == null)
+                {
+                    Customer = new Model.Customer() { DisplayName = SelectedCustomer.DisplayName, Address = SelectedCustomer.Address, Phone = SelectedCustomer.Phone };
+                }
+                //, IdPromotion = SelectedPromotion.Id, Status = Status
+                var Output = new Model.Output() { IdCustomer = Customer.Id, IdUser = SelectedUsers.Id, DateOutput = DateOutput, Id = Guid.NewGuid().ToString() };
                 
                 DataProvider.Ins.DB.Output.Add(Output);
                 DataProvider.Ins.DB.SaveChanges();
 
                 ListOutput.Add(Output);
-            });
-
-
-            AddOuputInfoCommand = new RelayCommand<object>((p) =>
-            {
-                if (SelectedObject == null || SelectedInputInfo == null)
-                    return false;
-                return true;
-
-            }, (p) =>
-
-            {
-                var OutputInfo = new Model.OutputInfo() {IdOutput = SelectedItem.Id, IdObject = SelectedObject.Id, IdInputInfo = SelectedInputInfo.Id, Count = Count, Status = Status, Id = Guid.NewGuid().ToString() };
-                
-                DataProvider.Ins.DB.OutputInfo.Add(OutputInfo);
-                DataProvider.Ins.DB.SaveChanges();
-
-                ListOutputInfo.Add(OutputInfo);
-
-                //SelectedObject = SelectedOutputInfo.Object;
-                //Count = SelectedOutputInfo.Count;
-                //Status = SelectedOutputInfo.Status;
             });
 
             EditCommand = new RelayCommand<Output>((p) =>
@@ -185,6 +170,74 @@ namespace QuanLyCuaHang.ViewModel
                 Status = Status;
                 DataProvider.Ins.DB.SaveChanges();
             });
+
+            AddOuputInfoCommand = new RelayCommand<object>((p) =>
+            {                
+                if (SelectedObject == null || Count == null)
+                    return false;                
+                return true;
+
+            }, (p) =>
+
+            {
+                var InputInfo = DataProvider.Ins.DB.InputInfo.Where(x => x.Id == SelectedObject.Id).SingleOrDefault();
+                if (InputInfo == null)
+                {
+                    MessageBox.Show("Hàng trong kho đã hết");
+                }
+
+                else
+                {
+                    var OutputInfo = new Model.OutputInfo()
+                    {
+                        IdOutput = SelectedItem.Id,
+                        IdObject = SelectedObject.Id,
+                        IdInputInfo = InputInfo.Id,
+                        Count = Count,
+                        Status = Status,
+                        //Status = SelectedOutputInfo.Status,
+                        SumPrice = Count * InputInfo.OutputPrice,
+                        Id = Guid.NewGuid().ToString()
+                    };
+
+                    DataProvider.Ins.DB.OutputInfo.Add(OutputInfo);
+                    DataProvider.Ins.DB.SaveChanges();
+
+                    ListOutputInfo.Add(OutputInfo);
+                }
+            });
+
+            EditOuputInfoCommand = new RelayCommand<Output>((p) =>
+            {
+                if (SelectedObject == null || SelectedCustomer == null)
+                    return false;
+
+                var displayList = DataProvider.Ins.DB.Output.Where(x => x.Id == SelectedItem.Id);
+                if (displayList != null && displayList.Count() != 0)
+                    return true;
+                return false;
+
+            }, (p) =>
+            {
+                var OutputInfo = DataProvider.Ins.DB.OutputInfo.Where(x => x.Id == SelectedItem.Id).SingleOrDefault();
+                var InputInfo = DataProvider.Ins.DB.InputInfo.Where(x => x.Id == OutputInfo.IdInputInfo).SingleOrDefault();
+                if (InputInfo == null)
+                {
+                    MessageBox.Show("Hàng trong kho đã hết");
+                }
+
+                else
+                {
+                    OutputInfo.IdObject = SelectedObject.Id;
+                    OutputInfo.Count = Count;
+                    OutputInfo.Status = Status;
+                    OutputInfo.SumPrice = Count * InputInfo.OutputPrice;
+                    //Output.IdPromotion = SelectedPromotion.Id;
+                    DataProvider.Ins.DB.SaveChanges();
+                }
+                
+            });
+
         }
     }
 }
