@@ -13,10 +13,10 @@ namespace QuanLyCuaHang.Model
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class QuanLyCuaHangThoiTrangEntities : DbContext
+    public partial class QuanLyCuaHangThoiTrangEntities1 : DbContext
     {
-        public QuanLyCuaHangThoiTrangEntities()
-            : base("name=QuanLyCuaHangThoiTrangEntities")
+        public QuanLyCuaHangThoiTrangEntities1()
+            : base("name=QuanLyCuaHangThoiTrangEntities1")
         {
         }
     
@@ -33,7 +33,6 @@ namespace QuanLyCuaHang.Model
         public virtual DbSet<OutputInfo> OutputInfo { get; set; }
         public virtual DbSet<Promotion> Promotion { get; set; }
         public virtual DbSet<Suplier> Suplier { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Unit> Unit { get; set; }
         public virtual DbSet<UserRole> UserRole { get; set; }
         public virtual DbSet<Users> Users { get; set; }

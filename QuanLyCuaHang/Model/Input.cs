@@ -13,17 +13,20 @@ namespace QuanLyCuaHang.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Input : BaseViewModel
+    public partial class Input:BaseViewModel
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Input()
         {
             this.InputInfo = new HashSet<InputInfo>();
         }
-        
-        public string Id { get; set; }
-        public Nullable<System.DateTime> DateInput { get; set; }
     
+        public string Id { get; set; }
+     
+
+        private Nullable<System.DateTime> _DateInput;
+        public Nullable<System.DateTime> DateInput { get => _DateInput; set { _DateInput = value; OnPropertyChanged(); } }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InputInfo> InputInfo { get; set; }
     }
