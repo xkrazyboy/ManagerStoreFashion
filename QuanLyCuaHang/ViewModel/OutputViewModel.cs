@@ -47,8 +47,8 @@ namespace QuanLyCuaHang.ViewModel
                     //SelectedInputInfo = SelectedItem.InputInfo;
 
                     Id = SelectedItem.Id;
-                    //Status = SelectedItem.Status;
-
+                    Status = SelectedItem.Status;
+                    SelectedItem.Status = "";
                 }
             }
         }
@@ -65,7 +65,9 @@ namespace QuanLyCuaHang.ViewModel
                     SelectedObject = SelectedOutputInfo.Object;
                     Count = SelectedOutputInfo.Count;
                     Status = SelectedOutputInfo.Status;
+                    SelectedCustomer = SelectedItem.Customer;
                     //SelectedInputInfo = SelectedItem.InputInfo;
+
                 }
             }
         }
@@ -77,16 +79,18 @@ namespace QuanLyCuaHang.ViewModel
             set {
                 _SelectedCustomer = value;
                 OnPropertyChanged();
-                //if (SelectedCustomer != null)
-                //{
-                //    SelectedCustomer = SelectedItem.Customer;
-                //}
+                if (SelectedCustomer != null && SelectedItem != null)
+                {
+                    SelectedItem.IdCustomer = SelectedCustomer.Id;
+                }
             }
         }
 
 
         private Model.Object _SelectedObject;
         public Model.Object SelectedObject { get => _SelectedObject; set { _SelectedObject = value; OnPropertyChanged(); } }
+
+       
 
         private Model.InputInfo _SelectedInputInfo;
         public Model.InputInfo SelectedInputInfo { get => _SelectedInputInfo; set { _SelectedInputInfo = value; OnPropertyChanged(); } }
@@ -129,6 +133,8 @@ namespace QuanLyCuaHang.ViewModel
             Customer = new ObservableCollection<Model.Customer>(DataProvider.Ins.DB.Customer);
             Object = new ObservableCollection<Model.Object>(DataProvider.Ins.DB.Object);
 
+
+
             // Nhấn vào danh sách hóa đơn => chi tiết hóa đơn thay đổi theo
             SelectedItemListViewChangedCommand = new RelayCommand<object>((p) => true, (p) =>
             {
@@ -152,25 +158,75 @@ namespace QuanLyCuaHang.ViewModel
 
             AddCommand = new RelayCommand<object>((p) =>
             {
-                if (SelectedUsers == null || SelectedItem == null)
+                if (SelectedUsers == null)
                     return false;
                 return true;
 
             }, (p) =>
 
             {
-                var Customer = DataProvider.Ins.DB.Customer.Where(x => x.Id == SelectedItem.IdCustomer).SingleOrDefault();
-                if (Customer == null)
+                if (SelectedCustomer != null)
                 {
-                    Customer = new Model.Customer() {Id = SelectedItem.IdCustomer, DisplayName = SelectedCustomer.DisplayName, Address = SelectedCustomer.Address, Phone = SelectedCustomer.Phone };
+                    var Output = new Model.Output() { IdCustomer = SelectedCustomer.Id, IdUser = SelectedUsers.Id, DateOutput = DateOutput, Id = Guid.NewGuid().ToString() };
+
+                    DataProvider.Ins.DB.Output.Add(Output);
+                    DataProvider.Ins.DB.SaveChanges();
+                    ListOutput.Add(Output);
                 }
+                else
+                {
+                    var Customer = new Model.Customer() { DisplayName = SelectedCustomer.DisplayName.ToString(), Address = SelectedCustomer.Address, Phone = SelectedCustomer.Phone };
+                    var Output = new Model.Output() { IdCustomer = Customer.Id, IdUser = SelectedUsers.Id, Id = Guid.NewGuid().ToString() };
+
+                    DataProvider.Ins.DB.Output.Add(Output);
+                    DataProvider.Ins.DB.SaveChanges();
+                    ListOutput.Add(Output);
+                }
+
+                //var Customer = DataProvider.Ins.DB.Customer;
+                //var Customer = DataProvider.Ins.DB.Customer.Where(x => x.Id == );
+                //if (SelectedCustomer == null)
+                //{
+                   
+                //    foreach(var i in Customer)
+                //    {
+                //        if (SelectedCustomer.DisplayName != i.DisplayName)
+                //        {
+                //            //var Customer = new Model.Customer() { Id = SelectedCustomer.Id, DisplayName = SelectedCustomer.DisplayName, Address = SelectedCustomer.Address, Phone = SelectedCustomer.Phone };
+
+                //            var Customer1 = new Model.Customer() { DisplayName = SelectedCustomer.DisplayName, Address = SelectedCustomer.Address, Phone = SelectedCustomer.Phone };
+
+                //            DataProvider.Ins.DB.Customer.Add(Customer1);
+                //            DataProvider.Ins.DB.SaveChanges();
+                           
+                //            ICollectionView view = CollectionViewSource.GetDefaultView(ListOutput);
+                //            view.Refresh();
+
+                //            // var displayList = DataProvider.Ins.DB.Customer.Where(x => x.Id == Customer.Id).SingleOrDefault();
+                //            //List.Add(Customer);
+                //            var Output = new Model.Output() { IdCustomer = Customer1.Id, IdUser = SelectedUsers.Id, DateOutput = DateOutput, Id = Guid.NewGuid().ToString() };
+
+                //            DataProvider.Ins.DB.Output.Add(Output);
+                //            DataProvider.Ins.DB.SaveChanges();
+                //            ListOutput.Add(Output);
+                //        }
+                //        else
+                //        {
+                //            var Output = new Model.Output() { IdCustomer = SelectedCustomer.Id, IdUser = SelectedUsers.Id, DateOutput = DateOutput, Id = Guid.NewGuid().ToString() };
+
+                //            DataProvider.Ins.DB.Output.Add(Output);
+                //            DataProvider.Ins.DB.SaveChanges();
+                //            ListOutput.Add(Output);
+                //        }
+                //    }
+                    
+                //}
+                
+                
                 //, IdPromotion = SelectedPromotion.Id, Status = Status
-                var Output = new Model.Output() { IdCustomer = Customer.Id, IdUser = SelectedUsers.Id, DateOutput = DateOutput, Id = Guid.NewGuid().ToString() };
+               
 
-                DataProvider.Ins.DB.Output.Add(Output);
-                DataProvider.Ins.DB.SaveChanges();
-
-                ListOutput.Add(Output);
+               
             });
 
             EditCommand = new RelayCommand<Output>((p) =>

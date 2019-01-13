@@ -2,9 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace QuanLyCuaHang.ViewModel
@@ -13,7 +15,12 @@ namespace QuanLyCuaHang.ViewModel
     {
         private ObservableCollection<Model.Customer> _List;
         public ObservableCollection<Model.Customer> List { get => _List; set { _List = value; OnPropertyChanged(); } }
-               
+        private ObservableCollection<Model.Output> _ListOutput;
+        public ObservableCollection<Model.Output> ListOutput { get => _ListOutput; set { _ListOutput = value; OnPropertyChanged(); } }
+
+        private ObservableCollection<Model.OutputInfo> _ListOutputInfo;
+        public ObservableCollection<Model.OutputInfo> ListOutputInfo { get => _ListOutputInfo; set { _ListOutputInfo = value; OnPropertyChanged(); } }
+
         private Model.Customer _SelectedItem;
         public Model.Customer SelectedItem
         {
@@ -77,12 +84,16 @@ namespace QuanLyCuaHang.ViewModel
         private DateTime? _ContractDate;
         public DateTime? ContractDate { get => _ContractDate; set { _ContractDate = value; OnPropertyChanged(); } }
 
+   
         public ICommand AddCommand { get; set; }
         public ICommand EditCommand { get; set; }
+        public ICommand DeleteCommand { get; set; }
 
         public CustomerViewModel()
         {
             List = new ObservableCollection<Model.Customer>(DataProvider.Ins.DB.Customer);
+            ListOutput = new ObservableCollection<Model.Output>(DataProvider.Ins.DB.Output);
+            ListOutputInfo = new ObservableCollection<Model.OutputInfo>(DataProvider.Ins.DB.OutputInfo);
 
             AddCommand = new RelayCommand<object>((p) =>
             {
@@ -95,6 +106,8 @@ namespace QuanLyCuaHang.ViewModel
                 DataProvider.Ins.DB.Customer.Add(Customer);
                 DataProvider.Ins.DB.SaveChanges();
 
+                ICollectionView view = CollectionViewSource.GetDefaultView(ListOutput);
+                view.Refresh();
                 List.Add(Customer);
             });
 
@@ -120,6 +133,49 @@ namespace QuanLyCuaHang.ViewModel
                 DataProvider.Ins.DB.SaveChanges();
 
                 SelectedItem.DisplayName = DisplayName;
+            });
+
+            DeleteCommand = new RelayCommand<object>((p) =>
+            {
+                if (SelectedItem == null)
+                    return false;
+
+                var displayList = DataProvider.Ins.DB.Customer.Where(x => x.Id == SelectedItem.Id);
+                if (displayList != null && displayList.Count() != 0)
+                    return true;
+                return false;
+
+            }, (p) =>
+            {
+                var Customer = DataProvider.Ins.DB.Customer.Where(x => x.Id == SelectedItem.Id).SingleOrDefault();
+                var Output = DataProvider.Ins.DB.Output.Where(x => x.IdCustomer == SelectedItem.Id).ToList();
+                foreach (var item in Output)
+                {
+                    var collection = DataProvider.Ins.DB.OutputInfo.Where(x => x.IdOutput == item.Id).ToList();
+                    if (collection != null)
+                    {
+                        foreach (var i in collection)
+                        {
+                            if (i != null)
+                            {
+                                DataProvider.Ins.DB.OutputInfo.Remove(i);
+                                ListOutputInfo.Remove(i);
+                            }
+
+                        }
+                        DataProvider.Ins.DB.Output.Remove(item);
+                        ListOutput.Remove(item);
+                    }
+                    
+                }
+
+                DataProvider.Ins.DB.Customer.Remove(Customer);
+                List.Remove(Customer);
+                ICollectionView view = CollectionViewSource.GetDefaultView(List);
+                view.Refresh();
+
+                DataProvider.Ins.DB.SaveChanges();
+
             });
         }
     }

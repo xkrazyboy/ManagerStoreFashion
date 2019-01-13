@@ -62,9 +62,6 @@ namespace QuanLyCuaHang.ViewModel
             }
         }
 
-        //private Model.Input _DateInput;
-        //public Model.Input DateInput { get => _DateInput; set { _DateInput = value; OnPropertyChanged(); } }
-
         private int? _Count;
         public int? Count { get => _Count; set { _Count = value; OnPropertyChanged(); } }              
 
