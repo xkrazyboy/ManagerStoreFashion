@@ -2,9 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace QuanLyCuaHang.ViewModel
@@ -69,25 +71,31 @@ namespace QuanLyCuaHang.ViewModel
 
         private string _Status;
         public string Status { get => _Status; set { _Status = value; OnPropertyChanged(); } }
+        private ObservableCollection<Model.OutputInfo> _ListOutputInfo;
+        public ObservableCollection<Model.OutputInfo> ListOutputInfo { get => _ListOutputInfo; set { _ListOutputInfo = value; OnPropertyChanged(); } }
 
         public ICommand AddCommand { get; set; }
         public ICommand EditCommand { get; set; }
+        public ICommand DeleteCommand { get; set; }
+        
 
         public InputInfoViewModel()
         {
             List = new ObservableCollection<Model.InputInfo>(DataProvider.Ins.DB.InputInfo);
             Object = new ObservableCollection<Model.Object>(DataProvider.Ins.DB.Object);
             Input = new ObservableCollection<Model.Input>(DataProvider.Ins.DB.Input);
+             
 
-            AddCommand = new RelayCommand<object>((p) =>
+        AddCommand = new RelayCommand<object>((p) =>
             {
-                if (SelectedObject == null)
+                if (SelectedObject == null || SelectedInput == null)
                     return false;
                 return true;
 
             }, (p) =>
 
             {
+               
                 var NewInput = new Model.Input() { Id = Guid.NewGuid().ToString(), DateInput = SelectedInput.DateInput };
                 var InputInfo = new Model.InputInfo() { IdObject = SelectedObject.Id, IdInput = NewInput.Id, Count = Count, InputPrice = InputPrice, OutputPrice = OutputPrice, Status = Status, Id = Guid.NewGuid().ToString() };
                 
@@ -120,6 +128,37 @@ namespace QuanLyCuaHang.ViewModel
                 InputInfo.OutputPrice = OutputPrice;
                 InputInfo.Status = Status;
                 DataProvider.Ins.DB.SaveChanges();              
+            });
+
+            DeleteCommand = new RelayCommand<InputInfo>((p) =>
+            {
+                if (SelectedItem == null || SelectedObject == null || SelectedInput == null)
+                    return false;
+
+                var displayList = DataProvider.Ins.DB.InputInfo.Where(x => x.Id == SelectedItem.Id);
+                if (displayList != null && displayList.Count() != 0)
+                    return true;
+                return false;
+
+            }, (p) =>
+            {
+                var InputInfo = DataProvider.Ins.DB.InputInfo.Where(x => x.Id == SelectedItem.Id).SingleOrDefault();
+                var collection = DataProvider.Ins.DB.OutputInfo.Where(x => x.IdInputInfo == SelectedItem.Id).ToList();
+
+                foreach (var item in collection)
+                {
+                    DataProvider.Ins.DB.OutputInfo.Remove(item);
+                    DataProvider.Ins.DB.SaveChanges();
+                    ListOutputInfo.Remove(item);
+                }
+                collection.Clear();
+
+                DataProvider.Ins.DB.InputInfo.Remove(InputInfo);
+                List.Remove(InputInfo);
+                DataProvider.Ins.DB.SaveChanges();
+                
+                ICollectionView view = CollectionViewSource.GetDefaultView(List);
+                view.Refresh();
             });
         }
     }

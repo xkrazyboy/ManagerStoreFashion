@@ -4,29 +4,29 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="7a88ed46a1c7474399e9ab5c0543e10f" Name="Diagram1" ZoomLevel="84">
-        <EntityTypeShape EntityType="QuanLyCuaHangThoiTrangModel.Customer" Width="1.5" PointX="5.25" PointY="7" />
-        <EntityTypeShape EntityType="QuanLyCuaHangThoiTrangModel.Input" Width="1.5" PointX="14.625" PointY="3.5" />
-        <EntityTypeShape EntityType="QuanLyCuaHangThoiTrangModel.InputInfo" Width="1.5" PointX="12.125" PointY="2.875" />
-        <EntityTypeShape EntityType="QuanLyCuaHangThoiTrangModel.Object" Width="1.5" PointX="12.125" PointY="6.125" />
-        <EntityTypeShape EntityType="QuanLyCuaHangThoiTrangModel.Output" Width="1.5" PointX="5.375" PointY="3.25" />
-        <EntityTypeShape EntityType="QuanLyCuaHangThoiTrangModel.OutputInfo" Width="1.5" PointX="7.625" PointY="3.375" />
-        <EntityTypeShape EntityType="QuanLyCuaHangThoiTrangModel.Promotion" Width="1.5" PointX="3" PointY="6.25" />
-        <EntityTypeShape EntityType="QuanLyCuaHangThoiTrangModel.Suplier" Width="1.5" PointX="9.875" PointY="5.125" />
-        <EntityTypeShape EntityType="QuanLyCuaHangThoiTrangModel.sysdiagrams" Width="1.5" PointX="18" PointY="7.75" />
-        <EntityTypeShape EntityType="QuanLyCuaHangThoiTrangModel.Unit" Width="1.5" PointX="9.875" PointY="8" />
-        <EntityTypeShape EntityType="QuanLyCuaHangThoiTrangModel.UserRole" Width="1.5" PointX="3.125" PointY="1.125" />
-        <EntityTypeShape EntityType="QuanLyCuaHangThoiTrangModel.Users" Width="1.5" PointX="3.125" PointY="3.25" />
+      <Diagram DiagramId="7a88ed46a1c7474399e9ab5c0543e10f" Name="Diagram1">
+        <EntityTypeShape EntityType="QuanLyCuaHangThoiTrangModel.Customer" Width="1.5" PointX="2.5" PointY="4.5" />
+        <EntityTypeShape EntityType="QuanLyCuaHangThoiTrangModel.Input" Width="1.5" PointX="3" PointY="12.25" />
+        <EntityTypeShape EntityType="QuanLyCuaHangThoiTrangModel.InputInfo" Width="1.5" PointX="5.25" PointY="14.375" />
+        <EntityTypeShape EntityType="QuanLyCuaHangThoiTrangModel.Object" Width="1.5" PointX="3" PointY="15.625" />
+        <EntityTypeShape EntityType="QuanLyCuaHangThoiTrangModel.Output" Width="1.5" PointX="5.25" PointY="1" />
+        <EntityTypeShape EntityType="QuanLyCuaHangThoiTrangModel.OutputInfo" Width="1.5" PointX="7.5" PointY="1.125" />
+        <EntityTypeShape EntityType="QuanLyCuaHangThoiTrangModel.Promotion" Width="1.5" PointX="3" PointY="9.125" />
+        <EntityTypeShape EntityType="QuanLyCuaHangThoiTrangModel.Suplier" Width="1.5" PointX="0.75" PointY="14.625" />
+        <EntityTypeShape EntityType="QuanLyCuaHangThoiTrangModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="5.75" />
+        <EntityTypeShape EntityType="QuanLyCuaHangThoiTrangModel.Unit" Width="1.5" PointX="0.75" PointY="17.875" />
+        <EntityTypeShape EntityType="QuanLyCuaHangThoiTrangModel.UserRole" Width="1.5" PointX="0.75" PointY="1.75" />
+        <EntityTypeShape EntityType="QuanLyCuaHangThoiTrangModel.Users" Width="1.5" PointX="3" PointY="1.375" />
         <AssociationConnector Association="QuanLyCuaHangThoiTrangModel.FK__Output__IdCustom__5165187F" />
         <AssociationConnector Association="QuanLyCuaHangThoiTrangModel.FK__InputInfo__IdInp__4D94879B" />
         <AssociationConnector Association="QuanLyCuaHangThoiTrangModel.FK__InputInfo__IdObj__4CA06362" />
-        <AssociationConnector Association="QuanLyCuaHangThoiTrangModel.FK__OutputInf__IdInp__5812160E" />
+        <AssociationConnector Association="QuanLyCuaHangThoiTrangModel.FK__OutputInf__IdInp__59063A47" />
         <AssociationConnector Association="QuanLyCuaHangThoiTrangModel.FK__Object__BarCode__3D5E1FD2" />
         <AssociationConnector Association="QuanLyCuaHangThoiTrangModel.FK__Object__IdSuplie__3E52440B" />
-        <AssociationConnector Association="QuanLyCuaHangThoiTrangModel.FK__OutputInf__IdObj__571DF1D5" />
+        <AssociationConnector Association="QuanLyCuaHangThoiTrangModel.FK__OutputInf__IdObj__5812160E" />
         <AssociationConnector Association="QuanLyCuaHangThoiTrangModel.FK__Output__IdPromot__534D60F1" />
         <AssociationConnector Association="QuanLyCuaHangThoiTrangModel.FK__Output__IdUser__52593CB8" />
-        <AssociationConnector Association="QuanLyCuaHangThoiTrangModel.FK__OutputInf__IdOut__5629CD9C" />
+        <AssociationConnector Association="QuanLyCuaHangThoiTrangModel.FK__OutputInf__IdOut__571DF1D5" />
         <AssociationConnector Association="QuanLyCuaHangThoiTrangModel.FK__Users__IdRole__45F365D3" />
       </Diagram>
     </edmx:Diagrams>
