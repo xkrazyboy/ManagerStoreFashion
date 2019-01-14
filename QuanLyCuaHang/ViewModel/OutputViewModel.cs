@@ -113,6 +113,7 @@ namespace QuanLyCuaHang.ViewModel
                 if (SelectedCustomer != null && SelectedItem != null)
                 {
                     SelectedItem.IdCustomer = SelectedCustomer.Id;
+                    
                 }
             }
         }

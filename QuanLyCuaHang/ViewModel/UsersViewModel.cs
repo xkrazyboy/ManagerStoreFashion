@@ -88,7 +88,7 @@ namespace QuanLyCuaHang.ViewModel
 
             EditCommand = new RelayCommand<Users>((p) =>
             {
-                if ( UserName == null || SelectedUserRole == null || DisplayName == null)
+                if ( UserName == null || SelectedUserRole == null)
                     return false;
 
                 var displayList = DataProvider.Ins.DB.Users.Where(x => x.UserName == UserName);
