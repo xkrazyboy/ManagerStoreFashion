@@ -123,6 +123,12 @@
                                 <Grid Grid.Row="2">
                                     <Label Margin="5,11,15,-1" Content="Mã hóa đơn"></Label>
                                 </Grid>
+                                <Button Grid.Row="3" Style="{StaticResource MaterialDesignRaisedDarkButton}" 
+                                            Width="100" Margin="0 5 0 0"
+                                            Content="In hóa đơn" 
+                                            Command="{Binding PrintCommand}" 
+                                            ToolTip="Resource name: MaterialDesignRaisedLightDarkButton">
+                                </Button>
                             </Grid>
                             <Grid Grid.Column="1">
                                 <Grid.RowDefinitions>

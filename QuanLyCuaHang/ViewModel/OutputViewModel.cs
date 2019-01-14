@@ -3,13 +3,20 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Input;
+using DevExpress.XtraReports.UI;
+using System.Data;
+using DevExpress.XtraPrinting;
+using System.Xml;
+
 
 namespace QuanLyCuaHang.ViewModel
 {
@@ -39,6 +46,22 @@ namespace QuanLyCuaHang.ViewModel
 
         private ObservableCollection<Model.Users> _Users;
         public ObservableCollection<Model.Users> Users { get => _Users; set { _Users = value; OnPropertyChanged(); } }
+
+        private ReportViewModel _Report;
+        public ReportViewModel Report { get => _Report; set { _Report = value; OnPropertyChanged(); } }
+        private IDocumentPaginatorSource _fixedDocumentSequence;
+
+        public IDocumentPaginatorSource FixedDocumentSequence
+        {
+            get { return _fixedDocumentSequence; }
+            set
+            {
+                if (_fixedDocumentSequence == value) return;
+
+                _fixedDocumentSequence = value;
+                OnPropertyChanged("FixedDocumentSequence");
+            }
+        }
 
         private Model.Output _SelectedItem;
         public Model.Output SelectedItem
@@ -94,6 +117,9 @@ namespace QuanLyCuaHang.ViewModel
             }
         }
 
+        
+
+
 
         private Model.Object _SelectedObject;
         public Model.Object SelectedObject { get => _SelectedObject; set { _SelectedObject = value; OnPropertyChanged(); } }
@@ -132,6 +158,9 @@ namespace QuanLyCuaHang.ViewModel
         public ICommand AddOuputInfoCommand { get; set; }        
         public ICommand EditOuputInfoCommand { get; set; }
         public ICommand DeleteOuputInfoCommand { get; set; }
+        public ICommand PrintCommand { get; set; }
+        
+
         #endregion
 
         public OutputViewModel()
@@ -363,43 +392,38 @@ namespace QuanLyCuaHang.ViewModel
                     }
                 }
                 ThongKe.LuongTon = luongNhap - luongXuat;
-
-                var Output = DataProvider.Ins.DB.Output.Where(x => x.Id == SelectedItem.Id).SingleOrDefault();
+                //var Output= DataProvider.Ins.DB.Output.Where(x => x.Id == SelectedItem.Id).SingleOrDefault();
                 var Object = DataProvider.Ins.DB.Object.Where(x => x.Id == SelectedObject.Id).SingleOrDefault();
-                var InputInfo = DataProvider.Ins.DB.InputInfo.Where(x => x.IdObject == Object.Id).SingleOrDefault();
-
-                //var InputInfo = DataProvider.Ins.DB.InputInfo.Where(x => x.Id == SelectedObject.Id).SingleOrDefault();
-                //var Output = DataProvider.Ins.DB.Output.Where(x => x.Id == SelectedItem.Id).SingleOrDefault();
-
-                if (ThongKe.LuongTon < Count)
-                {
-                    MessageBox.Show("Hàng trong kho đã hết");
-                }
-                else
-                {
-
-                    var OutputInfo = new Model.OutputInfo()
+                var InputInfolist = DataProvider.Ins.DB.InputInfo.Where(x => x.IdObject == Object.Id).First();
+                
+                    if (ThongKe.LuongTon < Count)
                     {
-                        IdOutput = SelectedItem.Id,
-                        IdObject = SelectedObject.Id,
-                        IdInputInfo = InputInfo.Id,
-                        Count = Count,
-                        Status = Status,
-                        //Status = SelectedOutputInfo.Status,
-                        SumPrice = Count * InputInfo.OutputPrice,
-                        Id = Guid.NewGuid().ToString()
-                    };
+                        MessageBox.Show("Hàng trong kho đã hết");
+                    }
+                    else
+                    {
 
-                    Output.Total += Count * InputInfo.OutputPrice;
-                    DataProvider.Ins.DB.OutputInfo.Add(OutputInfo);
-                    DataProvider.Ins.DB.SaveChanges();
+                        var OutputInfo = new Model.OutputInfo()
+                        {
+                            IdOutput = SelectedItem.Id,
+                            IdObject = SelectedObject.Id,
+                            IdInputInfo = InputInfolist.Id,
+                            Count = Count,
+                            Status = Status,
+                            //Status = SelectedOutputInfo.Status,
+                            SumPrice = Count * InputInfolist.OutputPrice,
+                            Id = Guid.NewGuid().ToString()
+                        };
 
-                    ICollectionView view = CollectionViewSource.GetDefaultView(ListOutput);
-                    view.Refresh();
+                        DataProvider.Ins.DB.OutputInfo.Add(OutputInfo);
+                        DataProvider.Ins.DB.SaveChanges();
 
-                    ListOutputInfo.Add(OutputInfo);
-                }
-
+                        ListOutputInfo.Add(OutputInfo);
+                        ICollectionView view = CollectionViewSource.GetDefaultView(ListOutput);
+                        view.Refresh();
+                    }
+                
+                
             });
 
             EditOuputInfoCommand = new RelayCommand<Output>((p) =>
@@ -462,7 +486,9 @@ namespace QuanLyCuaHang.ViewModel
                 ListOutputInfo.Remove(OutputInfo);
                 LoadTotalPrice();
                 DataProvider.Ins.DB.SaveChanges();
-                                
+                ICollectionView view = CollectionViewSource.GetDefaultView(ListOutputInfo);
+                view.Refresh();
+
             });
             #endregion
         }
@@ -490,8 +516,6 @@ namespace QuanLyCuaHang.ViewModel
 
             DataProvider.Ins.DB.SaveChanges();
 
-            //ICollectionView view = CollectionViewSource.GetDefaultView(outputList);
-            //view.Refresh();
         }
 
     }
