@@ -172,6 +172,7 @@
     <Compile Include="ViewModel\SuplierViewModel.cs" />
     <Compile Include="ViewModel\ThongKe.cs" />
     <Compile Include="ViewModel\UnitViewModel.cs" />
+    <Compile Include="ViewModel\UsersViewModel.cs" />
     <Page Include="CustomerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

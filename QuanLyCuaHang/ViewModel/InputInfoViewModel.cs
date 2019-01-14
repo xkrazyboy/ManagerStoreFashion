@@ -86,7 +86,7 @@ namespace QuanLyCuaHang.ViewModel
             Input = new ObservableCollection<Model.Input>(DataProvider.Ins.DB.Input);
              
 
-        AddCommand = new RelayCommand<object>((p) =>
+            AddCommand = new RelayCommand<object>((p) =>
             {
                 if (SelectedObject == null || SelectedInput == null)
                     return false;
