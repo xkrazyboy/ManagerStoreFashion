@@ -168,7 +168,7 @@
                             <WrapPanel>
                                 <ComboBox Margin="20 5 15 5" DisplayMemberPath="DisplayName" ItemsSource="{Binding Object}" SelectedItem="{Binding SelectedObject, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Tên sản phẩm" IsEditable="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}"></ComboBox>
                                 <TextBox Text="{Binding Count, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="5 5 15 5" materialDesign:HintAssist.Hint="Số lượng" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                                <TextBox Text="{Binding Status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="5 5 15 5" materialDesign:HintAssist.Hint="Ghi chú" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                                <TextBox Text="{Binding SelectedOutputInfo.Status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="5 5 15 5" materialDesign:HintAssist.Hint="Ghi chú" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                             </WrapPanel>
                         </Grid>
 

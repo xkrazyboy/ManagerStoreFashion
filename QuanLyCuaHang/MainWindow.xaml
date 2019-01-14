@@ -61,7 +61,6 @@
                         <ColumnDefinition></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Button Grid.Column="0" Command="{Binding InputInfoCommand}" ToolTip="Nhập kho">
                         <Grid>
@@ -77,49 +76,35 @@
                             </Grid>
                         </Grid>
                     </Button>
-                    <Button Grid.Column="1" Command="{Binding OutputInfoCommand}" ToolTip="Xuất kho">
+                    <Button Grid.Column="1" Command="{Binding OutputCommand}" ToolTip="Xuất kho">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition></RowDefinition>
                                 <RowDefinition></RowDefinition>
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0">
-                                <TextBlock Text="Tạo Hóa đơn" HorizontalAlignment="Center"></TextBlock>
+                                <TextBlock Text="Quản Lý Hóa đơn" HorizontalAlignment="Center"></TextBlock>
                             </Grid>
                             <Grid Grid.Row="1">
                                 <materialDesign:PackIcon HorizontalAlignment="Center" Width="30" Height="30" Kind="Export" />
                             </Grid>
                         </Grid>
                     </Button>
-                    <Button Grid.Column="2" Command="{Binding OutputCommand}" ToolTip="Xuất kho">
+                    <Button Grid.Column="2" Command="{Binding ObjectCommand}" ToolTip="Vật tư">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition></RowDefinition>
                                 <RowDefinition></RowDefinition>
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0">
-                                <TextBlock Text="QL Hóa đơn" HorizontalAlignment="Center"></TextBlock>
-                            </Grid>
-                            <Grid Grid.Row="1">
-                                <materialDesign:PackIcon HorizontalAlignment="Center" Width="30" Height="30" Kind="Export" />
-                            </Grid>
-                        </Grid>
-                    </Button>
-                    <Button Grid.Column="3" Command="{Binding ObjectCommand}" ToolTip="Vật tư">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <Grid Grid.Row="0">
-                                <TextBlock Text="Sản phẩm" HorizontalAlignment="Center"></TextBlock>
+                                <TextBlock Text="Danh mục Sản phẩm" HorizontalAlignment="Center"></TextBlock>
                             </Grid>
                             <Grid Grid.Row="1">
                                 <materialDesign:PackIcon HorizontalAlignment="Center" Width="30" Height="30" Kind="PumpkinCarved" />
                             </Grid>
                         </Grid>
                     </Button>
-                    <Button Grid.Column="4" Command="{Binding UnitCommand}" ToolTip="Đơn vị">
+                    <Button Grid.Column="3" Command="{Binding UnitCommand}" ToolTip="Đơn vị">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition></RowDefinition>
@@ -133,7 +118,7 @@
                             </Grid>
                         </Grid>
                     </Button>
-                    <Button Grid.Column="5" Command="{Binding SuplierCommand}" ToolTip="Nhà cung cấp">
+                    <Button Grid.Column="4" Command="{Binding SuplierCommand}" ToolTip="Nhà cung cấp">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition></RowDefinition>
@@ -147,7 +132,7 @@
                             </Grid>
                         </Grid>
                     </Button>
-                    <Button Grid.Column="6" Command="{Binding CustomerCommand}" ToolTip="Khách hàng">
+                    <Button Grid.Column="5" Command="{Binding CustomerCommand}" ToolTip="Khách hàng">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition></RowDefinition>
@@ -161,7 +146,7 @@
                             </Grid>
                         </Grid>
                     </Button>
-                    <Button Grid.Column="7" Command="{Binding UserCommand}" ToolTip="Người dùng">
+                    <Button Grid.Column="6" Command="{Binding UserCommand}" ToolTip="Người dùng">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition></RowDefinition>
@@ -195,7 +180,7 @@
                                 <RowDefinition></RowDefinition>
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0" Margin="5">
-                                <Grid.ColumnDefinitions>
+                                <!--<Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto"></ColumnDefinition>
                                     <ColumnDefinition Width="auto"></ColumnDefinition>
                                     <ColumnDefinition Width="auto"></ColumnDefinition>
@@ -214,7 +199,7 @@
                                             Command="{Binding Inventory}" 
                                             ToolTip="Resource name: MaterialDesignRaisedLightDarkButton">
                                     </Button>
-                                </Grid>
+                                </Grid>-->
                             </Grid>
                             <Grid Grid.Row="1">
                                 <Grid.ColumnDefinitions>
@@ -300,7 +285,7 @@
                                                 <RowDefinition Height="Auto" />
                                             </Grid.RowDefinitions>
                                             <TextBlock Grid.Row="0" Margin="16 16 16 4"
-                                                       Text="Lượng xuất"
+                                                       Text="Lượng bán"
                                                        Style="{StaticResource MaterialDesignHeadlineTextBlock}">
                                             </TextBlock>
                                             <Separator Grid.Row="1" Style="{StaticResource MaterialDesignLightSeparator}" />

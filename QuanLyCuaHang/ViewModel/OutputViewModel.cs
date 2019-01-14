@@ -55,10 +55,8 @@ namespace QuanLyCuaHang.ViewModel
                     SelectedUsers = SelectedItem.Users;
                     //Count = SelectedItem.Count;
                     //SelectedInputInfo = SelectedItem.InputInfo;
-
                     Id = SelectedItem.Id;
                     Status = SelectedItem.Status;
-                    SelectedItem.Status = "";
                 }
             }
         }
@@ -422,16 +420,13 @@ namespace QuanLyCuaHang.ViewModel
 
             }, (p) =>
             {
-                var OutputInfo = DataProvider.Ins.DB.OutputInfo.Where(x => x.Id == SelectedOutputInfo.Id).SingleOrDefault();               
-                
-                ListOutputInfo.Remove(OutputInfo);
+                var OutputInfo = DataProvider.Ins.DB.OutputInfo.Where(x => x.Id == SelectedOutputInfo.Id).SingleOrDefault();
 
+                DataProvider.Ins.DB.OutputInfo.Remove(OutputInfo);
+                ListOutputInfo.Remove(OutputInfo);
                 LoadTotalPrice();
                 DataProvider.Ins.DB.SaveChanges();
-
-                ICollectionView view = CollectionViewSource.GetDefaultView(ListOutputInfo);
-                view.Refresh();
-                
+                                
             });
             #endregion
         }

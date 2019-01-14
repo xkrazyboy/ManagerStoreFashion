@@ -89,7 +89,7 @@ namespace QuanLyCuaHang.ViewModel
 
             {
                 InventoryList.Clear();
-                LoadInventoryData();
+                LoadInventoryData2();
 
             });
 
@@ -162,6 +162,114 @@ namespace QuanLyCuaHang.ViewModel
             ThongKe.LuongTon = luongNhap - luongXuat;
             ThongKe.GiaTon = tongTienTon;
             ThongKe.GiaLai = tongTienLai;
+        }
+
+        void LoadInventoryData2()
+        {
+            InventoryList = new ObservableCollection<Inventory>();
+            ThongKe = new ThongKe();
+            var objectList = DataProvider.Ins.DB.Object;
+
+            // Tạo danh sách trong ngày duyệt - mảng Input & mảng Ouput
+            var dsNhap = DataProvider.Ins.DB.Input.Where(p => (p.DateInput >= DateBeginInventory) && (p.DateInput <= DateEndInventory));
+            var dsXuat = DataProvider.Ins.DB.Output.Where(p => (p.DateOutput >= DateBeginInventory) && (p.DateOutput <= DateEndInventory));
+
+            int luongNhap = 0;
+            int luongXuat = 0;
+
+            double tongTienNhap = 0;
+            double tongTienXuat = 0;
+            double tongTienTon = 0;
+            double tongTienLai = 0;
+
+            // Duyệt mảng Object
+            int i = 1;
+            foreach (var item in objectList)
+            {
+                int sumInput = 0;
+                int sumOutput = 0;
+
+                double tienNhap = 0;
+                double tienXuat = 0;
+
+                // Tìm mảng InputInfo nằm trong mảng Object và mảng Input (dsNhap)
+                foreach (var item1 in dsNhap)
+                {
+                    var inputList = DataProvider.Ins.DB.InputInfo.Where(p => (p.IdInput == item1.Id) && (p.IdObject == item.Id));
+                    if (inputList != null && inputList.Count() > 0)
+                    {
+                        sumInput = (int)inputList.Sum(p => p.Count);
+                        tienNhap = (double)inputList.Sum(p => p.InputPrice);
+                        tienXuat = (double)inputList.Sum(p => p.OutputPrice);
+                        luongNhap += sumInput;
+                        tongTienNhap += sumInput * tienNhap;
+
+                        Inventory inventory = new Inventory();
+                        inventory.STT = i;
+                        inventory.CountInput = sumInput;
+                        inventory.CountOutput = sumOutput;
+                        tongTienTon += (sumInput - sumOutput) * tienNhap;
+                        tongTienLai += sumOutput * (tienXuat - tienNhap);
+
+                        inventory.CountInventory = sumInput - sumOutput;
+                        inventory.MoneyInput = sumInput * tienNhap;
+                        inventory.MoneyOutput = sumOutput * tienXuat;
+                        inventory.MoneyInventory = (sumInput - sumOutput) * tienNhap;
+                        inventory.MoneyIncome = sumOutput * (tienXuat - tienNhap);
+                        inventory.Object = item;
+
+                        InventoryList.Add(inventory);
+
+                        i++;
+                    }
+
+                    ThongKe.LuongNhap = luongNhap;
+                    ThongKe.LuongXuat = luongXuat;
+                    ThongKe.GiaNhap = tongTienNhap;
+                    ThongKe.GiaXuat = tongTienXuat;
+                    ThongKe.LuongTon = luongNhap - luongXuat;
+                    ThongKe.GiaTon = tongTienTon;
+                    ThongKe.GiaLai = tongTienLai;
+                }
+
+                // Tìm mảng OutputInfo nằm trong mảng Object và mảng Output (dsXuat)
+                foreach (var item2 in dsXuat)
+                {
+                    var outputList = DataProvider.Ins.DB.OutputInfo.Where(p => p.IdOutput == item2.Id && (p.IdObject == item.Id));
+                    if (outputList != null && outputList.Count() > 0)
+                    {
+                        sumOutput = (int)outputList.Sum(p => p.Count);
+                        tienXuat = (double)outputList.Sum(p => p.SumPrice);
+
+                        Inventory inventory = new Inventory();
+                        inventory.STT = i;
+                        inventory.CountInput = sumInput;
+                        inventory.CountOutput = sumOutput;
+                        tongTienTon += (sumInput - sumOutput) * tienNhap;
+                        tongTienLai += sumOutput * (tienXuat - tienNhap);
+
+                        inventory.CountInventory = sumInput - sumOutput;
+                        inventory.MoneyInput = sumInput * tienNhap;
+                        inventory.MoneyOutput = sumOutput * tienXuat;
+                        inventory.MoneyInventory = (sumInput - sumOutput) * tienNhap;
+                        inventory.MoneyIncome = sumOutput * (tienXuat - tienNhap);
+                        inventory.Object = item;
+
+                        InventoryList.Add(inventory);
+
+                        i++;
+                    }
+
+                    ThongKe.LuongNhap = luongNhap;
+                    ThongKe.LuongXuat = luongXuat;
+                    ThongKe.GiaNhap = tongTienNhap;
+                    ThongKe.GiaXuat = tongTienXuat;
+                    ThongKe.LuongTon = luongNhap - luongXuat;
+                    ThongKe.GiaTon = tongTienTon;
+                    ThongKe.GiaLai = tongTienLai;
+                }
+            }
+
         }
     }
 }

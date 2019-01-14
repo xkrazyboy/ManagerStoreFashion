@@ -11,7 +11,7 @@
         <EntityTypeShape EntityType="QuanLyCuaHangThoiTrangModel.Object" Width="1.5" PointX="12" PointY="4.25" />
         <EntityTypeShape EntityType="QuanLyCuaHangThoiTrangModel.Output" Width="1.5" PointX="5.25" PointY="1" />
         <EntityTypeShape EntityType="QuanLyCuaHangThoiTrangModel.OutputInfo" Width="1.5" PointX="7.5" PointY="1.125" />
-        <EntityTypeShape EntityType="QuanLyCuaHangThoiTrangModel.Promotion" Width="1.5" PointX="3" PointY="9.125" />
+        <EntityTypeShape EntityType="QuanLyCuaHangThoiTrangModel.Promotion" Width="1.5" PointX="3.125" PointY="7.5" />
         <EntityTypeShape EntityType="QuanLyCuaHangThoiTrangModel.Suplier" Width="1.5" PointX="9.75" PointY="3.25" />
         <EntityTypeShape EntityType="QuanLyCuaHangThoiTrangModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="5.75" />
         <EntityTypeShape EntityType="QuanLyCuaHangThoiTrangModel.Unit" Width="1.5" PointX="9.75" PointY="6.5" />
