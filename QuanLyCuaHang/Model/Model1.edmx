@@ -93,6 +93,16 @@
           <Property Name="MoreInfo" Type="nvarchar(max)" />
           <Property Name="ContractDate" Type="datetime" />
         </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
         <EntityType Name="Unit">
           <Key>
             <PropertyRef Name="Id" />
@@ -201,7 +211,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__OutputInf__IdInp__59063A47">
+        <Association Name="FK__OutputInf__IdInp__5812160E">
           <End Role="InputInfo" Type="Self.InputInfo" Multiplicity="1" />
           <End Role="OutputInfo" Type="Self.OutputInfo" Multiplicity="*" />
           <ReferentialConstraint>
@@ -213,7 +223,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__OutputInf__IdObj__5812160E">
+        <Association Name="FK__OutputInf__IdObj__571DF1D5">
           <End Role="Object" Type="Self.Object" Multiplicity="1" />
           <End Role="OutputInfo" Type="Self.OutputInfo" Multiplicity="*" />
           <ReferentialConstraint>
@@ -225,7 +235,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__OutputInf__IdOut__571DF1D5">
+        <Association Name="FK__OutputInf__IdOut__5629CD9C">
           <End Role="Output" Type="Self.Output" Multiplicity="1" />
           <End Role="OutputInfo" Type="Self.OutputInfo" Multiplicity="*" />
           <ReferentialConstraint>
@@ -258,6 +268,7 @@
           <EntitySet Name="OutputInfo" EntityType="Self.OutputInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Promotion" EntityType="Self.Promotion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Suplier" EntityType="Self.Suplier" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Unit" EntityType="Self.Unit" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
@@ -289,15 +300,15 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="Output" EntitySet="Output" />
           </AssociationSet>
-          <AssociationSet Name="FK__OutputInf__IdInp__59063A47" Association="Self.FK__OutputInf__IdInp__59063A47">
+          <AssociationSet Name="FK__OutputInf__IdInp__5812160E" Association="Self.FK__OutputInf__IdInp__5812160E">
             <End Role="InputInfo" EntitySet="InputInfo" />
             <End Role="OutputInfo" EntitySet="OutputInfo" />
           </AssociationSet>
-          <AssociationSet Name="FK__OutputInf__IdObj__5812160E" Association="Self.FK__OutputInf__IdObj__5812160E">
+          <AssociationSet Name="FK__OutputInf__IdObj__571DF1D5" Association="Self.FK__OutputInf__IdObj__571DF1D5">
             <End Role="Object" EntitySet="Object" />
             <End Role="OutputInfo" EntitySet="OutputInfo" />
           </AssociationSet>
-          <AssociationSet Name="FK__OutputInf__IdOut__571DF1D5" Association="Self.FK__OutputInf__IdOut__571DF1D5">
+          <AssociationSet Name="FK__OutputInf__IdOut__5629CD9C" Association="Self.FK__OutputInf__IdOut__5629CD9C">
             <End Role="Output" EntitySet="Output" />
             <End Role="OutputInfo" EntitySet="OutputInfo" />
           </AssociationSet>
@@ -366,6 +377,7 @@
             <End Role="UserRole" EntitySet="UserRole" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
+          <EntitySet Name="sysdiagrams" EntityType="QuanLyCuaHangThoiTrangModel.sysdiagrams" />
         </EntityContainer>
         <EntityType Name="Customer">
           <Key>
@@ -633,6 +645,16 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -759,6 +781,17 @@
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="QuanLyCuaHangThoiTrangModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

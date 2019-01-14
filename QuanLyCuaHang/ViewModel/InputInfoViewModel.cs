@@ -149,7 +149,7 @@ namespace QuanLyCuaHang.ViewModel
                 {
                     DataProvider.Ins.DB.OutputInfo.Remove(item);
                     DataProvider.Ins.DB.SaveChanges();
-                    ListOutputInfo.Remove(item);
+                    //ListOutputInfo.Remove(item);
                 }
                 collection.Clear();
 

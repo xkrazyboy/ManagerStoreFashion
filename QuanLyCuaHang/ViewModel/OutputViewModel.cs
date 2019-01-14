@@ -122,13 +122,7 @@ namespace QuanLyCuaHang.ViewModel
         public double? Sum { get => _Sum; set { _Sum = value; OnPropertyChanged(); } }
 
         private string _Status;
-        public string Status { get => _Status; set { _Status = value; OnPropertyChanged(); } }
-        
-        private ObservableCollection<Inventory> _InventoryList;
-        public ObservableCollection<Inventory> InventoryList { get => _InventoryList; set { _InventoryList = value; OnPropertyChanged(); } }
-
-        private ThongKe _ThongKe;
-        public ThongKe ThongKe { get => _ThongKe; set { _ThongKe = value; OnPropertyChanged(); } }
+        public string Status { get => _Status; set { _Status = value; OnPropertyChanged(); } }        
 
         public ICommand SelectedItemListViewChangedCommand { get; set; }
         public ICommand SelectedOutputInfoListViewChangedCommand { get; set; }
@@ -369,9 +363,14 @@ namespace QuanLyCuaHang.ViewModel
                     }
                 }
                 ThongKe.LuongTon = luongNhap - luongXuat;
-                //var Output= DataProvider.Ins.DB.Output.Where(x => x.Id == SelectedItem.Id).SingleOrDefault();
+
+                var Output = DataProvider.Ins.DB.Output.Where(x => x.Id == SelectedItem.Id).SingleOrDefault();
                 var Object = DataProvider.Ins.DB.Object.Where(x => x.Id == SelectedObject.Id).SingleOrDefault();
                 var InputInfo = DataProvider.Ins.DB.InputInfo.Where(x => x.IdObject == Object.Id).SingleOrDefault();
+
+                //var InputInfo = DataProvider.Ins.DB.InputInfo.Where(x => x.Id == SelectedObject.Id).SingleOrDefault();
+                //var Output = DataProvider.Ins.DB.Output.Where(x => x.Id == SelectedItem.Id).SingleOrDefault();
+
                 if (ThongKe.LuongTon < Count)
                 {
                     MessageBox.Show("Hàng trong kho đã hết");

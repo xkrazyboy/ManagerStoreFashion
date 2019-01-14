@@ -9,20 +9,17 @@
 
 namespace QuanLyCuaHang.Model
 {
-    using QuanLyCuaHang.ViewModel;
     using System;
     using System.Collections.Generic;
     
-    public partial class Output :BaseViewModel
+    public partial class Output
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Output()
         {
             this.OutputInfo = new HashSet<OutputInfo>();
         }
-        private Model.Object _SelectedObject;
-        public Model.Object SelectedObject { get => _SelectedObject; set { _SelectedObject = value; OnPropertyChanged(); } }
-
+    
         public string Id { get; set; }
         public int IdCustomer { get; set; }
         public int IdUser { get; set; }
