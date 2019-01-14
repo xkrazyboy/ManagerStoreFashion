@@ -40,8 +40,9 @@ namespace QuanLyCuaHang.ViewModel
         public ICommand InputInfoCommand { get; set; }
         public ICommand OutputInfoCommand { get; set; }
         public ICommand OutputCommand { get; set; }
-        public ICommand Inventory { get; set; }
+        public ICommand Inventory { get; set; }        
         public ICommand InventoryCommand { get; set; }
+        public ICommand THONGKECommand { get; set; }
 
         public MainViewModel()
         {
@@ -90,6 +91,19 @@ namespace QuanLyCuaHang.ViewModel
             {
                 InventoryList.Clear();
                 LoadInventoryData2();
+
+            });
+
+            THONGKECommand = new RelayCommand<object>((x) =>
+            {
+                
+                return true;
+
+            }, (x) =>
+
+            {
+                InventoryList.Clear();
+                LoadInventoryData();
 
             });
 

@@ -101,7 +101,7 @@ go
 
 insert into UserRole(DisplayName) values(N'Admin')
 go
-insert into UserRole(DisplayName) values(N'Nh�n vi�n')
+insert into UserRole(DisplayName) values(N'Nhân viên')
 go
 
 create table Users

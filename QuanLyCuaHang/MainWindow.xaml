@@ -206,7 +206,7 @@
                                     <ColumnDefinition Width="50*"/>
                                     <ColumnDefinition Width="571*"/>
                                 </Grid.ColumnDefinitions>
-                                <Separator Margin="10" Grid.ColumnSpan="2"></Separator>
+                                <!--<Separator Margin="10" Grid.ColumnSpan="2"></Separator>-->
                             </Grid>
                             <Grid Grid.Row="2">
                                 <Grid.ColumnDefinitions>
@@ -459,6 +459,7 @@
                                 <ColumnDefinition Width="auto"></ColumnDefinition>
                                 <ColumnDefinition Width="auto"></ColumnDefinition>
                                 <ColumnDefinition Width="auto"></ColumnDefinition>
+                                <ColumnDefinition Width="auto"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <!--SelectedDate="{Binding DateBeginInventory}"-->
                             <Grid Grid.Column="0">
@@ -472,6 +473,14 @@
                                         Width="100" Margin="25 5 0 0"
                                         Content="LỌC"
                                         Command="{Binding InventoryCommand}" 
+                                        ToolTip="Resource name: MaterialDesignRaisedLightDarkButton" >
+                                </Button>
+                            </Grid>
+                            <Grid Grid.Column="3">
+                                <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" 
+                                        Width="100" Margin="25 5 0 0"
+                                        Content="THỐNG KÊ"
+                                        Command="{Binding THONGKECommand}" 
                                         ToolTip="Resource name: MaterialDesignRaisedLightDarkButton" >
                                 </Button>
                             </Grid>
