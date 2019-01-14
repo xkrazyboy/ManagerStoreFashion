@@ -480,7 +480,7 @@
                             <Separator></Separator>
                         </Grid>
                         <Grid Grid.Row="2">
-                            <ListView ItemsSource="{Binding InventoryList}">
+                            <ListView ItemsSource="{Binding InventoryList, Mode=TwoWay}">
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn Header="STT" DisplayMemberBinding="{Binding STT}"></GridViewColumn>

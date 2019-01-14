@@ -41,15 +41,7 @@ namespace QuanLyCuaHang.ViewModel
         }
 
         private Model.Object _SelectedObject;
-        public Model.Object SelectedObject
-        {
-            get => _SelectedObject;
-            set
-            {
-                _SelectedObject = value;
-                OnPropertyChanged();
-            }
-        }
+        public Model.Object SelectedObject { get => _SelectedObject; set { _SelectedObject = value; OnPropertyChanged(); } }
 
         private Model.Input _SelectedInput;
         public Model.Input SelectedInput
@@ -59,6 +51,10 @@ namespace QuanLyCuaHang.ViewModel
             {
                 _SelectedInput = value;
                 OnPropertyChanged();
+                if (SelectedInput != null)
+                {
+
+                }
             }
         }
 
@@ -85,7 +81,7 @@ namespace QuanLyCuaHang.ViewModel
 
             AddCommand = new RelayCommand<object>((p) =>
             {
-                if (SelectedObject == null || SelectedInput == null)
+                if (SelectedObject == null)
                     return false;
                 return true;
 
