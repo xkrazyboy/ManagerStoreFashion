@@ -163,10 +163,10 @@ namespace QuanLyCuaHang.ViewModel
                             }
 
                         }
-                        DataProvider.Ins.DB.Output.Remove(item);
-                        ListOutput.Remove(item);
+                        
                     }
-                    
+                    DataProvider.Ins.DB.Output.Remove(item);
+                    ListOutput.Remove(item);
                 }
 
                 DataProvider.Ins.DB.Customer.Remove(Customer);

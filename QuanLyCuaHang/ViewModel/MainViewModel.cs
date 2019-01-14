@@ -163,5 +163,8 @@ namespace QuanLyCuaHang.ViewModel
             ThongKe.GiaTon = tongTienTon;
             ThongKe.GiaLai = tongTienLai;
         }
+
+
+       
     }
 }
