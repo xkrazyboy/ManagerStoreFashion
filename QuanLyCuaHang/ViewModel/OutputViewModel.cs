@@ -109,12 +109,13 @@ namespace QuanLyCuaHang.ViewModel
             get => _SelectedCustomer;
             set {
                 _SelectedCustomer = value;
-                OnPropertyChanged();
+                OnPropertyChanged("Customer");
                 if (SelectedCustomer != null && SelectedItem != null)
                 {
                     SelectedItem.IdCustomer = SelectedCustomer.Id;
-                    
+
                 }
+                
             }
         }
 
@@ -172,6 +173,9 @@ namespace QuanLyCuaHang.ViewModel
             Users = new ObservableCollection<Model.Users>(DataProvider.Ins.DB.Users);
             Customer = new ObservableCollection<Model.Customer>(DataProvider.Ins.DB.Customer);
             Object = new ObservableCollection<Model.Object>(DataProvider.Ins.DB.Object);
+
+           
+       
 
             LoadTotalPrice();
 
@@ -318,8 +322,8 @@ namespace QuanLyCuaHang.ViewModel
 
                 LoadTotalPrice();
 
-                ICollectionView view = CollectionViewSource.GetDefaultView(ListOutput);
-                view.Refresh();
+                ICollectionView view2 = CollectionViewSource.GetDefaultView(ListOutput);
+                view2.Refresh();
             });
 
             DeleteCommand = new RelayCommand<Output>((p) =>
@@ -348,8 +352,8 @@ namespace QuanLyCuaHang.ViewModel
                 ListOutput.Remove(Output);
                 DataProvider.Ins.DB.SaveChanges();
 
-                ICollectionView view = CollectionViewSource.GetDefaultView(ListOutputInfo);
-                view.Refresh();
+                ICollectionView view2 = CollectionViewSource.GetDefaultView(ListOutputInfo);
+                view2.Refresh();
             });
             #endregion
 
@@ -420,8 +424,8 @@ namespace QuanLyCuaHang.ViewModel
                         DataProvider.Ins.DB.SaveChanges();
 
                         ListOutputInfo.Add(OutputInfo);
-                        ICollectionView view = CollectionViewSource.GetDefaultView(ListOutput);
-                        view.Refresh();
+                        ICollectionView view2 = CollectionViewSource.GetDefaultView(ListOutput);
+                        view2.Refresh();
                     }
                 
                 
@@ -462,8 +466,8 @@ namespace QuanLyCuaHang.ViewModel
                     LoadTotalPrice();
                     DataProvider.Ins.DB.SaveChanges();
 
-                    ICollectionView view = CollectionViewSource.GetDefaultView(ListOutputInfo);
-                    view.Refresh();
+                    ICollectionView view3 = CollectionViewSource.GetDefaultView(ListOutputInfo);
+                    view3.Refresh();
                 }
 
             });
@@ -487,11 +491,42 @@ namespace QuanLyCuaHang.ViewModel
                 ListOutputInfo.Remove(OutputInfo);
                 LoadTotalPrice();
                 DataProvider.Ins.DB.SaveChanges();
+                ICollectionView view1 = CollectionViewSource.GetDefaultView(ListOutputInfo);
+                view1.Refresh();
+
+            });
+            #endregion
+
+            PrintCommand = new RelayCommand<Output>((p) =>
+            {
+                if (SelectedItem == null)
+                    return false;
+
+                var displayList = DataProvider.Ins.DB.Output.Where(x => x.Id == SelectedItem.Id);
+                if (displayList != null && displayList.Count() != 0)
+                    return true;
+                return false;
+
+            }, (p) =>
+            {
+
+
+                //Report report = new Report();
+                XtraReport1 report = new XtraReport1();
+                report.CreateDocument();
+                report.FilterString = SelectedItem.Id;
+                ReportWindow window = new ReportWindow();
+               // window.DocViewer.Document = report;
+                
+                window.ShowDialog();
+          
+                
+
+                // rpw.DocViewer.Document = rpt;
                 ICollectionView view = CollectionViewSource.GetDefaultView(ListOutputInfo);
                 view.Refresh();
 
             });
-            #endregion
         }
 
         // Hàm tính tổng hóa đơn

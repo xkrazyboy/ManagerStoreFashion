@@ -76,7 +76,18 @@ namespace QuanLyCuaHang.ViewModel
 
         private string _Email;
         public string Email { get => _Email; set { _Email = value; OnPropertyChanged(); } }
+        private Model.Customer _SelectedCustomer;
+        public Model.Customer SelectedCustomer
+        {
+            get => _SelectedCustomer;
+            set
+            {
+                _SelectedCustomer = value;
+                OnPropertyChanged();
+                
 
+            }
+        }
 
         private string _MoreInfo;
         public string MoreInfo { get => _MoreInfo; set { _MoreInfo = value; OnPropertyChanged(); } }
@@ -108,6 +119,7 @@ namespace QuanLyCuaHang.ViewModel
 
                 ICollectionView view = CollectionViewSource.GetDefaultView(ListOutput);
                 view.Refresh();
+                
                 List.Add(Customer);
             });
 

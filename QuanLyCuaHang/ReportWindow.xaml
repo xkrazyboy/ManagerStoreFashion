@@ -8,6 +8,6 @@
         DataContext="{StaticResource ReportVM}"
         Title="ReportWindow" Height="450" Width="800">
     <Grid>
-        <DocumentViewer Name="DocViewer1" Document="{Binding FixedDocumentSequence, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="0,10,-0.4,0" VerticalAlignment="Top" Height="410" Width="794" Background="#FFF6E9E9"/>
+        <DocumentViewer Name="DocViewer" Document="{Binding FixedDocumentSequence, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="0,10,-0.4,0" VerticalAlignment="Top" Height="410" Width="794" Background="#FFF6E9E9"/>
     </Grid>
 </Window>

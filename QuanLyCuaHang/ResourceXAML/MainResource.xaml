@@ -12,4 +12,5 @@
     <viewmodel:OutputInfoViewModel x:Key="OutputInfoVM"></viewmodel:OutputInfoViewModel>
     <viewmodel:OutputViewModel x:Key="OutputVM"></viewmodel:OutputViewModel>
     <viewmodel:UsersViewModel x:Key="UserVM"></viewmodel:UsersViewModel>
+    <viewmodel:ReportViewModel x:Key="ReportVM"></viewmodel:ReportViewModel>
 </ResourceDictionary>
