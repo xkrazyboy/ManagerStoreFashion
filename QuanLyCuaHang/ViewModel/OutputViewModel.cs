@@ -96,8 +96,7 @@ namespace QuanLyCuaHang.ViewModel
                     SelectedObject = SelectedOutputInfo.Object;
                     Count = SelectedOutputInfo.Count;                    
                     Status = SelectedOutputInfo.Status;
-                    if (SelectedItem != null)
-                        SelectedCustomer = SelectedItem.Customer;
+                    SelectedCustomer = SelectedItem.Customer;
 
                 }
             }
@@ -109,7 +108,7 @@ namespace QuanLyCuaHang.ViewModel
             get => _SelectedCustomer;
             set {
                 _SelectedCustomer = value;
-                OnPropertyChanged("Customer");
+                OnPropertyChanged();
                 if (SelectedCustomer != null && SelectedItem != null)
                 {
                     SelectedItem.IdCustomer = SelectedCustomer.Id;
@@ -193,30 +192,30 @@ namespace QuanLyCuaHang.ViewModel
                     }
                 }
 
-                //var Output = DataProvider.Ins.DB.Output.Where(x => x.Id == SelectedItem.Id).SingleOrDefault();         
+                var Output = DataProvider.Ins.DB.Output.Where(x => x.Id == SelectedItem.Id).SingleOrDefault();
 
-                //if (SelectedItem != null)
-                //{
-                //    // Tính giá tiền nhập tương ứng với danh sách từng sản phẩm
-                //    var collection = DataProvider.Ins.DB.OutputInfo.Where(x => x.IdOutput == SelectedItem.Id).ToList();
-                //    foreach (var item in collection)
-                //    {
+                if (SelectedItem != null)
+                {
+                    // Tính giá tiền nhập tương ứng với danh sách từng sản phẩm
+                    var collection = DataProvider.Ins.DB.OutputInfo.Where(x => x.IdOutput == SelectedItem.Id).ToList();
+                    foreach (var item in collection)
+                    {
 
-                //        var InputInfo = DataProvider.Ins.DB.InputInfo.Where(x => x.IdInput == item.Id).SingleOrDefault();
-                //        if (InputInfo != null)
-                //        {
-                //            Output.Total += item.Count * InputInfo.OutputPrice;
-                //        }
-                //        ListOutputInfo.Add(item);
-                //        DataProvider.Ins.DB.SaveChanges();
-                //    }
-                //}
-                
-                ////DataProvider.Ins.DB.Output.Add(ListOutputInfo);
-                //DataProvider.Ins.DB.SaveChanges();
+                        var InputInfo = DataProvider.Ins.DB.InputInfo.Where(x => x.IdInput == item.Id).SingleOrDefault();
+                        if (InputInfo != null)
+                        {
+                            Output.Total += item.Count * InputInfo.OutputPrice;
+                        }
+                        ListOutputInfo.Add(item);
+                        DataProvider.Ins.DB.SaveChanges();
+                    }
+                }
 
-                //ICollectionView view = CollectionViewSource.GetDefaultView(ListOutput);
-                //view.Refresh();
+                //DataProvider.Ins.DB.Output.Add(ListOutputInfo);
+                DataProvider.Ins.DB.SaveChanges();
+
+                ICollectionView view = CollectionViewSource.GetDefaultView(ListOutput);
+                view.Refresh();
             });
 
             //SelectedOutputInfoListViewChangedCommand = new RelayCommand<object>((p) => true, (p) =>
@@ -352,8 +351,8 @@ namespace QuanLyCuaHang.ViewModel
                 ListOutput.Remove(Output);
                 DataProvider.Ins.DB.SaveChanges();
 
-                ICollectionView view2 = CollectionViewSource.GetDefaultView(ListOutputInfo);
-                view2.Refresh();
+                //ICollectionView view2 = CollectionViewSource.GetDefaultView(ListOutputInfo);
+                //view2.Refresh();
             });
             #endregion
 
@@ -424,8 +423,8 @@ namespace QuanLyCuaHang.ViewModel
                         DataProvider.Ins.DB.SaveChanges();
 
                         ListOutputInfo.Add(OutputInfo);
-                        ICollectionView view2 = CollectionViewSource.GetDefaultView(ListOutput);
-                        view2.Refresh();
+                        //ICollectionView view2 = CollectionViewSource.GetDefaultView(ListOutput);
+                        //view2.Refresh();
                     }
                 
                 
@@ -454,7 +453,6 @@ namespace QuanLyCuaHang.ViewModel
                 {
                     MessageBox.Show("Hàng trong kho đã hết");
                 }
-
                 else
                 {
                     OutputInfo.IdObject = SelectedObject.Id;
@@ -491,8 +489,8 @@ namespace QuanLyCuaHang.ViewModel
                 ListOutputInfo.Remove(OutputInfo);
                 LoadTotalPrice();
                 DataProvider.Ins.DB.SaveChanges();
-                ICollectionView view1 = CollectionViewSource.GetDefaultView(ListOutputInfo);
-                view1.Refresh();
+                //ICollectionView view1 = CollectionViewSource.GetDefaultView(ListOutputInfo);
+                //view1.Refresh();
 
             });
             #endregion
@@ -523,8 +521,8 @@ namespace QuanLyCuaHang.ViewModel
                 
 
                 // rpw.DocViewer.Document = rpt;
-                ICollectionView view = CollectionViewSource.GetDefaultView(ListOutputInfo);
-                view.Refresh();
+                //ICollectionView view = CollectionViewSource.GetDefaultView(ListOutputInfo);
+                //view.Refresh();
 
             });
         }

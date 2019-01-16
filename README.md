@@ -1,12 +1,14 @@
-# ManagerStoreFashion
+﻿# ManagerStoreFashion
 Quản lý cửa hàng thời trang
 
 WPF - MVVM 
 
-Lê Doãn Cường 15520077
+Lê Doãn Cường
 
-Lưu Nguyễn Khải Hoàn 15520249
+Lưu Nguyễn Khải Hoàn
 
+
+Cài đặt trong visual 2017:
 
 Install-Package MaterialDesignThemes
 
