@@ -1,5 +1,5 @@
 ﻿# ManagerStoreFashion
-Quản lý cửa hàng thời trang
+Quản lý cửa hàng thời trang (Quản Lý Kho + )
 
 WPF - MVVM 
 
