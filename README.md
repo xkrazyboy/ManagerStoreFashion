@@ -1,6 +1,8 @@
 ﻿# ManagerStoreFashion
 Quản lý cửa hàng thời trang (Quản Lý Kho + )
 
+Link list video: http://bit.ly/2WaqmVQ
+
 WPF - MVVM 
 
 Lê Doãn Cường
