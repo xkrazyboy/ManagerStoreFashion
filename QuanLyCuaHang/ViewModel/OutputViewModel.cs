@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,9 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
-using DevExpress.XtraReports.UI;
 using System.Data;
-using DevExpress.XtraPrinting;
 using System.Xml;
 
 
@@ -507,18 +504,6 @@ namespace QuanLyCuaHang.ViewModel
 
             }, (p) =>
             {
-
-
-                //Report report = new Report();
-                XtraReport1 report = new XtraReport1();
-                report.CreateDocument();
-                report.FilterString = SelectedItem.Id;
-                ReportWindow window = new ReportWindow();
-               // window.DocViewer.Document = report;
-                
-                window.ShowDialog();
-          
-                
 
                 // rpw.DocViewer.Document = rpt;
                 //ICollectionView view = CollectionViewSource.GetDefaultView(ListOutputInfo);
