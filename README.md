@@ -14,7 +14,8 @@ B1: Cài đặt database:
     - Execute tạo database
 
 B2: Chạy chương trình trên Visual Studio:
-    - Cài đặt các gói Package:
+
+   - Cài đặt các gói Package:
         Nhấn vào Tools -> Nuget Package Manager -> Package Manager Console -> Lần lượt gõ từng dòng dưới đây:
             
     Install-Package MaterialDesignThemes
