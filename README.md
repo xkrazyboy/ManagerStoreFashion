@@ -17,9 +17,9 @@ B2: Chạy chương trình trên Visual Studio:
     - Cài đặt các gói Package:
         Nhấn vào Tools -> Nuget Package Manager -> Package Manager Console -> Lần lượt gõ từng dòng dưới đây:
             
-   Install-Package MaterialDesignThemes
+    Install-Package MaterialDesignThemes
 
-   Install-Package System.Windows.Interactivity.WPF
+    Install-Package System.Windows.Interactivity.WPF
         
    - Kết nối database:
         + Vào Server Explorer -> Connect to Database -> Change -> Microsoft MQL Server -> Server name là tên server bạn sử dụng ở B1 -> Chọn database bạn đã Excute ở B1 (QuanLyCuaHangThoiTrang)
