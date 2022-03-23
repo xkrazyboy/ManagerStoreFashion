@@ -30,5 +30,6 @@ namespace QuanLyCuaHang.Model
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Output> Output { get; set; }
+        public virtual ICollection<Output> OutputInfo { get; set; }
     }
 }
