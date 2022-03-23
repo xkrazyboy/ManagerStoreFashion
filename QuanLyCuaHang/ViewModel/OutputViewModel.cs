@@ -93,7 +93,7 @@ namespace QuanLyCuaHang.ViewModel
                     SelectedObject = SelectedOutputInfo.Object;
                     Count = SelectedOutputInfo.Count;                    
                     Status = SelectedOutputInfo.Status;
-                    SelectedCustomer = SelectedItem.Customer;
+                    //SelectedCustomer = SelectedItem.Customer;
 
                 }
             }
@@ -169,8 +169,10 @@ namespace QuanLyCuaHang.ViewModel
             Users = new ObservableCollection<Model.Users>(DataProvider.Ins.DB.Users);
             Customer = new ObservableCollection<Model.Customer>(DataProvider.Ins.DB.Customer);
             Object = new ObservableCollection<Model.Object>(DataProvider.Ins.DB.Object);
-
+            
+            ICollectionView viewOutputInfo = CollectionViewSource.GetDefaultView(ListOutputInfo);
            
+            ICollectionView viewOutput = CollectionViewSource.GetDefaultView(ListOutput);
        
 
             LoadTotalPrice();
@@ -185,34 +187,18 @@ namespace QuanLyCuaHang.ViewModel
                     var collection = DataProvider.Ins.DB.OutputInfo.Where(x => x.IdOutput == SelectedItem.Id).ToList();
                     foreach (var item in collection)
                     {
-                        ListOutputInfo.Add(item);
-                    }
-                }
-
-                var Output = DataProvider.Ins.DB.Output.Where(x => x.Id == SelectedItem.Id).SingleOrDefault();
-
-                if (SelectedItem != null)
-                {
-                    // Tính giá tiền nhập tương ứng với danh sách từng sản phẩm
-                    var collection = DataProvider.Ins.DB.OutputInfo.Where(x => x.IdOutput == SelectedItem.Id).ToList();
-                    foreach (var item in collection)
-                    {
-
                         var InputInfo = DataProvider.Ins.DB.InputInfo.Where(x => x.IdInput == item.Id).SingleOrDefault();
                         if (InputInfo != null)
                         {
-                            Output.Total += item.Count * InputInfo.OutputPrice;
+                            item.SumPrice = item.Count * InputInfo.OutputPrice;
                         }
                         ListOutputInfo.Add(item);
-                        DataProvider.Ins.DB.SaveChanges();
                     }
                 }
 
-                //DataProvider.Ins.DB.Output.Add(ListOutputInfo);
-                DataProvider.Ins.DB.SaveChanges();
-
-                ICollectionView view = CollectionViewSource.GetDefaultView(ListOutput);
-                view.Refresh();
+                LoadTotalPrice();
+                viewOutputInfo.Refresh();
+                viewOutput.Refresh();
             });
 
             //SelectedOutputInfoListViewChangedCommand = new RelayCommand<object>((p) => true, (p) =>
@@ -362,68 +348,37 @@ namespace QuanLyCuaHang.ViewModel
 
             }, (p) => {
 
-                InventoryList = new ObservableCollection<Inventory>();
-                ThongKe = new ThongKe();
-                var objectList = DataProvider.Ins.DB.Object.Where(x => x.DisplayName == SelectedObject.DisplayName).ToList();
-
-                int luongNhap = 0;
-                int luongXuat = 0;
-
-                int i = 1;
-                foreach (var item in objectList)
-                {
-                    var inputList = DataProvider.Ins.DB.InputInfo.Where(x => x.IdObject == item.Id);
-                    var outputList = DataProvider.Ins.DB.OutputInfo.Where(x => x.IdObject == item.Id);
-
-                    int sumInput = 0;
-                    int sumOutput = 0;
-
-
-                    if (inputList != null && inputList.Count() > 0)
-                    {
-                        sumInput = (int)inputList.Sum(x => x.Count);
-
-                        luongNhap += sumInput;
-                    }
-
-                    if (outputList != null && outputList.Count() > 0)
-                    {
-                        sumOutput = (int)outputList.Sum(x => x.Count);
-                        luongXuat += sumOutput;
-                    }
-                }
-                ThongKe.LuongTon = luongNhap - luongXuat;
-                //var Output= DataProvider.Ins.DB.Output.Where(x => x.Id == SelectedItem.Id).SingleOrDefault();
+              
                 var Object = DataProvider.Ins.DB.Object.Where(x => x.Id == SelectedObject.Id).SingleOrDefault();
-                var InputInfolist = DataProvider.Ins.DB.InputInfo.Where(x => x.IdObject == Object.Id).First();
-                
-                    if (ThongKe.LuongTon < Count)
+
+
+                    int tonkho = ThongKeLuongTon(SelectedObject.Id);
+                    if (tonkho < Count)
                     {
                         MessageBox.Show("Hàng trong kho đã hết");
+                        // var InputInfolist = DataProvider.Ins.DB.InputInfo.Where(x => x.IdObject == Object.Id).First();
                     }
                     else
                     {
-
+                        var InputInfo = DataProvider.Ins.DB.InputInfo.Where(x => x.IdObject == Object.Id).First();
                         var OutputInfo = new Model.OutputInfo()
                         {
                             IdOutput = SelectedItem.Id,
                             IdObject = SelectedObject.Id,
-                            IdInputInfo = InputInfolist.Id,
+                            IdInputInfo = InputInfo.Id,
                             Count = Count,
                             Status = Status,
-                            //Status = SelectedOutputInfo.Status,
-                            SumPrice = Count * InputInfolist.OutputPrice,
+                            SumPrice = Count * InputInfo.OutputPrice,
                             Id = Guid.NewGuid().ToString()
                         };
-
-                        DataProvider.Ins.DB.OutputInfo.Add(OutputInfo);
-                        DataProvider.Ins.DB.SaveChanges();
-
+                    
                         ListOutputInfo.Add(OutputInfo);
-                        //ICollectionView view2 = CollectionViewSource.GetDefaultView(ListOutput);
-                        //view2.Refresh();
+                        DataProvider.Ins.DB.OutputInfo.Add(OutputInfo);
                     }
-                
+                LoadTotalPrice();
+                DataProvider.Ins.DB.SaveChanges();
+                viewOutputInfo.Refresh();
+                viewOutput.Refresh();
                 
             });
 
@@ -438,32 +393,30 @@ namespace QuanLyCuaHang.ViewModel
                 return false;
 
             }, (p) =>
-            {
-                var OutputInfo = DataProvider.Ins.DB.OutputInfo.Where(x => x.Id == SelectedOutputInfo.Id).SingleOrDefault();
-
-                //MessageBox.Show(OutputInfo.Id);
-                //var Output = DataProvider.Ins.DB.Output.Where(x => x.Id == OutputInfo.IdOutput).SingleOrDefault();
+            {              
 
 
-                var InputInfo = DataProvider.Ins.DB.InputInfo.Where(x => x.Id == SelectedObject.Id).SingleOrDefault();
-                if (InputInfo == null)
-                {
-                    MessageBox.Show("Hàng trong kho đã hết");
-                }
-                else
-                {
-                    OutputInfo.IdObject = SelectedObject.Id;
-                    OutputInfo.Count = Count;
-                    OutputInfo.Status = Status;
-                    OutputInfo.SumPrice = Count * InputInfo.OutputPrice;
-                    //Output.IdPromotion = SelectedPromotion.Id;
+                var Object = DataProvider.Ins.DB.Object.Where(x => x.Id == SelectedObject.Id).SingleOrDefault();
 
-                    LoadTotalPrice();
-                    DataProvider.Ins.DB.SaveChanges();
 
-                    ICollectionView view3 = CollectionViewSource.GetDefaultView(ListOutputInfo);
-                    view3.Refresh();
-                }
+                    int luongnhap = ThongKeLuongNhap(SelectedObject.Id);
+                    if (luongnhap < Count)
+                    {
+                        MessageBox.Show("Chỉnh sửa không hợp lệ. Hàng trong kho ít hơn số lượng bạn đã nhập");
+                    }
+                    else
+                    {
+                        var InputInfo = DataProvider.Ins.DB.InputInfo.Where(x => x.IdObject == Object.Id).First();
+                        var OutputInfo = DataProvider.Ins.DB.OutputInfo.Where(x => x.Id == SelectedOutputInfo.Id).SingleOrDefault();                        
+                        OutputInfo.Count = Count;
+                        OutputInfo.Status = Status;
+                        OutputInfo.SumPrice = Count * InputInfo.OutputPrice;
+                        DataProvider.Ins.DB.SaveChanges();
+                    }
+
+                LoadTotalPrice();                
+                viewOutputInfo.Refresh();
+                viewOutput.Refresh();
 
             });
 
@@ -482,12 +435,11 @@ namespace QuanLyCuaHang.ViewModel
             {
                 var OutputInfo = DataProvider.Ins.DB.OutputInfo.Where(x => x.Id == SelectedOutputInfo.Id).SingleOrDefault();
 
-                DataProvider.Ins.DB.OutputInfo.Remove(OutputInfo);
                 ListOutputInfo.Remove(OutputInfo);
-                LoadTotalPrice();
+                DataProvider.Ins.DB.OutputInfo.Remove(OutputInfo);
                 DataProvider.Ins.DB.SaveChanges();
-                //ICollectionView view1 = CollectionViewSource.GetDefaultView(ListOutputInfo);
-                //view1.Refresh();
+                LoadTotalPrice();
+                viewOutput.Refresh();
 
             });
             #endregion
@@ -505,10 +457,7 @@ namespace QuanLyCuaHang.ViewModel
             }, (p) =>
             {
 
-                // rpw.DocViewer.Document = rpt;
-                //ICollectionView view = CollectionViewSource.GetDefaultView(ListOutputInfo);
-                //view.Refresh();
-
+                viewOutput.Refresh();
             });
         }
 
@@ -535,6 +484,49 @@ namespace QuanLyCuaHang.ViewModel
 
             DataProvider.Ins.DB.SaveChanges();
 
+        }
+
+        int ThongKeLuongTon(string a)
+        {
+            int luongNhap = 0;
+            int luongXuat = 0;
+            int sumInput = 0;
+            int sumOutput = 0;
+
+            var inputList = DataProvider.Ins.DB.InputInfo.Where(x => x.IdObject == a);
+            var outputList = DataProvider.Ins.DB.OutputInfo.Where(x => x.IdObject == a);
+
+            if (inputList != null && inputList.Count() > 0)
+            {
+                  sumInput = (int)inputList.Sum(x => x.Count);
+
+                  luongNhap += sumInput;
+            }
+
+            if (outputList != null && outputList.Count() > 0)
+            {
+                 sumOutput = (int)outputList.Sum(x => x.Count);
+                 luongXuat += sumOutput;
+            }
+
+            return luongNhap - luongXuat;
+        }
+
+        int ThongKeLuongNhap(string a)
+        {
+            int luongNhap = 0;
+            int sumInput = 0;
+
+            var inputList = DataProvider.Ins.DB.InputInfo.Where(x => x.IdObject == a);
+
+            if (inputList != null && inputList.Count() > 0)
+            {
+                  sumInput = (int)inputList.Sum(x => x.Count);
+
+                  luongNhap += sumInput;
+            }
+
+            return luongNhap;
         }
 
     }

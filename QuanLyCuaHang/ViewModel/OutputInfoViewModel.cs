@@ -26,8 +26,8 @@ namespace QuanLyCuaHang.ViewModel
         private ObservableCollection<Model.Output> _Output;
         public ObservableCollection<Model.Output> Output { get => _Output; set { _Output = value; OnPropertyChanged(); } }
 
-        //private ObservableCollection<Model.Customer> _Customer;
-        //public ObservableCollection<Model.Customer> Customer { get => _Customer; set { _Customer = value; OnPropertyChanged(); } }
+        private ObservableCollection<Model.Customer> _Customer;
+        public ObservableCollection<Model.Customer> Customer { get => _Customer; set { _Customer = value; OnPropertyChanged(); } }
 
         private Model.OutputInfo _SelectedItem;
         public Model.OutputInfo SelectedItem
@@ -69,6 +69,7 @@ namespace QuanLyCuaHang.ViewModel
 
         public ICommand AddCommand { get; set; }
         public ICommand EditCommand { get; set; }
+        public ICommand DeleteCommand { get; set; }
 
         public OutputInfoViewModel()
         {
@@ -77,7 +78,8 @@ namespace QuanLyCuaHang.ViewModel
             Output = new ObservableCollection<Model.Output>(DataProvider.Ins.DB.Output);
             InputInfo = new ObservableCollection<Model.InputInfo>(DataProvider.Ins.DB.InputInfo);
             //Customer = new ObservableCollection<Model.Customer>(DataProvider.Ins.DB.Customers);
-
+            //ICollectionView view = CollectionViewSource.GetDefaultView(ListOutputInfo);
+  
             AddCommand = new RelayCommand<object>((p) =>
             {
                 if (SelectedObject == null || SelectedOutput == null || SelectedInputInfo == null)

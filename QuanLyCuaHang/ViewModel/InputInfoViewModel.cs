@@ -53,10 +53,7 @@ namespace QuanLyCuaHang.ViewModel
             {
                 _SelectedInput = value;
                 OnPropertyChanged();
-                if (SelectedInput != null)
-                {
-
-                }
+                // Chưa thêm được ngày tùy chọn - Chỉ thêm được ngày hiện tại
             }
         }
 
@@ -84,19 +81,17 @@ namespace QuanLyCuaHang.ViewModel
             List = new ObservableCollection<Model.InputInfo>(DataProvider.Ins.DB.InputInfo);
             Object = new ObservableCollection<Model.Object>(DataProvider.Ins.DB.Object);
             Input = new ObservableCollection<Model.Input>(DataProvider.Ins.DB.Input);
-             
+            
+            ICollectionView view = CollectionViewSource.GetDefaultView(List);
 
             AddCommand = new RelayCommand<object>((p) =>
             {
-                if (SelectedObject == null || SelectedInput == null)
-                    return false;
                 return true;
 
             }, (p) =>
 
             {
-               
-                var NewInput = new Model.Input() { Id = Guid.NewGuid().ToString(), DateInput = SelectedInput.DateInput };
+                var NewInput = new Model.Input() { Id = Guid.NewGuid().ToString(), DateInput = DateTime.Now };
                 var InputInfo = new Model.InputInfo() { IdObject = SelectedObject.Id, IdInput = NewInput.Id, Count = Count, InputPrice = InputPrice, OutputPrice = OutputPrice, Status = Status, Id = Guid.NewGuid().ToString() };
                 
                 DataProvider.Ins.DB.Input.Add(NewInput);
@@ -104,6 +99,7 @@ namespace QuanLyCuaHang.ViewModel
                 DataProvider.Ins.DB.SaveChanges();
 
                 List.Add(InputInfo);
+
             });
 
             EditCommand = new RelayCommand<InputInfo>((p) =>
@@ -127,6 +123,8 @@ namespace QuanLyCuaHang.ViewModel
                 InputInfo.InputPrice = InputPrice;
                 InputInfo.OutputPrice = OutputPrice;
                 InputInfo.Status = Status;
+                
+                view.Refresh();
                 DataProvider.Ins.DB.SaveChanges();              
             });
 
@@ -157,7 +155,6 @@ namespace QuanLyCuaHang.ViewModel
                 List.Remove(InputInfo);
                 DataProvider.Ins.DB.SaveChanges();
                 
-                ICollectionView view = CollectionViewSource.GetDefaultView(List);
                 view.Refresh();
             });
         }

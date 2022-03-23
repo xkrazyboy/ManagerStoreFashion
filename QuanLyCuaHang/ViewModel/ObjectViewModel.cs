@@ -99,8 +99,6 @@ namespace QuanLyCuaHang.ViewModel
 
             AddCommand = new RelayCommand<object>((p) =>
             {
-                if (SelectedSuplier == null || SelectedUnit == null)
-                    return false;
                 return true;
 
             }, (p) =>
