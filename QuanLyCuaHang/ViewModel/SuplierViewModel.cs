@@ -76,6 +76,7 @@ namespace QuanLyCuaHang.ViewModel
         public SuplierViewModel()
         {
             List = new ObservableCollection<Suplier>(DataProvider.Ins.DB.Suplier);
+            ICollectionView view = CollectionViewSource.GetDefaultView(List);
             
             ListOutput = new ObservableCollection<Model.Output>(DataProvider.Ins.DB.Output);
             ListOutputInfo = new ObservableCollection<Model.OutputInfo>(DataProvider.Ins.DB.OutputInfo);
@@ -91,7 +92,6 @@ namespace QuanLyCuaHang.ViewModel
 
                 DataProvider.Ins.DB.Suplier.Add(Suplier);
                 DataProvider.Ins.DB.SaveChanges();
-
                 List.Add(Suplier);
             });
 
@@ -117,6 +117,7 @@ namespace QuanLyCuaHang.ViewModel
                 DataProvider.Ins.DB.SaveChanges();
 
                 SelectedItem.DisplayName = DisplayName;
+                view.Refresh();
             });
 
             DeleteCommand = new RelayCommand<object>((p) =>
@@ -186,7 +187,6 @@ namespace QuanLyCuaHang.ViewModel
                 DataProvider.Ins.DB.Suplier.Remove(Suplier);
                 List.Remove(Suplier);
                 DataProvider.Ins.DB.SaveChanges();
-                ICollectionView view = CollectionViewSource.GetDefaultView(List);
                 view.Refresh();
             });
         }

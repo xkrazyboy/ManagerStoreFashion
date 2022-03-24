@@ -105,6 +105,7 @@ namespace QuanLyCuaHang.ViewModel
             List = new ObservableCollection<Model.Customer>(DataProvider.Ins.DB.Customer);
             ListOutput = new ObservableCollection<Model.Output>(DataProvider.Ins.DB.Output);
             ListOutputInfo = new ObservableCollection<Model.OutputInfo>(DataProvider.Ins.DB.OutputInfo);
+            ICollectionView view = CollectionViewSource.GetDefaultView(List);
 
             AddCommand = new RelayCommand<object>((p) =>
             {
@@ -116,10 +117,7 @@ namespace QuanLyCuaHang.ViewModel
 
                 DataProvider.Ins.DB.Customer.Add(Customer);
                 DataProvider.Ins.DB.SaveChanges();
-
-                ICollectionView view = CollectionViewSource.GetDefaultView(ListOutput);
-                view.Refresh();
-                
+                view.Refresh();                
                 List.Add(Customer);
             });
 
@@ -145,6 +143,7 @@ namespace QuanLyCuaHang.ViewModel
                 DataProvider.Ins.DB.SaveChanges();
 
                 SelectedItem.DisplayName = DisplayName;
+                view.Refresh();
             });
 
             DeleteCommand = new RelayCommand<object>((p) =>
@@ -183,9 +182,7 @@ namespace QuanLyCuaHang.ViewModel
 
                 DataProvider.Ins.DB.Customer.Remove(Customer);
                 List.Remove(Customer);
-                ICollectionView view = CollectionViewSource.GetDefaultView(List);
                 view.Refresh();
-
                 DataProvider.Ins.DB.SaveChanges();
 
             });

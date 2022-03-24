@@ -68,13 +68,14 @@ namespace QuanLyCuaHang.ViewModel
 
             AddCommand = new RelayCommand<object>((p) =>
             {
-                if (SelectedUserRole == null || UserName == null || DisplayName == null)
-                    return false;
                 
+                if (SelectedItem == null)
+                    return false;    
+                /*
                 var displayList = DataProvider.Ins.DB.Users.Where(x => x.UserName == UserName);
                 if (displayList == null || displayList.Count() != 0)
-                    return false;
-                return true;
+                    return false; */
+                 return true; 
 
             }, (p) =>
 
@@ -88,12 +89,9 @@ namespace QuanLyCuaHang.ViewModel
 
             EditCommand = new RelayCommand<Users>((p) =>
             {
-                if ( UserName == null || SelectedUserRole == null)
-                    return false;
-
-                var displayList = DataProvider.Ins.DB.Users.Where(x => x.UserName == UserName);
-                if (displayList == null || displayList.Count() != 0)
-                    return false;
+                
+                if (SelectedItem == null)
+                    return false;       
 
                 return true;
 

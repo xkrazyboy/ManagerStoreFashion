@@ -2,9 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace QuanLyCuaHang.ViewModel
@@ -40,7 +42,7 @@ namespace QuanLyCuaHang.ViewModel
         public UnitViewModel()
         {
             List = new ObservableCollection<Unit>(DataProvider.Ins.DB.Unit.ToList());
-
+            ICollectionView view = CollectionViewSource.GetDefaultView(List);            
 
             AddCommand = new RelayCommand<object>((p) => 
             {
@@ -75,10 +77,11 @@ namespace QuanLyCuaHang.ViewModel
             }, (p) =>
             {
                 var unit = DataProvider.Ins.DB.Unit.Where(x => x.Id == SelectedItem.Id).SingleOrDefault();
-                unit.DisplayName = DisplayName;
-                DataProvider.Ins.DB.SaveChanges();
+                unit.DisplayName = DisplayName; 
+                DataProvider.Ins.DB.SaveChanges(); 
 
                 SelectedItem.DisplayName = DisplayName;
+                view.Refresh();
             });
 
             DeleteCommand = new RelayCommand<object>((p) =>
